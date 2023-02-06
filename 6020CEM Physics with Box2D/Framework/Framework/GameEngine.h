@@ -1,6 +1,7 @@
 #pragma once
 #include "PhysicsEngine.h"
 #include "GraphicsEngine.h"
+#include "InputsEngine.h"
 
 class GameEngine
 {

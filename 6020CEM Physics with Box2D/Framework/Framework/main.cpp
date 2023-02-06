@@ -12,15 +12,7 @@ int main()
 
     while (gameEngine->isGameEngineRunning())
     {
-        // check all the window's events that were triggered since the last iteration of the loop
-        sf::Event event;
-        while (GraphicsEngine::GetInstance()->GetEngineWindow()->pollEvent(event))
-        {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                GraphicsEngine::GetInstance()->GetEngineWindow()->close();
-        }
-
+        gameEngine->Update();
         gameEngine->Render();
     }
 

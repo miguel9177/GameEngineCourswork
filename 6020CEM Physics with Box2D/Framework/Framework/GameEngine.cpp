@@ -13,7 +13,7 @@ GameEngine::~GameEngine()
 
 void GameEngine::Update()
 {
-
+    InputsEngine::GetInstance()->Update();
 }
 
 void GameEngine::Render()
