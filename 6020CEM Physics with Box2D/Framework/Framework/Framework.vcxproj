@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
     <ClCompile Include="InputsEngine.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="PhysicsEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EventQueue.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="InputsEngine.h" />

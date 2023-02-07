@@ -39,6 +39,9 @@
     <ClCompile Include="InputsEngine.cpp">
       <Filter>Source Files\Engines\Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="EventQueue.cpp">
+      <Filter>Source Files\Engines\Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -51,6 +54,9 @@
       <Filter>Source Files\Engines\Header</Filter>
     </ClInclude>
     <ClInclude Include="InputsEngine.h">
+      <Filter>Source Files\Engines\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="EventQueue.h">
       <Filter>Source Files\Engines\Header</Filter>
     </ClInclude>
   </ItemGroup>
