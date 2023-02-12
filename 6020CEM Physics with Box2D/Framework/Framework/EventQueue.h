@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <vector>
 class EventQueue
 {
 private:
@@ -17,7 +18,6 @@ public:
     void SubscribeToVoidEvent(voidEvents eventToSubscribeTo, void (*functionToCallBack)());
     void InvokeVoidEvents(voidEvents eventToSubscribeTo);
 private:
-    std::map<voidEvents, void (*)()> allSubscribedEvents;
-    
+    std::map<voidEvents, std::vector<void (*)()>> allSubscribedEvents;
 };
 

@@ -22,16 +22,17 @@ EventQueue* EventQueue::GetInstance()
 
 void EventQueue::SubscribeToVoidEvent(EventQueue::voidEvents eventToSubscribeTo, void(*functionToCallBack)())
 {
-    allSubscribedEvents.insert({ eventToSubscribeTo, functionToCallBack });
+    allSubscribedEvents[eventToSubscribeTo].push_back(functionToCallBack);
 }
 
 void EventQueue::InvokeVoidEvents(EventQueue::voidEvents eventToCall)
 {
-    for (auto const& x : allSubscribedEvents)
+    auto it = allSubscribedEvents.find(eventToCall);
+    if (it != allSubscribedEvents.end())
     {
-        if (x.first == eventToCall)
+        for (auto const& callback : it->second)
         {
-            x.second();
+            callback();
         }
     }
 }
