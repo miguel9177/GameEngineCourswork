@@ -29,7 +29,7 @@ int main()
         GameEngine::GetInstance()->Update();
         GameEngine::GetInstance()->Render();
         
-        /*for (int i = 0; i < InputsEngine::GetInstance()->GetInputEvents()->size(); i++)
+        /*  for (int i = 0; i < InputsEngine::GetInstance()->GetInputEvents()->size(); i++)
         {
             if (InputsEngine::GetInstance()->GetInputEvents()->at(i).type == sf::Event::KeyPressed)
             {
