@@ -2,9 +2,8 @@
 
 PhysicsEngine* PhysicsEngine::instance;
 
-PhysicsEngine::PhysicsEngine()
+PhysicsEngine::PhysicsEngine() : gravity(0.0f, -9.81f), world(gravity)
 {
-
 }
 
 PhysicsEngine::~PhysicsEngine()
@@ -19,6 +18,11 @@ PhysicsEngine* PhysicsEngine::GetInstance()
         instance = new PhysicsEngine();
     }
     return instance;
+}
+
+b2Body* PhysicsEngine::CreateRigidBody(b2BodyDef* bodyDefenition_)
+{
+    return world.CreateBody(bodyDefenition_);
 }
 
 void PhysicsEngine::Update()

@@ -11,6 +11,7 @@ void GameObject::AddComponent(Component* componentToAdd)
 
 void GameObject::RemoveComponent(Component* componentToRemove)
 {
+
 }
 
 
