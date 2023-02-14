@@ -1,14 +1,19 @@
 #pragma once
+
 class Component
 {
-private:
+public:
 	enum class typeOfComponent { Mesh, Collider, ScriptBehaviour, RigidBody };
-	typeOfComponent componentType;
+
+private:
 	bool enabled;
+	typeOfComponent componentType;
 
 public:
+
 	Component(typeOfComponent typeOfComponent_);
 	~Component();
+	typeOfComponent GetTypeOfComponent();
 	virtual void Start();
 };
 

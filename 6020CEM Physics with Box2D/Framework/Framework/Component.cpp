@@ -13,3 +13,8 @@ Component::~Component()
 void Component::Start()
 {
 }
+
+Component::typeOfComponent Component::GetTypeOfComponent()
+{
+	return componentType;
+}
