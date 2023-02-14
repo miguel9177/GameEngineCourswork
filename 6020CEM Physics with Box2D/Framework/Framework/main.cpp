@@ -18,18 +18,37 @@ void test2()
 
 int main()
 {
-    GameEngine* gameEngine = new GameEngine(500, 500);
+    GameEngine::GetInstance()->InitializeEngine(500,500);
 
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);
 
-    while (gameEngine->isGameEngineRunning())
+    while (GameEngine::GetInstance()->isGameEngineRunning())
     {
-        gameEngine->Update();
-        gameEngine->Render();
+        GameEngine::GetInstance()->Update();
+        GameEngine::GetInstance()->Render();
+        
+        /*for (int i = 0; i < InputsEngine::GetInstance()->GetInputEvents()->size(); i++)
+        {
+            if (InputsEngine::GetInstance()->GetInputEvents()->at(i).type == sf::Event::KeyPressed)
+            {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                {
+                    std::cout << "PRessed A" << std::endl;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                {
+                    std::cout << "PRessed D" << std::endl;
+                }
+            }
+            if (InputsEngine::GetInstance()->GetInputEvents()->at(i).type == sf::Event::Closed)
+            {
+                std::cout << "Closed Window" << std::endl;
+            }
+            break;
+        }*/
     }
 
-    delete gameEngine;
 	return 0;
 }

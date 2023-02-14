@@ -23,13 +23,21 @@ InputsEngine* InputsEngine::GetInstance()
 
 void InputsEngine::Update()
 {
-    while (GraphicsEngine::GetInstance()->GetEngineWindow()->pollEvent(events))
-    {
-       
-    }
+
 }
 
-sf::Event InputsEngine::GetEvents()
+void InputsEngine::ClearInputsReceivedFromWindow()
 {
-    return events;
+    sfmlEvents.clear();
+}
+
+
+void InputsEngine::ReceiveInputFromWindow(sf::Event event_)
+{
+    sfmlEvents.push_back(event_);
+}
+
+std::vector<sf::Event>* InputsEngine::GetInputEvents()
+{
+    return &sfmlEvents;
 }

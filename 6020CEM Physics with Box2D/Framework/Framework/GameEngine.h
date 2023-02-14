@@ -5,13 +5,24 @@
 
 class GameEngine
 {
-    sf::RenderWindow* gameEngineWindow;
+private:
+    static GameEngine* instance;
+    GraphicsEngine* graphicsEngine;
+    sf::Event windowEvents;
+
+    //game engine constructor
+    GameEngine();
+    ~GameEngine();
+
+    //this will update the window events
+    void GameEngine::UpdateWindowEvents();
 
 public:
-    //game engine constructor
-    GameEngine(float windowWidth, float windowHeight);
 
-    ~GameEngine();
+    //this gives the instance of the Game engine, and if theres no instance of it, it creates one
+    static GameEngine* GetInstance();
+
+    void InitializeEngine(float width, float height);
 
     void Update();
 
@@ -19,6 +30,5 @@ public:
 
     //this returns if the game engine is running
     bool isGameEngineRunning();
-
 };
 

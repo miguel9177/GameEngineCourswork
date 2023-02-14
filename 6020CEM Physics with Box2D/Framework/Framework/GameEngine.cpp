@@ -1,9 +1,11 @@
 #include "GameEngine.h"
 
-GameEngine::GameEngine(float windowWidth, float windowHeight)
+GameEngine* GameEngine::instance;
+
+GameEngine::GameEngine()
 {
 	//create the graphics engine window
-	gameEngineWindow = GraphicsEngine::GetInstance()->InitializeWindow(windowWidth, windowHeight);
+    graphicsEngine = new GraphicsEngine();
 }
 
 GameEngine::~GameEngine()
@@ -11,21 +13,45 @@ GameEngine::~GameEngine()
 
 }
 
+GameEngine* GameEngine::GetInstance()
+{
+    if (!instance)
+    {
+        instance = new GameEngine();
+    }
+    return instance;
+}
+
+void GameEngine::InitializeEngine(float width, float height)
+{
+    graphicsEngine->InitializeWindow(width, height);
+}
+
 void GameEngine::Update()
 {
+    UpdateWindowEvents();
     InputsEngine::GetInstance()->Update();
 }
 
 void GameEngine::Render()
 {
-    //update the graphics engine
-    GraphicsEngine::GetInstance()->Render();
+    graphicsEngine->Render();
 }
 
 bool GameEngine::isGameEngineRunning()
 {
-    if (!gameEngineWindow->isOpen())
-        return false;
+    if (!graphicsEngine->GetEngineWindow()->isOpen())
+       return false;
 
     return true;
+}
+
+void GameEngine::UpdateWindowEvents()
+{
+    InputsEngine::GetInstance()->ClearInputsReceivedFromWindow();
+
+    while (graphicsEngine->GetEngineWindow()->pollEvent(windowEvents))
+    {
+        InputsEngine::GetInstance()->ReceiveInputFromWindow(windowEvents);
+    }    
 }

@@ -1,7 +1,5 @@
 #include "GraphicsEngine.h"
 
-GraphicsEngine* GraphicsEngine::instance;
-
 GraphicsEngine::GraphicsEngine()
 {
 
@@ -12,32 +10,22 @@ GraphicsEngine::~GraphicsEngine()
 
 }
 
-
-GraphicsEngine* GraphicsEngine::GetInstance()
-{
-    if (!instance)
-    {
-        instance = new GraphicsEngine();
-    }
-    return instance;
-}
-
 sf::RenderWindow* GraphicsEngine::InitializeWindow(float width, float height)
 {
-    gameEngineWindow.create(sf::VideoMode(width, height), "Vami Reloaded Engine");
-    return &gameEngineWindow;
+    window.create(sf::VideoMode(width, height), "Vami Reloaded Engine");
+    return &window;
 }
 
 void GraphicsEngine::Render()
 {
     // Clear the window
-    gameEngineWindow.clear(sf::Color::Black);
+    window.clear(sf::Color::Black);
 
     // Display the window
-    gameEngineWindow.display();
+    window.display();
 }
 
 sf::RenderWindow* GraphicsEngine::GetEngineWindow()
 {
-    return &gameEngineWindow;
+    return &window;
 }

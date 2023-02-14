@@ -1,14 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "GraphicsEngine.h"
+#include "GameEngine.h"
+#include <vector>
 
 //this is a singleton, and stores the Inputs Engine script
 class InputsEngine
 {
  private:
     // check all the window's events that were triggered since the last iteration of the loop
-    sf::Event events;
     static InputsEngine* instance;
+    std::vector<sf::Event> sfmlEvents;
 
     InputsEngine();
     ~InputsEngine();
@@ -18,7 +19,10 @@ public:
 
     void Update();
 
-    sf::Event GetEvents();
+    void ClearInputsReceivedFromWindow();
+    void ReceiveInputFromWindow(sf::Event event_);
+
+    std::vector<sf::Event>* GetInputEvents();
 };
 
 
