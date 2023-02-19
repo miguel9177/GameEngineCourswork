@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "GameEngine.h"
 #include "EventQueue.h"
+#include "Scene.h"
+#include "Com_Mesh.h"
 using namespace std;
 
 void test()
@@ -24,6 +26,9 @@ int main()
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);
 
+    GameObject* obj1 = new GameObject("obj1", new Transform());
+    obj1->AddComponent(new Com_Mesh());
+ 
     while (GameEngine::GetInstance()->isGameEngineRunning())
     {
         GameEngine::GetInstance()->Update();

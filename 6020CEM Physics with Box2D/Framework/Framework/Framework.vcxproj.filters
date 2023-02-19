@@ -34,6 +34,12 @@
     <Filter Include="Source Files\Helpers_Utility">
       <UniqueIdentifier>{c9f582fc-3e68-4897-af98-3e26120ea71b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\Headers\Visuals">
+      <UniqueIdentifier>{aa4e93d9-ef19-48a7-905c-57d3ae3f12f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Cpps\Visuals">
+      <UniqueIdentifier>{19de5f47-6e7f-46d6-a535-6f1c6470e4e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +68,18 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Source Files\Components\Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="Com_Mesh.cpp">
+      <Filter>Source Files\Components\Cpps\Visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source Files\Components\Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>Source Files\Components\Cpps\Visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape_Box.cpp">
+      <Filter>Source Files\Components\Cpps\Visuals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +112,21 @@
     </ClInclude>
     <ClInclude Include="SceneObjectsImports.h">
       <Filter>Source Files\Helpers_Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Com_Mesh.h">
+      <Filter>Source Files\Components\Headers\Visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Source Files\Components\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Source Files\Helpers_Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>Source Files\Components\Headers\Visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape_Box.h">
+      <Filter>Source Files\Components\Headers\Visuals</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

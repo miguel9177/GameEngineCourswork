@@ -14,6 +14,6 @@ public:
 	Component(typeOfComponent typeOfComponent_);
 	~Component();
 	typeOfComponent GetTypeOfComponent();
-	virtual void Start();
+	virtual void Start() = 0;
 };
 

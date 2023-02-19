@@ -16,5 +16,7 @@ public:
     static Scene* GetInstance();
 
     void Update();
+
+    void AddObject(GameObject* gameObject);
 };
 

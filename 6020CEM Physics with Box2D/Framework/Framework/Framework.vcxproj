@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Com_Mesh.cpp" />
     <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -133,18 +134,26 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="Shape_Box.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommunImports.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Com_Mesh.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GraphicsEngine.h" />
+    <ClInclude Include="Shape.h" />
+    <ClInclude Include="Shape_Box.h" />
+    <ClInclude Include="Vector2.h" />
     <ClInclude Include="InputsEngine.h" />
     <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneObjectsImports.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
