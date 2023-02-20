@@ -6,6 +6,8 @@
 #include "EventQueue.h"
 #include "Scene.h"
 #include "Com_Mesh.h"
+#include "Shape_Box.h"
+
 using namespace std;
 
 void test()
@@ -27,7 +29,11 @@ int main()
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);
 
     GameObject* obj1 = new GameObject("obj1", new Transform());
-    obj1->AddComponent(new Com_Mesh());
+    
+    
+    Com_Mesh* obj1Mesh = new Com_Mesh();
+    //Shape_Box* shapeBox = new Shape_Box();
+   // obj1->AddComponent();
  
     while (GameEngine::GetInstance()->isGameEngineRunning())
     {

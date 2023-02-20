@@ -8,5 +8,5 @@ private:
 	sf::RectangleShape boxShape;
 
 	Shape_Box();
+	Shape_Box(Vector2 _positionOffsetFromGameObject, float _rotOffsetFromGameObject, Vector2 _scaleOffsetFromGameObject);
 };
-
