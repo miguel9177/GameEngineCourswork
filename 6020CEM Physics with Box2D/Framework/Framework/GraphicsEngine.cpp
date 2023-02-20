@@ -21,6 +21,8 @@ void GraphicsEngine::Render()
     // Clear the window
     window.clear(sf::Color::Black);
 
+    
+
     // Display the window
     window.display();
 }

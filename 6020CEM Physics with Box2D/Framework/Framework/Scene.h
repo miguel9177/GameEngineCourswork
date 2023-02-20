@@ -1,6 +1,7 @@
 #pragma once
 #include "CommunImports.h"
 #include "SceneObjectsImports.h"
+#include "Com_Mesh.h"
 
 //this is a singleton, and stores the scene script
 class Scene
@@ -8,6 +9,7 @@ class Scene
 private:
     static Scene* instance;
     std::vector<GameObject*> allSceneGameObjects;
+    std::vector<Com_Mesh*> allMeshes;
 
     Scene();
     ~Scene();

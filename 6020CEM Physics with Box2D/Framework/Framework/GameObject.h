@@ -21,6 +21,8 @@ public:
 
 	void AddComponent(Component* componentToAdd);
 
+	bool HasComponent(Component* componentToCheck);
+
 	void RemoveComponent(Component* componentToRemove);
 };
 

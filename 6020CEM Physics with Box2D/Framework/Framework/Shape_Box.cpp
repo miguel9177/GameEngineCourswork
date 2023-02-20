@@ -14,3 +14,8 @@ Shape_Box::Shape_Box(Vector2 _positionOffsetFromGameObject, float _rotOffsetFrom
 	scaleOffsetFromGameObject = _scaleOffsetFromGameObject;
 }
 
+Shape_Box::~Shape_Box()
+{
+	//delete boxShape;
+}
+

@@ -38,6 +38,12 @@ GameObject::GameObject(std::string name_, Transform* transform_)
 void GameObject::AddComponent(Component* componentToAdd)
 {
 	allComponents[componentToAdd->GetTypeOfComponent()].push_back(componentToAdd);
+    componentToAdd->gameObject = this;
+}
+
+bool GameObject::HasComponent(Component* _componentToCheck)
+{
+    return false;
 }
 
 void GameObject::RemoveComponent(Component* componentToRemove)

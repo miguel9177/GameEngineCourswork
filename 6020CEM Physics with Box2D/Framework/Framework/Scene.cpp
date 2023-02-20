@@ -26,4 +26,5 @@ void Scene::Update()
 void Scene::AddObject(GameObject* gameObject)
 {
     allSceneGameObjects.push_back(gameObject);
+    //if(gameObject->)
 }

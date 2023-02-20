@@ -1,5 +1,5 @@
 #pragma once
-
+class GameObject;
 class Component
 {
 public:
@@ -10,7 +10,8 @@ private:
 	typeOfComponent componentType;
 
 public:
-
+	
+	GameObject* gameObject;
 	Component(typeOfComponent typeOfComponent_);
 	~Component();
 	typeOfComponent GetTypeOfComponent();
