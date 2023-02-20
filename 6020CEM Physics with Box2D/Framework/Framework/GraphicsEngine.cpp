@@ -1,4 +1,7 @@
 #include "GraphicsEngine.h"
+#include <iostream>
+#include "Scene.h"
+#include "Com_Mesh.h"
 
 GraphicsEngine::GraphicsEngine()
 {
@@ -21,7 +24,16 @@ void GraphicsEngine::Render()
     // Clear the window
     window.clear(sf::Color::Black);
 
-    
+    // Iterate through allMeshes
+    for (std::vector<Com_Mesh*>::iterator it = Scene::GetInstance()->GetAllMeshes()->begin(); it != Scene::GetInstance()->GetAllMeshes()->end(); ++it) 
+    {
+        // do something with each Com_Mesh in the vector
+        Com_Mesh* mesh = *it;
+        
+        std::cout << mesh->gameObject->name;
+
+        //window.draw(mesh);
+    }
 
     // Display the window
     window.display();

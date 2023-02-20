@@ -1,13 +1,13 @@
 #include "Com_Mesh.h"
 
-Com_Mesh::Com_Mesh() : Component(Component::typeOfComponent::Mesh)
+Com_Mesh::Com_Mesh() : Component(Component::typeOfComponent::Mesh, uniqueComponentIdIdentifier)
 {
 	texture = nullptr;
 	shape = nullptr;
 	
 }
 
-Com_Mesh::Com_Mesh(sf::Texture* texture_, Shape* shape_) : Component(Component::typeOfComponent::Mesh)
+Com_Mesh::Com_Mesh(sf::Texture* texture_, Shape* shape_) : Component(Component::typeOfComponent::Mesh, uniqueComponentIdIdentifier)
 {
 	texture = texture_;
 	shape = shape_;

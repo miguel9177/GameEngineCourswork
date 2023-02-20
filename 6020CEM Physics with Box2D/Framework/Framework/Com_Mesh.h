@@ -9,7 +9,10 @@ class Com_Mesh : public Component
 private:
 	sf::Texture* texture;
 	Shape* shape;
+	
 public :
+	static const unsigned int uniqueComponentIdIdentifier = 0;
+
 	Com_Mesh();
 
 	Com_Mesh(sf::Texture* texture_, Shape* shape_);

@@ -20,5 +20,8 @@ public:
     void Update();
 
     void AddObject(GameObject* gameObject);
+
+    //this will get all the meshes from the scene
+    std::vector<Com_Mesh*>* GetAllMeshes();
 };
 
