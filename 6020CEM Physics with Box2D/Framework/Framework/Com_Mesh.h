@@ -26,5 +26,12 @@ public :
 
 	//this lets the user add a shape to the Mesh
 	void SetShape(Shape* shape_);
+
+	//returns the current texture
+	sf::Texture* GetTexture();
+	//returns the current shape
+	Shape* GetShape();
+	//returns the mesh all prepared to be drawn, with correct position, rotation and texture
+	sf::Shape* GetMeshToRender();
 };
 

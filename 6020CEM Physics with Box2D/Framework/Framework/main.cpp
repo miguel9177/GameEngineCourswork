@@ -29,20 +29,33 @@ int main()
 #pragma region creating a game object with a mesh with and shape and a texture
     
     GameObject* obj1 = new GameObject("obj1", new Transform());
-    Com_Mesh* obj1Mesh = new Com_Mesh();
     
     Shape_Box* shapeBox = new Shape_Box();
-    
     sf::Texture testTexture;
     if (!testTexture.loadFromFile("../Textures/keyboardcat.jpg"))
     {
         std::cout << "Texture did not load!" << "\n" << std::endl;
     }
 
+    Com_Mesh* obj1Mesh = new Com_Mesh(&testTexture, shapeBox);
+
     obj1->AddComponent(obj1Mesh);
 
     //add an object to the scene
     Scene::GetInstance()->AddObject(obj1);
+
+
+    GameObject* obj2 = new GameObject("obj2", new Transform(Vector2(200,200), 0, Vector2(2,2)));
+
+    Shape_Box* shapeBox2 = new Shape_Box();
+
+    Com_Mesh* obj2Mesh = new Com_Mesh();
+    obj2Mesh->SetShape(shapeBox2);
+
+    obj2->AddComponent(obj2Mesh);
+
+    //add an object to the scene
+    Scene::GetInstance()->AddObject(obj2);
 
 #pragma endregion
  

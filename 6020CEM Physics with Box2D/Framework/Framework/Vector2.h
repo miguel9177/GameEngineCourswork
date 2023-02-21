@@ -27,6 +27,20 @@ struct Vector2
         return *this;
     }
 
+    Vector2& operator+(const Vector2& newVec2) {
+        x += newVec2.x;
+        y += newVec2.y;
+
+        return *this;
+    }
+
+    Vector2& operator*(const float& newFloat) {
+        x *= newFloat;
+        y *= newFloat;
+
+        return *this;
+    }
+
     // Convert to SFML Vector2
     operator sf::Vector2f() const { return sf::Vector2f(x, y); }
 

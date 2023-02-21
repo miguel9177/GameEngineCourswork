@@ -30,9 +30,9 @@ void GraphicsEngine::Render()
         // do something with each Com_Mesh in the vector
         Com_Mesh* mesh = *it;
         
-        std::cout << mesh->gameObject->name;
-
-        //window.draw(mesh);
+        //std::cout << mesh->gameObject->name;
+        if(mesh->GetShape() != nullptr)
+            window.draw(*mesh->GetMeshToRender());
     }
 
     // Display the window
