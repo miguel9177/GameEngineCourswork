@@ -44,13 +44,19 @@ int main()
     //add an object to the scene
     Scene::GetInstance()->AddObject(obj1);
 
-
+    //Object 2
     GameObject* obj2 = new GameObject("obj2", new Transform(Vector2(200,200), 0, Vector2(2,2)));
 
     Shape_Box* shapeBox2 = new Shape_Box();
 
     Com_Mesh* obj2Mesh = new Com_Mesh();
+    sf::Texture testTexture2;
+    if (!testTexture2.loadFromFile("../Textures/pngTestTransparent.png"))
+    {
+        std::cout << "Texture did not load!" << "\n" << std::endl;
+    }
     obj2Mesh->SetShape(shapeBox2);
+    obj2Mesh->SetTexture(&testTexture2);
 
     obj2->AddComponent(obj2Mesh);
 
