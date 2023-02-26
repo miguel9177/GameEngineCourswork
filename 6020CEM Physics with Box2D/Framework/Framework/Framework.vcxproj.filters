@@ -40,6 +40,12 @@
     <Filter Include="Source Files\Components\Cpps\Visuals">
       <UniqueIdentifier>{19de5f47-6e7f-46d6-a535-6f1c6470e4e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\Cpps\Physics">
+      <UniqueIdentifier>{6993cf3c-43f1-45c8-a117-28db524b0616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Headers\Physics">
+      <UniqueIdentifier>{d099b81b-7787-431f-b95e-e5e2696ea17b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="Shape_Box.cpp">
       <Filter>Source Files\Components\Cpps\Visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Source Files\Components\Cpps\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Shape_Box.h">
       <Filter>Source Files\Components\Headers\Visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Source Files\Components\Headers\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

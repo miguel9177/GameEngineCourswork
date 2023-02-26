@@ -3,7 +3,7 @@ class GameObject;
 class Component
 {
 public:
-	enum class typeOfComponent { Mesh = 0, Collider = 100, ScriptBehaviour = 10000, RigidBody = 200 };
+	enum class typeOfComponent { Mesh = 0, Collider = 100, Physics = 200,ScriptBehaviour = 10000};
 
 private:
 	typeOfComponent componentType;
@@ -15,6 +15,7 @@ public:
 	Component(typeOfComponent typeOfComponent_, const unsigned int _uniqueComponentIdIdentifier);
 	~Component();
 	virtual void Start() = 0;
+	virtual void Update(){};
 	typeOfComponent GetTypeOfComponent();
 	const unsigned int GetUniqueIdIdentifier();
 };

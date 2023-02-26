@@ -133,6 +133,7 @@
     <ClCompile Include="InputsEngine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Shape_Box.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GraphicsEngine.h" />
+    <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Shape_Box.h" />
     <ClInclude Include="Vector2.h" />
