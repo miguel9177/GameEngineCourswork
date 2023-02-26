@@ -69,9 +69,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Engines\Cpps</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\Components\Cpps</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Source Files\Components\Cpps</Filter>
     </ClCompile>
@@ -89,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="RigidBody.cpp">
       <Filter>Source Files\Components\Cpps\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="RigidBody.h">
       <Filter>Source Files\Components\Headers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineMathHelper.h">
+      <Filter>Source Files\Helpers_Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

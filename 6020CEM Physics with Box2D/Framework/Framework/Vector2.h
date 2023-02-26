@@ -53,4 +53,11 @@ struct Vector2
 
     // Convert to Box2D b2Vec2
     operator b2Vec2() const { return b2Vec2(x, y); }
+
+    // Convert from Box2D b2Vec2
+    Vector2(const b2Vec2& b2vec)
+    {
+        x = b2vec.x;
+        y = b2vec.y;
+    }
 };

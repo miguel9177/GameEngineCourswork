@@ -30,6 +30,7 @@ void GameEngine::InitializeEngine(float width, float height)
 void GameEngine::Update()
 {
     UpdateWindowEvents();
+    PhysicsEngine::GetInstance()->Update();
     InputsEngine::GetInstance()->Update();
 }
 

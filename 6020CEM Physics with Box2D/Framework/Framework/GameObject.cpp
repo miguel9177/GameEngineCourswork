@@ -1,4 +1,6 @@
 #include "GameObject.h"
+#include "RigidBody.h"
+#include <iostream>
 
 GameObject::GameObject(std::string name_)
 {
@@ -35,10 +37,27 @@ GameObject::GameObject(std::string name_, Transform* transform_)
 	transform = transform_;
 }
 
+//this adds components to the game object
 void GameObject::AddComponent(Component* componentToAdd)
 {
+    //if the component that we are adding is a physics component
+    if (componentToAdd->GetTypeOfComponent() == Component::typeOfComponent::Physics)
+    {
+        //if the component we are adding is a rigidbody
+        if (componentToAdd->GetUniqueIdIdentifier() == RigidBody::uniqueComponentIdIdentifier)
+        {
+            if (HasRigidBody())
+            {
+                std::cout << "ERROR: trying to add a rigidbody to a GameObject that already has a rigidbody" << std::endl;
+                return;
+            }
+            rigidBody = static_cast<RigidBody*>(componentToAdd);
+        }
+    }
+
 	allComponents[componentToAdd->GetTypeOfComponent()].push_back(componentToAdd);
     componentToAdd->gameObject = this;
+    componentToAdd->Start();
 }
 
 //this will return true if the user has the component
@@ -118,5 +137,81 @@ void GameObject::RemoveComponent(Component* componentToRemove)
 {
 
 }
+
+#pragma region Geters and setters
+
+    Transform* GameObject::GetTransform()
+    {
+        return transform;
+    }
+
+    //this sets the transfpr,, it checks if we have a rb, if yes tell rb to update the transform
+    void GameObject::SetTransform(Transform _newTransform)
+    {
+        if (HasRigidBody())
+        {
+            rigidBody->SetPositionAndRotation(_newTransform.position, _newTransform.rotation);
+            transform->scale = _newTransform.scale;
+        }
+        else
+            *transform = _newTransform;
+    }
+
+    Vector2 GameObject::GetPosition()
+    {
+        return transform->position;
+    }
+
+    //this sets the positiom, it checks if we have a rb, if yes tell rb to update the position
+    void GameObject::SetPosition(Vector2 _newPosition)
+    {
+        if (HasRigidBody())
+            rigidBody->SetPosition(_newPosition);
+        else
+            transform->position = _newPosition;
+    }
+
+    float GameObject::GetRotation()
+    {
+        return transform->rotation;
+    }
+
+    //this sets the rotation, it checks if we have a rb, if yes tell rb to update the rotation
+    void GameObject::SetRotation(float _newRotation)
+    {
+        if (HasRigidBody())
+            rigidBody->SetRotation(_newRotation);
+        else
+            transform->rotation = _newRotation;
+    }
+
+    Vector2 GameObject::GetScale()
+    {
+        return transform->scale;
+    }
+
+    void GameObject::SetScale(Vector2 _newScale)
+    {
+        transform->scale = _newScale;
+    }
+
+    bool GameObject::HasRigidBody()
+    {
+        if (rigidBody == nullptr)
+            return false;
+        else
+            return true;
+    }
+
+    RigidBody* GameObject::TryGetRigidBody()
+    {
+        if (rigidBody == nullptr)
+            return nullptr;
+        else
+            return rigidBody;
+    }
+
+#pragma endregion
+
 
 

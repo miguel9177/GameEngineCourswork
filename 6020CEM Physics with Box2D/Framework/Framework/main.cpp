@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Com_Mesh.h"
 #include "Shape_Box.h"
+#include "RigidBody.h"
 
 void test()
 {
@@ -39,10 +40,20 @@ int main()
 
     Com_Mesh* obj1Mesh = new Com_Mesh(&testTexture, shapeBox);
 
+    RigidBody* rb = new RigidBody(b2_dynamicBody);
+
+    obj1->AddComponent(rb);
+
     obj1->AddComponent(obj1Mesh);
 
     //add an object to the scene
     Scene::GetInstance()->AddObject(obj1);
+
+
+
+
+
+
 
     //Object 2
     GameObject* obj2 = new GameObject("obj2", new Transform(Vector2(200,200), 0, Vector2(2,2)));

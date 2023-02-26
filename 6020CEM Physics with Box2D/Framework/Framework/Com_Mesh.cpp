@@ -85,9 +85,9 @@ Shape* Com_Mesh::GetShape()
 sf::Shape* Com_Mesh::GetMeshToRender()
 {
 	//get the correct position, rotation and scale of the mesh, applying its ofssets
-	Vector2 positionOfMesh = gameObject->transform->position + shape->positionOffsetFromGameObject;
-	float rotationOfMesh = gameObject->transform->rotation + shape->rotOffsetFromGameObject;
-	Vector2 scaleOfMesh = gameObject->transform->scale + shape->scaleOffsetFromGameObject;
+	Vector2 positionOfMesh = gameObject->GetPosition() + shape->positionOffsetFromGameObject;
+	float rotationOfMesh = gameObject->GetRotation() + shape->rotOffsetFromGameObject;
+	Vector2 scaleOfMesh = gameObject->GetScale() + shape->scaleOffsetFromGameObject;
 
 	//set the shape position, rotation, and scale of mesh
 	shape->GetDrawableShape()->setPosition(positionOfMesh);

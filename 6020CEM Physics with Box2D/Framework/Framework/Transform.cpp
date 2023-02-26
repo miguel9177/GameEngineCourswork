@@ -13,3 +13,9 @@ Transform::Transform(Vector2 position_, float rotation_, Vector2 scale_)
 	rotation = rotation_;
 	scale = scale_;
 }
+
+Transform::Transform(const Transform& _newTransform)
+	: position(_newTransform.position), rotation(_newTransform.rotation), scale(_newTransform.scale)
+{
+	
+}

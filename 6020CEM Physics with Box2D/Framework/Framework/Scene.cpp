@@ -21,8 +21,10 @@ Scene* Scene::GetInstance()
 
 void Scene::Update()
 {
+    
 }
 
+//this adds an object to the scene, it will alse store its meshes and rb
 void Scene::AddObject(GameObject* gameObject)
 {
     allSceneGameObjects.push_back(gameObject);
@@ -42,10 +44,19 @@ void Scene::AddObject(GameObject* gameObject)
         }
     }
     
+    //if the game object has a rigidbody, add it to the rigidbody scene list
+    if(gameObject->HasRigidBody())
+        allRigidBodys.push_back(static_cast<RigidBody*>(gameObject->TryGetRigidBody()));
 }
 
 //this will get all the meshes from the scene
 std::vector<Com_Mesh*>* Scene::GetAllMeshes()
 {
     return &allMeshes;
+}
+
+//this will return all rbs on the scene
+std::vector<RigidBody*>* Scene::GetAllRigidBodys()
+{
+    return &allRigidBodys;
 }

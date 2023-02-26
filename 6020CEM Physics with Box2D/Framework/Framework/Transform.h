@@ -10,5 +10,7 @@ public:
 	Transform();
 	
 	Transform(Vector2 position_, float rotation_, Vector2 scale);
+	
+	Transform(const Transform& _newTransform);
 };
 

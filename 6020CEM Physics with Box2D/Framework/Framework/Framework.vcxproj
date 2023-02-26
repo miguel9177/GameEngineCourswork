@@ -146,6 +146,7 @@
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameEngineMathHelper.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Shape.h" />
