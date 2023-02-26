@@ -5,7 +5,7 @@
 
 PhysicsEngine* PhysicsEngine::instance;
 
-PhysicsEngine::PhysicsEngine() : gravity(0.0f, -9.81f), world(gravity)
+PhysicsEngine::PhysicsEngine() : gravity(0.0f, 9.81f), world(gravity)
 {
 }
 

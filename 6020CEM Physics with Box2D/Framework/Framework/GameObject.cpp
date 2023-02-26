@@ -165,10 +165,10 @@ void GameObject::RemoveComponent(Component* componentToRemove)
     //this sets the positiom, it checks if we have a rb, if yes tell rb to update the position
     void GameObject::SetPosition(Vector2 _newPosition)
     {
+        transform->position = _newPosition;
+
         if (HasRigidBody())
             rigidBody->SetPosition(_newPosition);
-        else
-            transform->position = _newPosition;
     }
 
     float GameObject::GetRotation()
@@ -179,10 +179,9 @@ void GameObject::RemoveComponent(Component* componentToRemove)
     //this sets the rotation, it checks if we have a rb, if yes tell rb to update the rotation
     void GameObject::SetRotation(float _newRotation)
     {
+        transform->rotation = _newRotation;
         if (HasRigidBody())
             rigidBody->SetRotation(_newRotation);
-        else
-            transform->rotation = _newRotation;
     }
 
     Vector2 GameObject::GetScale()
