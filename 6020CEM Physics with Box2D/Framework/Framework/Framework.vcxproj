@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Com_Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Com_Mesh.cpp" />
     <ClCompile Include="EventQueue.cpp" />
@@ -137,9 +138,11 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Shape_Box.cpp" />
+    <ClCompile Include="SquareCollider.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Com_Collider.h" />
     <ClInclude Include="CommunImports.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Com_Mesh.h" />
@@ -151,6 +154,7 @@
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Shape_Box.h" />
+    <ClInclude Include="SquareCollider.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="InputsEngine.h" />
     <ClInclude Include="PhysicsEngine.h" />

@@ -90,6 +90,12 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SquareCollider.cpp">
+      <Filter>Source Files\Components\Cpps\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Com_Collider.cpp">
+      <Filter>Source Files\Components\Cpps\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -142,6 +148,12 @@
     </ClInclude>
     <ClInclude Include="GameEngineMathHelper.h">
       <Filter>Source Files\Helpers_Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareCollider.h">
+      <Filter>Source Files\Components\Headers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Com_Collider.h">
+      <Filter>Source Files\Components\Headers\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
