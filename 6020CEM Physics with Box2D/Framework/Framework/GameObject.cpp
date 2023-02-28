@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "RigidBody.h"
 #include <iostream>
+#include "Com_Collider.h"
 
 GameObject::GameObject(std::string name_)
 {
@@ -52,6 +53,20 @@ void GameObject::AddComponent(Component* componentToAdd)
                 return;
             }
             rigidBody = static_cast<RigidBody*>(componentToAdd);
+        }
+    }
+
+    //if the component we are adding is a collider component
+    if (componentToAdd->GetTypeOfComponent() == Component::typeOfComponent::Collider)
+    {
+        //if the component we are adding is a collider
+        if (componentToAdd->GetUniqueIdIdentifier() == Com_Collider::uniqueComponentIdIdentifier)
+        {
+            if (!HasRigidBody())
+            {
+                std::cout << "ERROR: trying to add a collider to a gameobject that has no Rigidbody" << std::endl;
+                return;
+            }
         }
     }
 

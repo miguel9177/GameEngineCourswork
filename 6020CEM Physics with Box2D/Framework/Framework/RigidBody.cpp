@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include <Box2D/Box2D.h>
 #include "GameEngineMathHelper.h"
+#include "Com_Collider.h"
 
 RigidBody::RigidBody(b2BodyType _typeOfRb) : Component(Component::typeOfComponent::Physics, uniqueComponentIdIdentifier)
 {
@@ -24,6 +25,11 @@ RigidBody::RigidBody(b2BodyType _typeOfRb, Vector2 pos_) : Component(Component::
 
 	//creates the rigidbody
 	body = PhysicsEngine::GetInstance()->CreateRigidBody(&bodyDef);
+}
+
+RigidBody::~RigidBody()
+{
+	
 }
 
 void RigidBody::Start()
@@ -70,3 +76,20 @@ void RigidBody::SetPositionAndRotation(Vector2 _position, float _rot)
 
 #pragma endregion
 
+#pragma region Collider Functions
+
+//this adds a collider to the rigidbody
+void RigidBody::AddCollider(Com_Collider* _coll)
+{
+	//adds the item to the list
+	allColliders.push_back(_coll);
+	//gets the collider defenition
+	body->CreateFixture(_coll->GetColliderBox2dDefenition());
+}
+
+std::vector<Com_Collider*>* RigidBody::GetAllColliders()
+{
+	return &allColliders;
+}
+
+#pragma endregion

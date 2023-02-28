@@ -8,6 +8,7 @@
 #include "Com_Mesh.h"
 #include "Shape_Box.h"
 #include "RigidBody.h"
+#include "SquareCollider.h"
 
 void test()
 {
@@ -41,9 +42,11 @@ int main()
     Com_Mesh* obj1Mesh = new Com_Mesh(&testTexture, shapeBox);
 
     RigidBody* rb = new RigidBody(b2_dynamicBody);
+    
+    SquareCollider* squareColl = new SquareCollider(Vector2(100.f, 100.f), Vector2(0, 0));
 
     obj1->AddComponent(rb);
-
+    obj1->AddComponent(squareColl);
     obj1->AddComponent(obj1Mesh);
 
     //add an object to the scene
