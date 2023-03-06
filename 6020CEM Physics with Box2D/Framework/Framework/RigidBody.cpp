@@ -11,6 +11,9 @@ RigidBody::RigidBody(b2BodyType _typeOfRb) : Component(Component::typeOfComponen
 	b2BodyDef bodyDef;
 	bodyDef.type = _typeOfRb;
 
+	bodyDef.linearDamping = 0.5f;  // change linear damping
+	bodyDef.angularDamping = 0.5f; // change angular damping
+
 	//creates the rigidbody
 	body = PhysicsEngine::GetInstance()->CreateRigidBody(&bodyDef);
 }
