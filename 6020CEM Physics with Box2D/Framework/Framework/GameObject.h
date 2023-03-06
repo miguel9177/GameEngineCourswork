@@ -59,8 +59,6 @@ public:
 	    return nullptr;
 	};
 
-	void SetRbPos(Vector2 pos_);
-
 	//this will get all components of a certain type
 	std::vector<Component*> GetAllComponentsOfType(Component::typeOfComponent typeOfComponentToGet);
 
@@ -71,7 +69,7 @@ public:
 	Transform* GetTransform();
 	void SetTransform(Transform _newTransform);
 	Vector2 GetPosition();
-	void SetPosition(Vector2 _newPosition);
+	void SetPosition(Vector2 _newPosition, bool checkForRigidBody = true);
 	float GetRotation();
 	void SetRotation(float _newRotation);
 	Vector2 GetScale();

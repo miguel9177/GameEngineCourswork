@@ -104,23 +104,23 @@ int main()
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
                     std::cout << "PRessed A" << std::endl;
-                    obj1->SetRbPos(Vector2(obj1->GetPosition().x - 0.1f, obj1->GetPosition().y));
+                    obj1->SetPosition(Vector2(obj1->GetPosition().x - 0.1f, obj1->GetPosition().y));
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
                     std::cout << "PRessed D" << std::endl;
-                    obj1->SetRbPos(Vector2(obj1->GetPosition().x + 0.1f, obj1->GetPosition().y));
+                    obj1->SetPosition(Vector2(obj1->GetPosition().x + 0.1f, obj1->GetPosition().y));
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                 {
                     std::cout << "PRessed W" << std::endl;
-                    obj1->SetRbPos(Vector2(obj1->GetPosition().x, obj1->GetPosition().y - 0.1));
+                    obj1->SetPosition(Vector2(obj1->GetPosition().x, obj1->GetPosition().y - 0.1));
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
                     std::cout << "PRessed S" << std::endl;
-                    obj1->SetRbPos(Vector2(obj1->GetPosition().x, obj1->GetPosition().y + 0.1));
+                    obj1->SetPosition(Vector2(obj1->GetPosition().x, obj1->GetPosition().y + 0.1));
                 }
             }
             if (InputsEngine::GetInstance()->GetInputEvents()->at(i).type == sf::Event::Closed)

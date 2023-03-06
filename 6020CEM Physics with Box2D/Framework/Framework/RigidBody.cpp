@@ -40,7 +40,7 @@ void RigidBody::Start()
 void RigidBody::Update()
 {
 	//since we have a rigidbody, we need to update the gameobject position to the rigidbody posiiton
-	gameObject->SetPosition(body->GetPosition());
+	gameObject->SetPosition(body->GetPosition(), false);
 	gameObject->SetRotation(RadiansToDegree(body->GetAngle()));
 }
 
