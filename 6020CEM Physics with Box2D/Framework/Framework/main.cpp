@@ -89,9 +89,37 @@ int main()
     
 #pragma endregion
  
+#pragma region testing sfml and box2d position
+
+    Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);
+    RigidBody* rbToCheckPos = obj1->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);
+
+    //float scalingFactor = 200.0f;
+
+    //// Assume you have a sprite or shape called sprite and a body called body
+
+    //// Get the position of the sprite or shape
+    //sf::Vector2f spritePosition = meshToCheckPos->GetMeshToRender()->getPosition();
+
+    //// Get the position of the body
+    //b2Vec2 bodyPosition = rbToCheckPos->GetPosition();
+
+    //// Convert the Box2D position to SFML coordinates
+    //sf::Vector2f bodyPositionSFML = sf::Vector2f(bodyPosition.x, bodyPosition.y);
+
+    //// Compare the two positions
+    //if (spritePosition == bodyPositionSFML) {
+    //    // The sprite and body are in the same position
+    //}
+    //else {
+    //    // The sprite and body are not in the same position
+    //}
 
 
 
+#pragma endregion
+
+    float forceToAply = 0.1f;
     while (GameEngine::GetInstance()->isGameEngineRunning())
     {
         GameEngine::GetInstance()->Update();
@@ -104,23 +132,24 @@ int main()
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
                     std::cout << "PRessed A" << std::endl;
-                    obj1->SetPosition(Vector2(obj1->GetPosition().x - 0.1f, obj1->GetPosition().y));
+                    rbToCheckPos->AddForceToCenter(Vector2(-forceToAply, 0.f));
+                    
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
                     std::cout << "PRessed D" << std::endl;
-                    obj1->SetPosition(Vector2(obj1->GetPosition().x + 0.1f, obj1->GetPosition().y));
+                    rbToCheckPos->AddForceToCenter(Vector2(+forceToAply, 0.f));
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                 {
                     std::cout << "PRessed W" << std::endl;
-                    obj1->SetPosition(Vector2(obj1->GetPosition().x, obj1->GetPosition().y - 0.1));
+                    rbToCheckPos->AddForceToCenter(Vector2(0.f, -forceToAply));
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
                     std::cout << "PRessed S" << std::endl;
-                    obj1->SetPosition(Vector2(obj1->GetPosition().x, obj1->GetPosition().y + 0.1));
+                    rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
                 }
             }
             if (InputsEngine::GetInstance()->GetInputEvents()->at(i).type == sf::Event::Closed)
@@ -129,37 +158,6 @@ int main()
             }
             break;
         }
-
-
-#pragma region testing sfml and box2d position
-
-        Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);
-        RigidBody* rbToCheckPos = obj1->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);
-
-        float scalingFactor = 200.0f;
-
-        // Assume you have a sprite or shape called sprite and a body called body
-
-        // Get the position of the sprite or shape
-        sf::Vector2f spritePosition = meshToCheckPos->GetMeshToRender()->getPosition();
-
-        // Get the position of the body
-        b2Vec2 bodyPosition = rbToCheckPos->GetPosition();
-
-        // Convert the Box2D position to SFML coordinates
-        sf::Vector2f bodyPositionSFML = sf::Vector2f(bodyPosition.x, bodyPosition.y);
-
-        // Compare the two positions
-        if (spritePosition == bodyPositionSFML) {
-            // The sprite and body are in the same position
-        }
-        else {
-            // The sprite and body are not in the same position
-        }
-
-
-
-#pragma endregion
     }
 
 	return 0;
