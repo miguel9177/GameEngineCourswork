@@ -12,6 +12,7 @@ private:
 	
 public :
 	static const unsigned int uniqueComponentIdIdentifier = 0;
+	static const float scalingFactor;
 
 	Com_Mesh();
 

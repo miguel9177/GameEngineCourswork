@@ -8,6 +8,7 @@ public:
 	//this sotres the default pixels every shape starts with, and then they are multiplyed by the scale
 	static const float defaultPixelsForBasicShapes;
 
+
 	//this stores the position offset from the game Object
 	Vector2 positionOffsetFromGameObject;
 	//this stores the scale offset from the game object, if our object is 1,1 of scale

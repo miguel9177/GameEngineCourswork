@@ -1,5 +1,8 @@
 #include "Com_Mesh.h"
 #include "GameObject.h"
+
+const float Com_Mesh::scalingFactor = 200.f;
+
 Com_Mesh::Com_Mesh() : Component(Component::typeOfComponent::Mesh, uniqueComponentIdIdentifier)
 {
 	texture = nullptr;
@@ -84,10 +87,11 @@ Shape* Com_Mesh::GetShape()
 //this returns the prepared shape to draw
 sf::Shape* Com_Mesh::GetMeshToRender()
 {
+	//OFFSET X += HW Y += HY
 	//get the correct position, rotation and scale of the mesh, applying its ofssets
-	Vector2 positionOfMesh = gameObject->GetPosition() + shape->positionOffsetFromGameObject;
-	float rotationOfMesh = gameObject->GetRotation() + shape->rotOffsetFromGameObject;
-	Vector2 scaleOfMesh = gameObject->GetScale() + shape->scaleOffsetFromGameObject;
+	Vector2 positionOfMesh = (gameObject->GetPosition() + shape->positionOffsetFromGameObject) * scalingFactor;
+	float rotationOfMesh = (gameObject->GetRotation() + shape->rotOffsetFromGameObject);
+	Vector2 scaleOfMesh = (gameObject->GetScale() + shape->scaleOffsetFromGameObject);
 
 	//set the shape position, rotation, and scale of mesh
 	shape->GetDrawableShape()->setPosition(positionOfMesh);
