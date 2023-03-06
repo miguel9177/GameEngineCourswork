@@ -59,6 +59,8 @@ public:
 	    return nullptr;
 	};
 
+	void SetRbPos(Vector2 pos_);
+
 	//this will get all components of a certain type
 	std::vector<Component*> GetAllComponentsOfType(Component::typeOfComponent typeOfComponentToGet);
 

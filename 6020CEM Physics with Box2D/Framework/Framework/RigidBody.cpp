@@ -53,7 +53,9 @@ Vector2 RigidBody::GetPosition()
 
 void RigidBody::SetPosition(Vector2 _position)
 {
+	body->SetActive(false);
 	body->SetTransform(_position, body->GetAngle());
+	body->SetActive(true);
 }
 
 float RigidBody::GetRotation()
