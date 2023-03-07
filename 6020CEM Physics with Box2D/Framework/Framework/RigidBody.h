@@ -31,34 +31,79 @@ enum RigidBodyType
 
 struct RigidBodySettings
 {
-	RigidBodyType type;
+	RigidBodyType type = RigidBodyType::dynamicBody;
 	float drag = 0.5f; // adds drag to the body (reducing its speed over time)
 	float angularDrag = 0.5f; // adds Angular drag to the body (reducing its rotating speed over time)
+	
 	/*When Box2D determines that a body (or group of bodies) has come to rest, the body enters a sleep state which 
 	has very little CPU overhead. If a body is awake and collides with a sleeping body, then the sleeping body wakes 
 	up. Bodies will also wake up if a joint or contact attached to them is destroyed. You can also wake a body 
 	manually.The body definition lets you specify whether a body can sleep and whether a body is created sleeping.*/
-	bool allowSleep = true; 
+	bool allowSleep = true; //basically if this is false the body will never sleep
 
-	//TODO ACABAR DE COMENTAR ISTO E FAZER O RB USAR ESTE STRUCT E O ENUM EM CIMA
-	bool awake = true; // Initially awake
-	bool freezeRotation = false; // Allow rotation
-	bool important = false; // Disable continuous collision detection
+	
+	bool awake = true; //Is this body awake or sleeping ?
+	bool freezeRotation = false; // if true dont let the object rotate
+	bool important = false; // enable continuous collision detection or disable it
 	float gravityScale = 1.0f; // Gravity scale
+	
+	RigidBodySettings()
+		: type(RigidBodyType::dynamicBody),
+		drag(0.5f),
+		angularDrag(0.5f),
+		allowSleep(true),
+		awake(true),
+		freezeRotation(false),
+		important(false),
+		gravityScale(1.0f)
+	{
+	}
+
+	RigidBodySettings(RigidBodyType _type, float _drag, float _angularDrag, bool _allowSleep, bool _awake, bool _freezeRotation, bool _important, float _gravityScale)
+		: type(_type),
+		drag(_drag),
+		angularDrag(_angularDrag),
+		allowSleep(_allowSleep),
+		awake(_awake),
+		freezeRotation(_freezeRotation),
+		important(_important),
+		gravityScale(_gravityScale)
+	{
+	}
+
+	b2BodyType ConvertTypeToBox2DType(RigidBodyType type)
+	{
+		switch (type)
+		{
+		case staticBody:
+			return b2_staticBody;
+		case kinematicBody:
+			return b2_kinematicBody;
+		case dynamicBody:
+			return b2_dynamicBody;
+		default:
+			return b2_staticBody; // or some other default value
+		}
+	}
 };
 
 class RigidBody : public Component
 {
 	//this stores the body of this rb, the b2Body is pratically the same as rigidbody on unity.
 	b2Body* body;
+
+	//this stores the settings of this rb
+	RigidBodySettings bodySettings;
+
 	//this stores every colliders of the rigidbody
 	std::vector<Com_Collider*> allColliders;
+
 public:
 	static const unsigned int uniqueComponentIdIdentifier = 200;
 	bool useGravity = false;
-	
-	RigidBody(b2BodyType _typeOfRb);
-	RigidBody(b2BodyType _typeOfRb, Vector2 _pos);
+
+	RigidBody(RigidBodySettings _bodySettings = RigidBodySettings());
+	RigidBody(Vector2 _pos, RigidBodySettings _bodySettings = RigidBodySettings());
 	~RigidBody();
 
 	// Inherited via Component
@@ -89,76 +134,80 @@ public:
 	#pragma region Getters and setters
 		
 		//ALL THIS FUNCTIONS ARE MEARLY CONVERSIONS OF THE BOX 2D DOCUMENTATION: https://box2d.org/documentation/classb2_body.html#a942be8e1cd2bcd06f53c4638c45a9525
-		inline float GetAngularVelocity()
-		{
-			return body->GetAngularVelocity();
+	
+
+		inline float GetInertia() { return body->GetInertia(); }
+
+		inline float GetMass() { return body->GetMass(); }
+
+		inline RigidBodyType GetRbType() { return bodySettings.type; }
+
+		inline void SetRbType(RigidBodyType type_) 
+		{ 
+			bodySettings.type = type_;
+			body->SetType(bodySettings.ConvertTypeToBox2DType(type_)); 
 		}
 
-		inline float GetInertia()
-		{
-			return body->GetInertia();
+		inline float GetDrag() { return bodySettings.drag; }
+
+		inline void SetDrag(float _drag) 
+		{ 
+			bodySettings.drag = _drag; 
+			body->SetLinearDamping(_drag);
 		}
 
-		inline Vector2 GetLinearVelocity()
+		inline float GetAngularDrag() { return bodySettings.angularDrag; }
+
+		inline void SetAngularDrag(float _angularDrag)
 		{
-			return body->GetLinearVelocity();
+			bodySettings.angularDrag = _angularDrag;
+			body->SetAngularDamping(_angularDrag);
 		}
 
-		inline float GetMass()
-		{
-			return body->GetMass();
+		inline bool GetAllowSleep() { return bodySettings.allowSleep; }
+
+		inline void SetAllowSleep(bool _allowSleep) 
+		{ 
+			bodySettings.allowSleep = _allowSleep; 
+			body->SetSleepingAllowed(_allowSleep);
 		}
 
-		inline bool IsAwake()
+		inline bool GetAwake() { return bodySettings.awake; }
+
+		inline void SetAwake(bool _awake)
 		{
-			return body->IsAwake();
+			bodySettings.awake = _awake;
+			body->SetAwake(_awake);
 		}
 
-		inline void SetAwake(bool awake)
+		inline bool GetFreezedRotation() { return bodySettings.freezeRotation; }
+
+		inline void SetFreezeRotation(bool _freezeRotation)
 		{
-			body->SetAwake(awake);
+			bodySettings.freezeRotation = _freezeRotation;
+			body->SetFixedRotation(_freezeRotation);
 		}
 
-		inline void SetAngularVelocity(float _newAngularVelocity)
-		{
-			body->SetAngularVelocity(_newAngularVelocity);
-		}
-
-		inline void SetActive(bool isEnabled)
-		{
-			body->SetActive(isEnabled);
-		}
-
-		inline bool IsActive()
-		{
-			return body->IsActive();
-		}
-
-		inline void FreezeRotation(bool _freeze)
-		{
-			body->SetFixedRotation(_freeze);
-		}
-
-		inline bool IsFreezeRotiation()
-		{
-			return body->IsFixedRotation();
-		}
-
-		inline void SetLinearVelocity(const Vector2 _newVel)
-		{
-			body->SetLinearVelocity(_newVel);
-		}
+		inline bool IsImportant() { return bodySettings.important; }
 
 		//if this is setted to true it will improve the physics collision detection (makes game slower)
 		inline void SetImportant(bool _important)
 		{
+			bodySettings.important = _important;
 			body->SetBullet(_important);
 		}
 
-		inline bool IsImportant()
-		{
-			return body->IsBullet();
-		}
+		inline Vector2 GetLinearVelocity() { return body->GetLinearVelocity(); }
+
+		inline void SetLinearVelocity(const Vector2 _newVel) { body->SetLinearVelocity(_newVel); }
+
+		inline float GetAngularVelocity(){ return body->GetAngularVelocity(); }
+
+		inline void SetAngularVelocity(float _newAngularVelocity) { body->SetAngularVelocity(_newAngularVelocity); }
+
+		inline void SetActive(bool isEnabled) { body->SetActive(isEnabled); }
+
+		inline bool IsActive() { return body->IsActive(); }
 
 	#pragma endregion
 

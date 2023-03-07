@@ -42,7 +42,7 @@ void Com_Mesh::Start()
 void Com_Mesh::SetTexture(sf::Texture* texture_)
 {
 	texture = texture_;
-
+	
 	//if the texture is not 0, it means theres a texture assigned
 	if (texture != nullptr && texture->getSize() != sf::Vector2u(0, 0) && shape != nullptr)
 	{

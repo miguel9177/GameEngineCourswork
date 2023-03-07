@@ -42,7 +42,7 @@ int main()
 
     Com_Mesh* obj1Mesh = new Com_Mesh(&testTexture, shapeBox);
 
-    RigidBody* rb = new RigidBody(b2_dynamicBody);
+    RigidBody* rb = new RigidBody();
     
     SquareCollider* squareColl = new SquareCollider(Vector2(0.1, 0.1), Vector2(0, 0));
 
@@ -66,7 +66,7 @@ int main()
 
     Com_Mesh* obj2Mesh = new Com_Mesh();
 
-    RigidBody* rb2 = new RigidBody(b2_kinematicBody);
+    RigidBody* rb2 = new RigidBody();
 
     SquareCollider* squareColl2 = new SquareCollider(Vector2(0.1, 0.1), Vector2(0, 0));
 

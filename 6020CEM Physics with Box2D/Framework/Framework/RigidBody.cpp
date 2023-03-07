@@ -5,24 +5,41 @@
 #include "GameEngineMathHelper.h"
 #include "Com_Collider.h"
 
-RigidBody::RigidBody(b2BodyType _typeOfRb) : Component(Component::typeOfComponent::Physics, uniqueComponentIdIdentifier)
+RigidBody::RigidBody(RigidBodySettings _bodySettings) : Component(Component::typeOfComponent::Physics, uniqueComponentIdIdentifier)
 {
+	bodySettings = _bodySettings;
+
 	//creates a temp body defenition so that we can create a rigidbody
 	b2BodyDef bodyDef;
-	bodyDef.type = _typeOfRb;
-
-	bodyDef.linearDamping = 0.5f;  // change linear damping
-	bodyDef.angularDamping = 0.5f; // change angular damping
-
+	bodyDef.type = _bodySettings.ConvertTypeToBox2DType(_bodySettings.type);
+	bodyDef.linearDamping = _bodySettings.drag;
+	bodyDef.angularDamping = _bodySettings.angularDrag;
+	bodyDef.allowSleep = _bodySettings.allowSleep;
+	bodyDef.awake = _bodySettings.awake;
+	bodyDef.fixedRotation = _bodySettings.freezeRotation;
+	bodyDef.bullet = _bodySettings.important;
+	bodyDef.gravityScale = _bodySettings.gravityScale;
+	
 	//creates the rigidbody
 	body = PhysicsEngine::GetInstance()->CreateRigidBody(&bodyDef);
+	
 }
 
-RigidBody::RigidBody(b2BodyType _typeOfRb, Vector2 pos_) : Component(Component::typeOfComponent::Physics, uniqueComponentIdIdentifier)
+RigidBody::RigidBody(Vector2 pos_, RigidBodySettings _bodySettings) : Component(Component::typeOfComponent::Physics, uniqueComponentIdIdentifier)
 {
 	//creates a temp body defenition so that we can create a rigidbody
+	bodySettings = _bodySettings;
+
+	//creates a temp body defenition so that we can create a rigidbody
 	b2BodyDef bodyDef;
-	bodyDef.type = _typeOfRb;
+	bodyDef.type = _bodySettings.ConvertTypeToBox2DType(_bodySettings.type);
+	bodyDef.linearDamping = _bodySettings.drag;
+	bodyDef.angularDamping = _bodySettings.angularDrag;
+	bodyDef.allowSleep = _bodySettings.allowSleep;
+	bodyDef.awake = _bodySettings.awake;
+	bodyDef.fixedRotation = _bodySettings.freezeRotation;
+	bodyDef.bullet = _bodySettings.important;
+	bodyDef.gravityScale = _bodySettings.gravityScale;
 	bodyDef.position = pos_;
 
 	//creates the rigidbody
