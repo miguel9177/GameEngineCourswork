@@ -3,7 +3,7 @@
 #include <Box2D/Box2D.h>
 #include "GameObject.h"
 #include "RigidBody.h"
-
+#include <iostream>
 #pragma region Constructors
 
 SquareCollider::SquareCollider(Vector2 _halfSize) : Com_Collider(ColliderType::BoxColl)
@@ -70,6 +70,8 @@ void SquareCollider::CreateCollider()
 	//this creates a box shape with the specific halfsize, offset and angles
 	b2PolygonShape boxShape;
 	boxShape.SetAsBox(halfSize.x * gameObject->GetTransform()->scale.x, halfSize.y * gameObject->GetTransform()->scale.y, posOffset, offsetAngle);
+
+	
 
 	// Create a fixture definition for the box shape
 	coll.shape = &boxShape;

@@ -23,5 +23,6 @@ public:
 
 	// Inherited via Component
 	virtual void Start();
+
 };
 

@@ -4,6 +4,7 @@
 #include <Box2D/Box2D.h>
 #include "GameEngineMathHelper.h"
 #include "Com_Collider.h"
+#include <iostream>
 
 RigidBody::RigidBody(RigidBodySettings _bodySettings) : Component(Component::typeOfComponent::Physics, uniqueComponentIdIdentifier)
 {
@@ -61,6 +62,8 @@ void RigidBody::Update()
 	//since we have a rigidbody, we need to update the gameobject position to the rigidbody posiiton
 	gameObject->SetPosition(body->GetPosition(), false);
 	gameObject->SetRotation(RadiansToDegree(body->GetAngle()));
+	if(gameObject->name == "obj2")
+	std::cout << "game object pos: " << gameObject->GetPosition().x << " ; " << gameObject->GetPosition().y << " body pos: " << body->GetPosition().x << " ; " << body->GetPosition().y << std::endl;
 }
 
 #pragma region Getters And Setters
@@ -85,8 +88,8 @@ float RigidBody::GetRotation()
 
 void RigidBody::SetRotation(float _rot)
 {
-	float bodyRotationRadians = DegreesToRadians(_rot);
-	body->SetTransform(body->GetPosition(), bodyRotationRadians);
+	//float bodyRotationRadians = DegreesToRadians(_rot);
+	//body->SetTransform(body->GetPosition(), bodyRotationRadians);
 }
 
 void RigidBody::SetPositionAndRotation(Vector2 _position, float _rot)

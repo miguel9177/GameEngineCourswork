@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Scene.h"
 #include "Com_Mesh.h"
+#include "RigidBody.h"
 
 GraphicsEngine::GraphicsEngine()
 {
@@ -31,8 +32,14 @@ void GraphicsEngine::Render()
         Com_Mesh* mesh = *it;
         
         //std::cout << mesh->gameObject->name;
-        if(mesh->GetShape() != nullptr)
+        if (mesh->GetShape() != nullptr)
+        {
             window.draw(*mesh->GetMeshToRender());
+            
+            // Get the body's fixture list
+            b2Fixture* fixture = mesh->gameObject->TryGetRigidBody()->Debug_GetB2Body()->GetFixtureList();
+            Debug_DrawRectangle(fixture, sf::Color::Green);
+        }
     }
 
     // Display the window

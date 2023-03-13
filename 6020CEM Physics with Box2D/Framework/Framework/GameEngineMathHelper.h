@@ -8,5 +8,5 @@ float RadiansToDegree(float radians)
 
 float DegreesToRadians(float degrees)
 {
-    return degrees * b2_pi / 180.0f;
+    return degrees * (b2_pi / 180.0f);
 }

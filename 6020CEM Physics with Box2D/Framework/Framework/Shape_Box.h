@@ -13,4 +13,6 @@ public:
 	~Shape_Box();
 	//this will return the sape of the rectangleShape
 	sf::Shape* GetDrawableShape() override;
+	//this will return the sape of the rectangleShape
+	Vector2 GetHalfWidthAndHalfHeightOffset() override;
 };

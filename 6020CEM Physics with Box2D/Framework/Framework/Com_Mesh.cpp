@@ -89,8 +89,8 @@ sf::Shape* Com_Mesh::GetMeshToRender()
 {
 	//OFFSET X += HW Y += HY
 	//get the correct position, rotation and scale of the mesh, applying its ofssets
-	Vector2 positionOfMesh = (gameObject->GetPosition() + shape->positionOffsetFromGameObject) * scalingFactor;
-	float rotationOfMesh = (gameObject->GetRotation() + shape->rotOffsetFromGameObject);
+	Vector2 positionOfMesh = (gameObject->GetPosition() + (shape->GetHalfWidthAndHalfHeightOffset()) + shape->positionOffsetFromGameObject) * scalingFactor;
+	float rotationOfMesh = (gameObject->GetRotation());
 	Vector2 scaleOfMesh = (gameObject->GetScale() + shape->scaleOffsetFromGameObject);
 
 	//set the shape position, rotation, and scale of mesh

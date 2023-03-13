@@ -23,7 +23,7 @@ void test2()
 
 int main()
 {
-    GameEngine::GetInstance()->InitializeEngine(500,500);
+    GameEngine::GetInstance()->InitializeEngine(1920,1080);
 
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
@@ -42,7 +42,8 @@ int main()
 
     Com_Mesh* obj1Mesh = new Com_Mesh(&testTexture, shapeBox);
 
-    RigidBody* rb = new RigidBody();
+    RigidBodySettings bodySettings_ = RigidBodySettings(dynamicBody, 1, 1, false, true, false, true, 0);
+    RigidBody* rb = new RigidBody(bodySettings_);
     
     SquareCollider* squareColl = new SquareCollider(Vector2(0.1, 0.1), Vector2(0, 0));
 
@@ -57,8 +58,6 @@ int main()
 
 
 
-
-
     //Object 2
     GameObject* obj2 = new GameObject("obj2", new Transform(Vector2(1,1.2), 0, Vector2(1,1)));
 
@@ -66,12 +65,13 @@ int main()
 
     Com_Mesh* obj2Mesh = new Com_Mesh();
 
-    RigidBody* rb2 = new RigidBody();
+    RigidBodySettings bodySettings = RigidBodySettings(dynamicBody, 1, 1, false, true, false, false, 0);
+    RigidBody* rb2 = new RigidBody(bodySettings);
 
     SquareCollider* squareColl2 = new SquareCollider(Vector2(0.1, 0.1), Vector2(0, 0));
 
     sf::Texture testTexture2;
-    if (!testTexture2.loadFromFile("../Textures/pngTestTransparent.png"))
+    if (!testTexture2.loadFromFile("../Textures/whiteSquare.png"))
     {
         std::cout << "Texture did not load!" << "\n" << std::endl;
     }
@@ -86,6 +86,41 @@ int main()
 
     //add an object to the scene
     Scene::GetInstance()->AddObject(obj2);
+
+
+
+
+
+
+    //Object 3
+     //Object 2
+    GameObject* obj3 = new GameObject("obj3", new Transform(Vector2(1, 1.2), 0, Vector2(1, 1)));
+
+    Shape_Box* shapeBox3 = new Shape_Box();
+
+    Com_Mesh* obj3Mesh = new Com_Mesh();
+
+    RigidBodySettings bodySettings3 = RigidBodySettings(staticBody, 1, 1, false, true, false, false, 0);
+    RigidBody* rb3 = new RigidBody(bodySettings3);
+
+    SquareCollider* squareColl3 = new SquareCollider(Vector2(0.1, 0.1), Vector2(0, 0));
+
+    sf::Texture testTexture3;
+    if (!testTexture2.loadFromFile("../Textures/whiteSquare.png"))
+    {
+        std::cout << "Texture did not load!" << "\n" << std::endl;
+    }
+
+
+    obj3Mesh->SetShape(shapeBox3);
+    obj3Mesh->SetTexture(&testTexture3);
+
+    obj3->AddComponent(obj3Mesh);
+    obj3->AddComponent(rb3);
+    obj3->AddComponent(squareColl3);
+
+    //add an object to the scene
+    Scene::GetInstance()->AddObject(obj3);
     
 #pragma endregion
  
@@ -125,6 +160,7 @@ int main()
         GameEngine::GetInstance()->Update();
         GameEngine::GetInstance()->Render();
         
+
         for (int i = 0; i < InputsEngine::GetInstance()->GetInputEvents()->size(); i++)
         {
             if (InputsEngine::GetInstance()->GetInputEvents()->at(i).type == sf::Event::KeyPressed)

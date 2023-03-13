@@ -133,6 +133,9 @@ public:
 
 	#pragma region Getters and setters
 		
+		//DEBUG GETTERS
+		inline b2Body* Debug_GetB2Body() { return body; }
+
 		//ALL THIS FUNCTIONS ARE MEARLY CONVERSIONS OF THE BOX 2D DOCUMENTATION: https://box2d.org/documentation/classb2_body.html#a942be8e1cd2bcd06f53c4638c45a9525
 	
 

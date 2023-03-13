@@ -19,5 +19,8 @@ public:
 
 	//this gets the shape out of the type of SF drawable item
 	virtual sf::Shape* GetDrawableShape() = 0;
+	//this will get the offset from the image, since the image is drawned from the top left
+	virtual Vector2 GetHalfWidthAndHalfHeightOffset() = 0;
+	
 };
 
