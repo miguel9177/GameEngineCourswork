@@ -111,6 +111,9 @@
     <ClCompile Include="UiScreenView_Image.cpp">
       <Filter>Source Files\Components\Cpps\UI</Filter>
     </ClCompile>
+    <ClCompile Include="UiScreenView_btnImage.cpp">
+      <Filter>Source Files\Components\Cpps\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -180,6 +183,9 @@
       <Filter>Source Files\Components\Headers\UI</Filter>
     </ClInclude>
     <ClInclude Include="UiScreenView_Image.h">
+      <Filter>Source Files\Components\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UiScreenView_btnImage.h">
       <Filter>Source Files\Components\Headers\UI</Filter>
     </ClInclude>
   </ItemGroup>

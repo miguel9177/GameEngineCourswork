@@ -169,8 +169,29 @@ int main()
         GameEngine::GetInstance()->Update();
         GameEngine::GetInstance()->Render();
         
+        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::A].pressing)
+        {
+            std::cout << "PRessed A" << std::endl;
+            rbToCheckPos->AddForceToCenter(Vector2(-forceToAply, 0.f));
+        }
+        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::D].pressing)
+        {
+            std::cout << "PRessed D" << std::endl;
+            rbToCheckPos->AddForceToCenter(Vector2(+forceToAply, 0.f));
+        }
 
-        for (int i = 0; i < InputsEngine::GetInstance()->GetInputEvents()->size(); i++)
+        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::W].pressing)
+        {
+            std::cout << "PRessed W" << std::endl;
+            rbToCheckPos->AddForceToCenter(Vector2(0.f, -forceToAply));
+        }
+        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::S].pressing)
+        {
+            std::cout << "PRessed S" << std::endl;
+            rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
+        }
+
+        /*for (int i = 0; i < InputsEngine::GetInstance()->GetInputEvents()->size(); i++)
         {
             if (InputsEngine::GetInstance()->GetInputEvents()->at(i).type == sf::Event::KeyPressed)
             {
@@ -203,7 +224,7 @@ int main()
             }
             break;
           
-        }
+        }*/
     }
 
 	return 0;
