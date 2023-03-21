@@ -96,6 +96,9 @@
     <ClCompile Include="Com_Collider.cpp">
       <Filter>Source Files\Components\Cpps\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="UiEngine.cpp">
+      <Filter>Source Files\Engines\Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -158,8 +161,8 @@
     <ClInclude Include="GarbageCollector.h">
       <Filter>Source Files\Helpers_Utility</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="TextFonts\Roboto-Regular.ttf" />
+    <ClInclude Include="UiEngine.h">
+      <Filter>Source Files\Engines\Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
