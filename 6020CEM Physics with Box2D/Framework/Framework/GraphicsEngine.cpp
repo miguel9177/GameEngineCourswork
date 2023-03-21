@@ -22,24 +22,26 @@ sf::RenderWindow* GraphicsEngine::InitializeWindow(float width, float height)
 
 void GraphicsEngine::Render()
 {
-    // Clear the window
     window.clear(sf::Color::Black);
 
-    // Iterate through allMeshes
+    //goes through every mesh on the scene and draws it
     for (std::vector<Com_Mesh*>::iterator it = Scene::GetInstance()->GetAllMeshes()->begin(); it != Scene::GetInstance()->GetAllMeshes()->end(); ++it) 
     {
-        // do something with each Com_Mesh in the vector
         Com_Mesh* mesh = *it;
         
-        //std::cout << mesh->gameObject->name;
+        //if the mesh has a shape
         if (mesh->GetShape() != nullptr)
         {
+            //draw the mesh
             window.draw(*mesh->GetMeshToRender());
             
-            // Get the body's fixture list
-            b2Fixture* fixture = mesh->gameObject->TryGetRigidBody()->Debug_GetB2Body()->GetFixtureList();
-            Debug_DrawCollider(fixture, sf::Color::Green);
-            window.draw(*mesh->Debug_GetOriginPointToRender());
+            //if we are on debug mode, draw the colliders and the origin points of the meshes
+            if (GameEngine::GetInstance()->isDebugMode) 
+            {
+                b2Fixture* fixture = mesh->gameObject->TryGetRigidBody()->Debug_GetB2Body()->GetFixtureList();
+                Debug_DrawCollider(fixture, sf::Color::Green);
+                window.draw(*mesh->Debug_GetOriginPointToRender());
+            }
         }
     }
 

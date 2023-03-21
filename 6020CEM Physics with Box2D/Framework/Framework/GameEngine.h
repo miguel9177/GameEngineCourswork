@@ -19,6 +19,8 @@ private:
 
 public:
 
+    bool isDebugMode = false;
+
     //this gives the instance of the Game engine, and if theres no instance of it, it creates one
     static GameEngine* GetInstance();
 
