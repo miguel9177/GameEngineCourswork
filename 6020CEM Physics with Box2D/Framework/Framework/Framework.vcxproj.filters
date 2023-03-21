@@ -155,5 +155,11 @@
     <ClInclude Include="Com_Collider.h">
       <Filter>Source Files\Components\Headers\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="GarbageCollector.h">
+      <Filter>Source Files\Helpers_Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="TextFonts\Roboto-Regular.ttf" />
   </ItemGroup>
 </Project>

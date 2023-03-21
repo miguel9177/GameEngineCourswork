@@ -150,6 +150,7 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameEngineMathHelper.h" />
+    <ClInclude Include="GarbageCollector.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="Shape.h" />
@@ -161,6 +162,9 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneObjectsImports.h" />
     <ClInclude Include="Transform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="TextFonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,10 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
+
+
 class GraphicsEngine
 {    
     //this stores the game engine window
     sf::RenderWindow window;
+    sf::Font gameEngineFont;
 
 public:
 
@@ -57,6 +60,8 @@ public:
         
 	};
 
+    //this will write on the game screen the debug information
+    void Debug_WriteDebugInformation();
 #pragma endregion
 };
 

@@ -24,7 +24,7 @@ void test2()
 int main()
 {
     GameEngine::GetInstance()->InitializeEngine(1920,1080);
-    GameEngine::GetInstance()->isDebugMode = false;
+    GameEngine::GetInstance()->isDebugMode = true;
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);
@@ -187,6 +187,7 @@ int main()
                 std::cout << "Closed Window" << std::endl;
             }
             break;
+          
         }
     }
 
