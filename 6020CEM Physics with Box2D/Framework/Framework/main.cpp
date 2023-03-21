@@ -10,6 +10,8 @@
 #include "RigidBody.h"
 #include "SquareCollider.h"
 #include "Component.h"
+#include "UiEngine.h"
+#include "UiScreenView_Text.h"
 
 void test()
 {
@@ -145,6 +147,13 @@ int main()
     //}
 
 
+
+#pragma endregion
+
+#pragma region Testing UI
+
+
+    UiScreenView_Text* txtText1 = new UiScreenView_Text("string 1 working on UiEngine", new Transform(Vector2(0.5f, 0.0f), 0, Vector2(1, 1)));
 
 #pragma endregion
 

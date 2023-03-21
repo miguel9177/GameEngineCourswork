@@ -4,6 +4,10 @@
 #include "Com_Mesh.h"
 #include "RigidBody.h"
 #include "GarbageCollector.h"
+#include "UiEngine.h"
+
+sf::Font GraphicsEngine::gameEngineFont;
+
 
 GraphicsEngine::GraphicsEngine()
 {
@@ -41,6 +45,7 @@ void GraphicsEngine::Render()
         {
             //draw the mesh
             window.draw(*mesh->GetMeshToRender());
+            UiEngine::GetInstance()->DrawAllUi(&window);
             
             //if we are on debug mode, draw the colliders and the origin points of the meshes
             if (GameEngine::GetInstance()->isDebugMode) 
@@ -48,7 +53,6 @@ void GraphicsEngine::Render()
                 b2Fixture* fixture = mesh->gameObject->TryGetRigidBody()->Debug_GetB2Body()->GetFixtureList();
                 Debug_DrawCollider(fixture, sf::Color::Green);
                 window.draw(*mesh->Debug_GetOriginPointToRender());
-
                 Debug_WriteDebugInformation();
             }
         }
@@ -84,7 +88,6 @@ void GraphicsEngine::Debug_WriteDebugInformation()
         window.draw(garbageCollectionText);
     }
 #pragma endregion
-
 }
 
 #pragma endregion

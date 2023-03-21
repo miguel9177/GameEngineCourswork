@@ -7,7 +7,7 @@ class GraphicsEngine
 {    
     //this stores the game engine window
     sf::RenderWindow window;
-    sf::Font gameEngineFont;
+    static sf::Font gameEngineFont;
 
 public:
 
@@ -21,6 +21,8 @@ public:
     void Render();
 
     sf::RenderWindow* GetEngineWindow();
+
+    static inline sf::Font* GetGameEngineFont() { return &gameEngineFont; };
 
 #pragma region DEBUG FUNCTIONS
 
@@ -62,6 +64,7 @@ public:
 
     //this will write on the game screen the debug information
     void Debug_WriteDebugInformation();
+
 #pragma endregion
 };
 

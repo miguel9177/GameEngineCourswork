@@ -32,5 +32,7 @@ public:
 
     //this returns if the game engine is running
     bool isGameEngineRunning();
+
+    inline sf::Vector2u GetWindowSize() { return graphicsEngine->GetEngineWindow()->getSize(); };
 };
 
