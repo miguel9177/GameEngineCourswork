@@ -24,12 +24,32 @@ void test2()
     std::cout << "ei2" << std::endl;
 }
 
+void test3()
+{
+    std::cout << "ei3" << std::endl;
+}
+
+void testUserKeyPressedA() { std::cout << "Pressed A" << std::endl; }
+
+void testUserKeyReleasedA() { std::cout << "Released A" << std::endl; }
+
+void testUserKeyPressedD() { std::cout << "Pressed D" << std::endl; }
+
+void testUserKeyReleasedD() { std::cout << "Released D" << std::endl; }
+
 int main()
 {
     GameEngine::GetInstance()->InitializeEngine(1920,1080);
     GameEngine::GetInstance()->isDebugMode = true;
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
+    EventQueue::GetInstance()->UnsubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test3);
+
+    EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::A, &testUserKeyPressedA);
+    EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::D, &testUserKeyPressedD);
+    EventQueue::GetInstance()->SubscribeToKeyReleaseEvent(sf::Keyboard::A, &testUserKeyReleasedA);
+    EventQueue::GetInstance()->SubscribeToKeyReleaseEvent(sf::Keyboard::D, &testUserKeyReleasedD);
+
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);
 
 #pragma region creating a game object with a mesh with and shape and a texture
@@ -171,23 +191,23 @@ int main()
         
         if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::A].pressing)
         {
-            std::cout << "PRessed A" << std::endl;
+            //std::cout << "PRessed A" << std::endl;
             rbToCheckPos->AddForceToCenter(Vector2(-forceToAply, 0.f));
         }
         if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::D].pressing)
         {
-            std::cout << "PRessed D" << std::endl;
+            //std::cout << "PRessed D" << std::endl;
             rbToCheckPos->AddForceToCenter(Vector2(+forceToAply, 0.f));
         }
 
         if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::W].pressing)
         {
-            std::cout << "PRessed W" << std::endl;
+            //std::cout << "PRessed W" << std::endl;
             rbToCheckPos->AddForceToCenter(Vector2(0.f, -forceToAply));
         }
         if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::S].pressing)
         {
-            std::cout << "PRessed S" << std::endl;
+            //std::cout << "PRessed S" << std::endl;
             rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
         }
 
