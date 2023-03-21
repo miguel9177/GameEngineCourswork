@@ -37,6 +37,29 @@ void testUserKeyPressedD() { std::cout << "Pressed D" << std::endl; }
 
 void testUserKeyReleasedD() { std::cout << "Released D" << std::endl; }
 
+
+#pragma region Testing event callback mouse input
+
+void testUserMouseKeyPressedRight() { std::cout << "Pressed Right Mouse Button" << std::endl; }
+
+void testUserMouseKeyPressedLeft() { std::cout << "Pressed Left Mouse Button" << std::endl; }
+
+void testUserMouseKeyPressedMidle() { std::cout << "Pressed Midle Mouse Button" << std::endl; }
+
+void testUserMouseKeyReleasedRight() { std::cout << "Released Right Mouse Button" << std::endl; }
+
+void testUserMouseKeyReleasedLeft() { std::cout << "Released Left Mouse Button" << std::endl; }
+
+void testUserMouseKeyReleasedMidle() { std::cout << "Released Midle Mouse Button" << std::endl; }
+
+void testUserMouseMoved(Vector2 pos_) { std::cout << "Mouse position: X: " << pos_.x << " Y: " << pos_.y << std::endl; }
+
+void testUserMouseScrollWheel(float delta_) { std::cout << "Mouse scrolled wheel " << delta_ << std::endl; }
+
+#pragma endregion
+
+
+
 int main()
 {
     GameEngine::GetInstance()->InitializeEngine(1920,1080);
@@ -47,8 +70,18 @@ int main()
 
     EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::A, &testUserKeyPressedA);
     EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::D, &testUserKeyPressedD);
-    EventQueue::GetInstance()->SubscribeToKeyReleaseEvent(sf::Keyboard::A, &testUserKeyReleasedA);
-    EventQueue::GetInstance()->SubscribeToKeyReleaseEvent(sf::Keyboard::D, &testUserKeyReleasedD);
+    EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::A, &testUserKeyReleasedA);
+    EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::D, &testUserKeyReleasedD);
+
+    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Right, &testUserMouseKeyPressedRight);
+    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Left, &testUserMouseKeyPressedLeft);
+    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Middle, &testUserMouseKeyPressedMidle);
+    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Right, &testUserMouseKeyReleasedRight);
+    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
+    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);
+
+    EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
+    EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
 
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);
 
@@ -210,6 +243,8 @@ int main()
             //std::cout << "PRessed S" << std::endl;
             rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
         }
+
+        //std::cout << InputsEngine::GetInstance()->GetMouseState().wheelDelta << std::endl;
 
         /*for (int i = 0; i < InputsEngine::GetInstance()->GetInputEvents()->size(); i++)
         {

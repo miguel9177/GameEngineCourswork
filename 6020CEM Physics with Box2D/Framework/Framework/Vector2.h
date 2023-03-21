@@ -6,14 +6,12 @@ struct Vector2
 {
     float x, y;
 
-    // Default constructor
     Vector2() 
     {
         x = 0;
         y = 0;
     }
 
-    // Constructor with parameters
     Vector2(float x_, float y_) 
     { 
         x = x_; 
@@ -62,16 +60,22 @@ struct Vector2
         return *this;
     }
 
-    // Convert to SFML Vector2
+    //Convert to SFML Vector2
     operator sf::Vector2f() const { return sf::Vector2f(x, y); }
 
-    // Convert to Box2D b2Vec2
+    //Convert to Box2D b2Vec2
     operator b2Vec2() const { return b2Vec2(x, y); }
 
-    // Convert from Box2D b2Vec2
+    //Convert from Box2D b2Vec2
     Vector2(const b2Vec2& b2vec)
     {
         x = b2vec.x;
         y = b2vec.y;
+    }
+
+    Vector2(const sf::Vector2i& vec2)
+    {
+        x = vec2.x;
+        y = vec2.y;
     }
 };
