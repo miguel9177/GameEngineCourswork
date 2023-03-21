@@ -65,6 +65,16 @@ void UiScreenView_Text::SetUiPosition(Vector2 _newPos)
 	sfmlText.setPosition(xPos, yPos);
 }
 
+void UiScreenView_Text::SetUiRotation(float _newRot)
+{
+	sfmlText.setRotation(_newRot);
+}
+
+void UiScreenView_Text::SetUiScale(Vector2 _newScale)
+{
+	sfmlText.setScale(_newScale);
+}
+
 sf::Text UiScreenView_Text::GetComponentToDraw()
 {
 	return sfmlText;

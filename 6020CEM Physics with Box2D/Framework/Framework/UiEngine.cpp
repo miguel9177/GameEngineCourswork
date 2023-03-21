@@ -1,5 +1,7 @@
 #include "UiEngine.h"
 #include "UiScreenView_Text.h"
+#include "UiScreenView_Image.h"
+
 UiEngine* UiEngine::instance;
 
 UiEngine::UiEngine()
@@ -25,5 +27,11 @@ void UiEngine::DrawAllUi(sf::RenderWindow* _GameEngineWindow)
     for (UiScreenView_Text* screenViewText : allScreenViewTexts) 
     {
         _GameEngineWindow->draw(screenViewText->GetComponentToDraw());
+    }
+
+    //draws all image items
+    for (UiScreenView_Image* screenViewImage : allScreenViewImages)
+    {
+        _GameEngineWindow->draw(screenViewImage->GetComponentToDraw());
     }
 }

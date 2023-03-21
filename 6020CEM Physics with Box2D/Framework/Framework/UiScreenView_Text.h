@@ -16,6 +16,8 @@ public:
 	void SetFontSize(float _newSize);
 	void SetTextColor(sf::Color _newColor);
 	void SetUiPosition(Vector2 _newPos);
+	void SetUiRotation(float _newRot);
+	void SetUiScale(Vector2 _newScale);
 	sf::Text GetComponentToDraw();
 };
 

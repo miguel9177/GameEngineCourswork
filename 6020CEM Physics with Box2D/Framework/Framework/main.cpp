@@ -12,6 +12,7 @@
 #include "Component.h"
 #include "UiEngine.h"
 #include "UiScreenView_Text.h"
+#include "UiScreenView_Image.h"
 
 void test()
 {
@@ -152,8 +153,13 @@ int main()
 
 #pragma region Testing UI
 
-
-    UiScreenView_Text* txtText1 = new UiScreenView_Text("string 1 working on UiEngine", new Transform(Vector2(0.5f, 0.0f), 0, Vector2(1, 1)));
+    UiScreenView_Text* ui_txtText1 = new UiScreenView_Text("string 1 working on UiEngine", new Transform(Vector2(0.5f, 0.0f), 0, Vector2(1, 1)));
+    sf::Texture ui_texture1;
+    if (!ui_texture1.loadFromFile("../Textures/keyboardcat.jpg"))
+    {
+        std::cout << "Texture did not load!" << "\n" << std::endl;
+    }
+    UiScreenView_Image* ui_img1 = new UiScreenView_Image(&ui_texture1 ,new Transform(Vector2(0.9f, 0.7f), 90, Vector2(2, 2)));
 
 #pragma endregion
 

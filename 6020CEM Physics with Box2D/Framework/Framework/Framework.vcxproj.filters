@@ -108,6 +108,9 @@
     <ClCompile Include="UiScreenView_Text.cpp">
       <Filter>Source Files\Components\Cpps\UI</Filter>
     </ClCompile>
+    <ClCompile Include="UiScreenView_Image.cpp">
+      <Filter>Source Files\Components\Cpps\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -174,6 +177,9 @@
       <Filter>Source Files\Engines\Header</Filter>
     </ClInclude>
     <ClInclude Include="UiScreenView_Text.h">
+      <Filter>Source Files\Components\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UiScreenView_Image.h">
       <Filter>Source Files\Components\Headers\UI</Filter>
     </ClInclude>
   </ItemGroup>
