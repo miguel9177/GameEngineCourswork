@@ -21,34 +21,40 @@ public:
 
 #pragma region DEBUG FUNCTIONS
 
-
-	inline void Debug_DrawRectangle(b2Fixture* fixture_ , const sf::Color& color)
+    //this draws the square colliders (only  activated in debug mode)
+	inline void Debug_DrawCollider(b2Fixture* fixture_ , const sf::Color& color)
 	{
-        // Get the AABB of the fixture
-        b2AABB aabb = fixture_->GetAABB(0);
+        //this gets the polygon shape of the fixture received
+        b2PolygonShape* polygonShape = dynamic_cast<b2PolygonShape*>(fixture_->GetShape());
+        if (!polygonShape)
+            return;
 
-        // Calculate the position of the rectangle
-        sf::Vector2f position(aabb.GetCenter().x * 200.f, aabb.GetCenter().y * 200.f);
+        int32 vertexCount = polygonShape->m_count;
+        //create a convex shape that will be used to draw our collider
+        sf::ConvexShape shapeOfCollider;
+        shapeOfCollider.setPointCount(vertexCount);
+        //loop through every vertex created and assign its points as the same as the box2d shape
+        for (int32 i = 0; i < vertexCount; ++i) {
+            b2Vec2 vertex = polygonShape->m_vertices[i];
+            shapeOfCollider.setPoint(i, sf::Vector2f(vertex.x * 215.f, vertex.y * 215.f));
+        }
+        
+        //paint the shape
+        shapeOfCollider.setFillColor(sf::Color::Transparent);
+        shapeOfCollider.setOutlineColor(color);
+        shapeOfCollider.setOutlineThickness(-1.0f);
 
-        // Calculate the size of the rectangle
-        sf::Vector2f size((aabb.GetExtents().x * 2.f) * 200.f, (aabb.GetExtents().y * 2.f) * 200.f);
-
-        // Create an SFML rectangle shape to draw the collider
-        sf::RectangleShape rectangle;
-
-        // Set the size and position of the rectangle
-        rectangle.setSize(size);
-        rectangle.setOrigin(size / 2.f);
-        rectangle.setPosition(position);
-
-        // Set the rotation of the rectangle to match the rotation of the Box2D fixture
-        rectangle.setRotation(fixture_->GetBody()->GetAngle() * 180.f / b2_pi);
-
-        // Set the color of the rectangle to red
-        rectangle.setFillColor(color);
-
-        // Draw the rectangle shape to the SFML window
-        window.draw(rectangle);
+        //this gets the position and angle of the collider
+        b2Vec2 position = fixture_->GetBody()->GetPosition();
+        float angle = fixture_->GetBody()->GetAngle();
+        //creates a new sf::transform and moves it, rotates and scales with the correct values from the collider
+        sf::Transform transform;
+        transform.translate(position.x * 200.f, position.y * 200.f);
+        transform.rotate(angle * 180.f / b2_pi);
+        transform.scale(1.f, 1.f);
+        //draw the collider
+        window.draw(shapeOfCollider, transform);
+        
 	};
 
 #pragma endregion

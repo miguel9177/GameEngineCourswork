@@ -9,7 +9,7 @@ class Com_Mesh : public Component
 private:
 	sf::Texture* texture;
 	Shape* shape;
-	
+	sf::CircleShape* debug_OriginPointShape;
 public :
 	static const unsigned int uniqueComponentIdIdentifier = 0;
 	static const float scalingFactor;
@@ -34,5 +34,7 @@ public :
 	Shape* GetShape();
 	//returns the mesh all prepared to be drawn, with correct position, rotation and texture
 	sf::Shape* GetMeshToRender();
+	//this will get the origin point to render
+	sf::Shape* Debug_GetOriginPointToRender();
 };
 

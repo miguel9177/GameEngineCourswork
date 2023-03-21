@@ -71,8 +71,6 @@ void SquareCollider::CreateCollider()
 	b2PolygonShape boxShape;
 	boxShape.SetAsBox(halfSize.x * gameObject->GetTransform()->scale.x, halfSize.y * gameObject->GetTransform()->scale.y, posOffset, offsetAngle);
 
-	
-
 	// Create a fixture definition for the box shape
 	coll.shape = &boxShape;
 	coll.density = mass;   //Mass per unit area

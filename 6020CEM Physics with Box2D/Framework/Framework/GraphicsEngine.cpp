@@ -38,7 +38,8 @@ void GraphicsEngine::Render()
             
             // Get the body's fixture list
             b2Fixture* fixture = mesh->gameObject->TryGetRigidBody()->Debug_GetB2Body()->GetFixtureList();
-            Debug_DrawRectangle(fixture, sf::Color::Green);
+            Debug_DrawCollider(fixture, sf::Color::Green);
+            window.draw(*mesh->Debug_GetOriginPointToRender());
         }
     }
 

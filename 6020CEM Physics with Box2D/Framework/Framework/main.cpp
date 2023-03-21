@@ -31,7 +31,7 @@ int main()
 
 #pragma region creating a game object with a mesh with and shape and a texture
     
-    GameObject* obj1 = new GameObject("obj1", new Transform(Vector2(1, 0), 0, Vector2(1, 1)));
+    GameObject* obj1 = new GameObject("obj1", new Transform(Vector2(1, 0), 0, Vector2(1.5, 1.5)));
     
     Shape_Box* shapeBox = new Shape_Box();
     sf::Texture testTexture;
@@ -45,7 +45,7 @@ int main()
     RigidBodySettings bodySettings_ = RigidBodySettings(dynamicBody, 1, 1, false, true, false, true, 0);
     RigidBody* rb = new RigidBody(bodySettings_);
     
-    SquareCollider* squareColl = new SquareCollider(Vector2(0.1, 0.1), Vector2(0, 0));
+    SquareCollider* squareColl = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
     obj1->AddComponent(rb);
     obj1->AddComponent(squareColl);
@@ -68,7 +68,7 @@ int main()
     RigidBodySettings bodySettings = RigidBodySettings(dynamicBody, 1, 1, false, true, false, false, 0);
     RigidBody* rb2 = new RigidBody(bodySettings);
 
-    SquareCollider* squareColl2 = new SquareCollider(Vector2(0.1, 0.1), Vector2(0, 0));
+    SquareCollider* squareColl2 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
     sf::Texture testTexture2;
     if (!testTexture2.loadFromFile("../Textures/whiteSquare.png"))
@@ -87,14 +87,8 @@ int main()
     //add an object to the scene
     Scene::GetInstance()->AddObject(obj2);
 
-
-
-
-
-
     //Object 3
-     //Object 2
-    GameObject* obj3 = new GameObject("obj3", new Transform(Vector2(1, 1.2), 0, Vector2(1, 1)));
+    GameObject* obj3 = new GameObject("obj3", new Transform(Vector2(1, 1.2), 0, Vector2(1.5, 1.5)));
 
     Shape_Box* shapeBox3 = new Shape_Box();
 
@@ -103,7 +97,7 @@ int main()
     RigidBodySettings bodySettings3 = RigidBodySettings(staticBody, 1, 1, false, true, false, false, 0);
     RigidBody* rb3 = new RigidBody(bodySettings3);
 
-    SquareCollider* squareColl3 = new SquareCollider(Vector2(0.1, 0.1), Vector2(0, 0));
+    SquareCollider* squareColl3 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
     sf::Texture testTexture3;
     if (!testTexture2.loadFromFile("../Textures/whiteSquare.png"))

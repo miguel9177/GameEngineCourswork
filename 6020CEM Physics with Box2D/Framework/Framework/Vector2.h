@@ -41,9 +41,23 @@ struct Vector2
         return *this;
     }
 
+    Vector2& operator-(const Vector2& newVec2) {
+        x -= newVec2.x;
+        y -= newVec2.y;
+
+        return *this;
+    }
+
     Vector2& operator*(const float& newFloat) {
         x *= newFloat;
         y *= newFloat;
+
+        return *this;
+    }
+
+     Vector2& operator/(const float& newFloat) {
+        x /= newFloat;
+        y /= newFloat;
 
         return *this;
     }
