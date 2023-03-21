@@ -46,6 +46,12 @@
     <Filter Include="Source Files\Components\Headers\Physics">
       <UniqueIdentifier>{d099b81b-7787-431f-b95e-e5e2696ea17b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\Cpps\UI">
+      <UniqueIdentifier>{9f99253f-99fb-4591-9993-482e7e30b687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Headers\UI">
+      <UniqueIdentifier>{863633b1-db68-4867-bec9-b0641d0e223d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="UiEngine.cpp">
       <Filter>Source Files\Engines\Cpps</Filter>
+    </ClCompile>
+    <ClCompile Include="UiScreenView_Text.cpp">
+      <Filter>Source Files\Components\Cpps\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="UiEngine.h">
       <Filter>Source Files\Engines\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="UiScreenView_Text.h">
+      <Filter>Source Files\Components\Headers\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
