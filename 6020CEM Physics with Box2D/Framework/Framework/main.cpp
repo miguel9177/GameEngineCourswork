@@ -64,24 +64,25 @@ int main()
 {
     GameEngine::GetInstance()->InitializeEngine(1920,1080);
     GameEngine::GetInstance()->isDebugMode = true;
-    EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
-    EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
-    EventQueue::GetInstance()->UnsubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test3);
+    
+    //EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
+    //EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
+    //EventQueue::GetInstance()->UnsubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test3);
 
-    EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::A, &testUserKeyPressedA);
-    EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::D, &testUserKeyPressedD);
-    EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::A, &testUserKeyReleasedA);
-    EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::D, &testUserKeyReleasedD);
+    //EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::A, &testUserKeyPressedA);
+    //EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::D, &testUserKeyPressedD);
+    //EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::A, &testUserKeyReleasedA);
+    //EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::D, &testUserKeyReleasedD);
 
-    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Right, &testUserMouseKeyPressedRight);
-    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Left, &testUserMouseKeyPressedLeft);
-    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Middle, &testUserMouseKeyPressedMidle);
-    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Right, &testUserMouseKeyReleasedRight);
-    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
-    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);
+    //EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Right, &testUserMouseKeyPressedRight);
+    //EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Left, &testUserMouseKeyPressedLeft);
+    //EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Middle, &testUserMouseKeyPressedMidle);
+    //EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Right, &testUserMouseKeyReleasedRight);
+    //EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
+    //EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);
 
-    EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
-    EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
+    ////EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
+    //EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
 
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);
 
