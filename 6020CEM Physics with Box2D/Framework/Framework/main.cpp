@@ -69,10 +69,10 @@ int main()
     
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
-    EventQueue::GetInstance()->UnsubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test3);
 
     EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::A, &testUserKeyPressedA);
     EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::D, &testUserKeyPressedD);
+
     EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::A, &testUserKeyReleasedA);
     EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::D, &testUserKeyReleasedD);
 

@@ -27,63 +27,134 @@ EventQueue* EventQueue::GetInstance()
 //this subscribes to an event
 void EventQueue::SubscribeToVoidEvent(EventQueue::voidEvents eventToSubscribeTo, std::function<void()> function)
 {
-    allSubscribedVoidEvents[eventToSubscribeTo].push_back(std::make_shared<std::function<void()>>(function));
+    allSubscribedVoidEvents[eventToSubscribeTo].push_back(std::function<void()>(function));
 }
 
 //this unsubscribes an event
 void EventQueue::UnsubscribeToVoidEvent(voidEvents eventToUnSubscribeTo, std::function<void()> function)
 {
-    auto& subscribers = allSubscribedVoidEvents[eventToUnSubscribeTo];
-    auto function_ptr = std::make_shared<std::function<void()>>(function);
-    subscribers.erase(std::remove(subscribers.begin(), subscribers.end(), function_ptr), subscribers.end());
+    auto mapIt = allSubscribedVoidEvents.find(eventToUnSubscribeTo);
+    if (mapIt != allSubscribedVoidEvents.end())
+    {
+        std::vector<std::function<void()>>& subscribers = mapIt->second;
+
+        for (unsigned int i = 0; i < subscribers.size();)
+        {
+            if (subscribers[i] != nullptr && getAddress(subscribers[i]) == getAddress(function))
+            {
+                subscribers.erase(subscribers.begin() + i);
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
 }
 
 void EventQueue::SubscribeToKeyPressEvent(sf::Keyboard::Key _key, std::function<void()> function)
 {
-    allSubscribedOnKeyPressEvent[_key].push_back(std::make_shared<std::function<void()>>(function));
+    allSubscribedOnKeyPressEvent[_key].push_back(std::function<void()>(function));
 }
 
 void EventQueue::UnsubscribeToKeyPressEvent(sf::Keyboard::Key _key, std::function<void()> function)
 {
-    auto& subscribers = allSubscribedOnKeyPressEvent[_key];
-    auto function_ptr = std::make_shared<std::function<void()>>(function);
-    subscribers.erase(std::remove(subscribers.begin(), subscribers.end(), function_ptr), subscribers.end());
+    auto mapIt = allSubscribedOnKeyPressEvent.find(_key);
+    if (mapIt != allSubscribedOnKeyPressEvent.end())
+    {
+        std::vector<std::function<void()>>& subscribers = mapIt->second;
+
+        for (unsigned int i = 0; i < subscribers.size();)
+        {
+            if (subscribers[i] != nullptr && getAddress(subscribers[i]) == getAddress(function))
+            {
+                subscribers.erase(subscribers.begin() + i);
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
 }
 
 void EventQueue::SubscribeToKeyReleasedEvent(sf::Keyboard::Key _key, std::function<void()> function)
 {
-    allSubscribedOnKeyReleaseEvent[_key].push_back(std::make_shared<std::function<void()>>(function));
+    allSubscribedOnKeyReleaseEvent[_key].push_back(std::function<void()>(function));
 }
 
 void EventQueue::UnsubscribeToKeyReleasedEvent(sf::Keyboard::Key _key, std::function<void()> function)
 {
-    auto& subscribers = allSubscribedOnKeyReleaseEvent[_key];
-    auto function_ptr = std::make_shared<std::function<void()>>(function);
-    subscribers.erase(std::remove(subscribers.begin(), subscribers.end(), function_ptr), subscribers.end());
+    auto mapIt = allSubscribedOnKeyReleaseEvent.find(_key);
+    if (mapIt != allSubscribedOnKeyReleaseEvent.end())
+    {
+        std::vector<std::function<void()>>& subscribers = mapIt->second;
+
+        for (unsigned int i = 0; i < subscribers.size();)
+        {
+            if (subscribers[i] != nullptr && getAddress(subscribers[i]) == getAddress(function))
+            {
+                subscribers.erase(subscribers.begin() + i);
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
 }
 
 void EventQueue::SubscribeToMouseKeyPressEvent(sf::Mouse::Button _mouseButton, std::function<void()> function)
 {
-    allSubscribedOnMouseKeyPressEvent[_mouseButton].push_back(std::make_shared<std::function<void()>>(function));
+    allSubscribedOnMouseKeyPressEvent[_mouseButton].push_back(std::function<void()>(function));
 }
 
 void EventQueue::UnsubscribeToMouseKeyPressEvent(sf::Mouse::Button _mouseButton, std::function<void()> function)
 {
-    auto& subscribers = allSubscribedOnMouseKeyPressEvent[_mouseButton];
-    auto function_ptr = std::make_shared<std::function<void()>>(function);
-    subscribers.erase(std::remove(subscribers.begin(), subscribers.end(), function_ptr), subscribers.end());
+    auto mapIt = allSubscribedOnMouseKeyPressEvent.find(_mouseButton);
+    if (mapIt != allSubscribedOnMouseKeyPressEvent.end())
+    {
+        std::vector<std::function<void()>>& subscribers = mapIt->second;
+
+        for (unsigned int i = 0; i < subscribers.size();)
+        {
+            if (subscribers[i] != nullptr && getAddress(subscribers[i]) == getAddress(function))
+            {
+                subscribers.erase(subscribers.begin() + i);
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
 }
 
 void EventQueue::SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button _mouseButton, std::function<void()> function)
 {
-    allSubscribedOnMouseKeyReleaseEvent[_mouseButton].push_back(std::make_shared<std::function<void()>>(function));
+    allSubscribedOnMouseKeyReleaseEvent[_mouseButton].push_back(std::function<void()>(function));
 }
 
 void EventQueue::UnsubscribeToMouseKeyReleasedEvent(sf::Mouse::Button _mouseButton, std::function<void()> function)
 {
-    auto& subscribers = allSubscribedOnMouseKeyReleaseEvent[_mouseButton];
-    auto function_ptr = std::make_shared<std::function<void()>>(function);
-    subscribers.erase(std::remove(subscribers.begin(), subscribers.end(), function_ptr), subscribers.end());
+    auto mapIt = allSubscribedOnMouseKeyReleaseEvent.find(_mouseButton);
+    if (mapIt != allSubscribedOnMouseKeyReleaseEvent.end())
+    {
+        std::vector<std::function<void()>>& subscribers = mapIt->second;
+
+        for (unsigned int i = 0; i < subscribers.size();)
+        {
+            if (subscribers[i] != nullptr && getAddress(subscribers[i]) == getAddress(function))
+            {
+                subscribers.erase(subscribers.begin() + i);
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
+
 }
 
 void EventQueue::SubscribeToMouseMovedEvent(std::function<void(Vector2 _pos)> function)
@@ -108,14 +179,22 @@ void EventQueue::UnsubscribeToMouseMovedEvent(std::function<void(Vector2 _pos)> 
 
 void EventQueue::SubscribeToMouseWheelScrolledEvent(std::function<void(float _delta)> function)
 {
-    allSubscribedOnMouseWheelScrolledEvent.push_back(std::make_shared<std::function<void(float)>>(function));
+    allSubscribedOnMouseWheelScrolledEvent.push_back(std::function<void(float)>(function));
 }
 
 void EventQueue::UnsubscribeToMouseWheelScrolledEvent(std::function<void(float _delta)> function)
 {
-    auto& subscribers = allSubscribedOnMouseWheelScrolledEvent;
-    auto function_ptr = std::make_shared<std::function<void(float _delta)>>(function);
-    subscribers.erase(std::remove(subscribers.begin(), subscribers.end(), function_ptr), subscribers.end());
+    for (unsigned int i = 0; i < allSubscribedOnMouseWheelScrolledEvent.size();)
+    {
+        if (allSubscribedOnMouseWheelScrolledEvent[i] != nullptr && getAddress(allSubscribedOnMouseWheelScrolledEvent[i]) == getAddress(function))
+        {
+            allSubscribedOnMouseWheelScrolledEvent.erase(allSubscribedOnMouseWheelScrolledEvent.begin() + i);
+        }
+        else
+        {
+            i++;
+        }
+    }
 }
 
 #pragma endregion
@@ -129,7 +208,7 @@ void EventQueue::InvokeVoidEvents(EventQueue::voidEvents eventToCall)
     {
         for (auto const& callback : it->second)
         {
-            (*callback)();
+            callback();
         }
     }
 }
@@ -141,7 +220,7 @@ void EventQueue::InvokeKeyPressedEvents(sf::Keyboard::Key _key)
     {
         for (auto const& callback : it->second)
         {
-            (*callback)();
+            callback();
         }
     }
 }
@@ -153,7 +232,7 @@ void EventQueue::InvokeKeyReleasedEvents(sf::Keyboard::Key _key)
     {
         for (auto const& callback : it->second)
         {
-           (*callback)();
+           callback();
         }
     }
 }
@@ -165,7 +244,7 @@ void EventQueue::InvokeMouseKeyPressedEvents(sf::Mouse::Button _mouseButton)
     {
         for (auto const& callback : it->second)
         {
-            (*callback)();
+            callback();
         }
     }
 }
@@ -177,7 +256,7 @@ void EventQueue::InvokeMouseKeyReleasedEvents(sf::Mouse::Button _mouseButton)
     {
         for (auto const& callback : it->second)
         {
-           (*callback)();
+           callback();
         }
     }
 }
@@ -199,7 +278,7 @@ void EventQueue::InvokeMouseWheelScrolledEvents(float _mouseWheelDelta)
     {
         if (callback != nullptr)
         {
-            (*callback)(_mouseWheelDelta);
+            callback(_mouseWheelDelta);
         }
     }
 }

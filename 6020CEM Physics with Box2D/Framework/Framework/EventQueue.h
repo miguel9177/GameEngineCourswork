@@ -50,13 +50,13 @@ public:
     void InvokeMouseMovedEvents(Vector2 _pos);
     void InvokeMouseWheelScrolledEvents(float _mouseWheelDelta);
 private:
-    std::map<voidEvents, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedVoidEvents;
-    std::map<sf::Keyboard::Key, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnKeyPressEvent;
-    std::map<sf::Keyboard::Key, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnKeyReleaseEvent;
-    std::map<sf::Mouse::Button, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnMouseKeyPressEvent;
-    std::map<sf::Mouse::Button, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnMouseKeyReleaseEvent;
+    std::map<voidEvents, std::vector<std::function<void()>>> allSubscribedVoidEvents;
+    std::map<sf::Keyboard::Key, std::vector<std::function<void()>>> allSubscribedOnKeyPressEvent;
+    std::map<sf::Keyboard::Key, std::vector<std::function<void()>>> allSubscribedOnKeyReleaseEvent;
+    std::map<sf::Mouse::Button, std::vector<std::function<void()>>> allSubscribedOnMouseKeyPressEvent;
+    std::map<sf::Mouse::Button, std::vector<std::function<void()>>> allSubscribedOnMouseKeyReleaseEvent;
     std::vector<std::function<void(Vector2 _pos)>> allSubscribedOnMouseMovedEvent;
-    std::vector<std::shared_ptr<std::function<void(float _delta)>>> allSubscribedOnMouseWheelScrolledEvent;
+    std::vector<std::function<void(float _delta)>> allSubscribedOnMouseWheelScrolledEvent;
 
     //this was taken from https://stackoverflow.com/questions/20833453/comparing-stdfunctions-for-equality
     //it basically gets the function adrees so that we can easaly compare it
