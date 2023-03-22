@@ -21,6 +21,7 @@ public:
 	void SetUiRotation(float _newRot);
 	void SetUiScale(Vector2 _newScale);
 	sf::Sprite GetComponentToDraw();
+	bool isButtonBeingHovered();
 
 	void SubscribeToBtnOnPressEvent(std::function<void()> function);
 	void UnsubscribeToBtnOnPressEvent(std::function<void()> function);

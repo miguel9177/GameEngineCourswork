@@ -142,6 +142,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UiEngine.cpp" />
     <ClCompile Include="UiScreenView_btnImage.cpp" />
+    <ClCompile Include="UiScreenView_btnText.cpp" />
     <ClCompile Include="UiScreenView_Image.cpp" />
     <ClCompile Include="UiScreenView_Text.cpp" />
   </ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="SquareCollider.h" />
     <ClInclude Include="UiEngine.h" />
     <ClInclude Include="UiScreenView_btnImage.h" />
+    <ClInclude Include="UiScreenView_btnText.h" />
     <ClInclude Include="UiScreenView_Image.h" />
     <ClInclude Include="UiScreenView_Text.h" />
     <ClInclude Include="Vector2.h" />

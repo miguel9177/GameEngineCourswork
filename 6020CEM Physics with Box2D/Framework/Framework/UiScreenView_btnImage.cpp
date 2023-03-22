@@ -71,10 +71,7 @@ sf::Sprite UiScreenView_btnImage::GetComponentToDraw()
 
 void UiScreenView_btnImage::UserPressedLeftMouseButton()
 {
-	Vector2 mousePosition = InputsEngine::GetInstance()->GetMouseState().position;
-	sf::FloatRect buttonBounds = sprite.getGlobalBounds();
-
-	if (buttonBounds.contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)) && !pressing)
+	if (isButtonBeingHovered() && !pressing)
 	{
 		pressing = true;
 		InvokeButtonPressedEvent();
@@ -154,3 +151,17 @@ void UiScreenView_btnImage::InvokeButtonReleasedEvent()
 
 #pragma endregion
 
+#pragma region Helper Functions
+
+bool UiScreenView_btnImage::isButtonBeingHovered()
+{
+	Vector2 mousePosition = InputsEngine::GetInstance()->GetMouseState().position;
+	sf::FloatRect buttonBounds = sprite.getGlobalBounds();
+
+	if (buttonBounds.contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+		return true;
+	else 
+		return false;
+}
+
+#pragma endregion
