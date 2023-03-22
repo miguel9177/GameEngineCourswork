@@ -16,6 +16,7 @@
 #include "UiScreenView_btnImage.h"
 #include "UiScreenView_btnText.h"
 #include "EngineFunctionalityManager.h"
+#include "AllUserScipts/SB_TestScript.h"
 
 void test()
 {
@@ -109,6 +110,9 @@ int main()
     
     SquareCollider* squareColl = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
+    SB_TestScript* playerScript = new SB_TestScript();
+
+    obj1->AddComponent(playerScript);
     obj1->AddComponent(rb);
     obj1->AddComponent(squareColl);
     obj1->AddComponent(obj1Mesh);
@@ -164,7 +168,6 @@ int main()
         std::cout << "Texture did not load!" << "\n" << std::endl;
     }
 
-
     obj3Mesh->SetShape(shapeBox3);
     obj3Mesh->SetTexture(&testTexture3);
 
@@ -176,8 +179,6 @@ int main()
     Scene::GetInstance()->AddObject(obj3);
     
 #pragma endregion
-
-    
 
     Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);
     RigidBody* rbToCheckPos = obj1->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);

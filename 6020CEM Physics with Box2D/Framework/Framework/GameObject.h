@@ -28,9 +28,6 @@ public:
 	//this will return if the user has the component or not
 	bool HasComponent(Component* componentToCheck);
 
-	//this will try and get the given component
-	//Component* TryGetComponent(Component* componentToCheck);
-
 	//this will try and get the given component, its inline since the visual studio compiler wasnt letting it be in the cpp
 	template<typename T>
 	inline T* TryGetComponent(Component::typeOfComponent componentType_) 

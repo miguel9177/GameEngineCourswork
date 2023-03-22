@@ -3,6 +3,7 @@
 #include "SceneObjectsImports.h"
 #include "Com_Mesh.h"
 
+class ScriptBehaviour;
 //this is a singleton, and stores the scene script
 class Scene
 {
@@ -11,6 +12,7 @@ private:
     std::vector<GameObject*> allSceneGameObjects;
     std::vector<Com_Mesh*> allMeshes;
     std::vector<RigidBody*> allRigidBodys;
+    std::vector<ScriptBehaviour*> allScriptBehaviours;
 
     Scene();
     ~Scene();
@@ -25,7 +27,10 @@ public:
     //this will get all the meshes from the scene
     std::vector<Com_Mesh*>* GetAllMeshes();
 
-    //this will get all the meshes from the scene
+    //this will get all the rigidbodys from the scene
     std::vector<RigidBody*>* GetAllRigidBodys();
+
+    //this will get all the scripts from the scene
+    std::vector<ScriptBehaviour*>* GetAllScripts();
 };
 

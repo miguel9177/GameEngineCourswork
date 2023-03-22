@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include "EngineFunctionalityManager.h"
 #include "UiEngine.h"
+#include "Scene.h"
 
 GameEngine* GameEngine::instance;
 
@@ -36,6 +37,7 @@ void GameEngine::Update()
     PhysicsEngine::GetInstance()->Update();
     InputsEngine::GetInstance()->Update(graphicsEngine->GetEngineWindow());
     UiEngine::GetInstance()->Update();
+    Scene::GetInstance()->Update();
 }
 
 void GameEngine::Render()

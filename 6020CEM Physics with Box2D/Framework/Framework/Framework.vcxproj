@@ -136,7 +136,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="AllUserScipts\SB_TestScript.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ScriptBehaviour.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Shape_Box.cpp" />
     <ClCompile Include="SquareCollider.cpp" />
@@ -160,6 +162,8 @@
     <ClInclude Include="GarbageCollector.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="AllUserScipts\SB_TestScript.h" />
+    <ClInclude Include="ScriptBehaviour.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Shape_Box.h" />
     <ClInclude Include="SquareCollider.h" />

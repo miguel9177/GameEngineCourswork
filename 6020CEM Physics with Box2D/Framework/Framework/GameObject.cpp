@@ -102,33 +102,6 @@ bool GameObject::HasComponent(Component* _componentToCheck)
     return false;
 }
 
-////this will return the component if the gameobject has it, and return null if the gameObject doesnt have it
-//Component* GameObject::TryGetComponent(Component* _componentToCheck)
-//{
-//    // Get the type of the component to check
-//    Component::typeOfComponent componentType = _componentToCheck->GetTypeOfComponent();
-//
-//    // Check if the type of component exists in the map
-//    auto it = allComponents.find(componentType);
-//    if (it == allComponents.end()) {
-//        return nullptr;
-//    }
-//
-//    // Get the vector of components for the given type
-//    std::vector<Component*>& componentsOfType = it->second;
-//
-//    // Loop through the vector of components
-//    for (std::vector<Component*>::iterator it = componentsOfType.begin(); it != componentsOfType.end(); ++it)
-//    {
-//        // do something with each component in the vector
-//        Component* component = *it;
-//        if (component->GetUniqueIdIdentifier() == _componentToCheck->GetUniqueIdIdentifier())
-//            return component;
-//    }
-//
-//    return nullptr;
-//}
-
 //this will get all the components of a certain type
 std::vector<Component*> GameObject::GetAllComponentsOfType(Component::typeOfComponent _typeOfComponentToGet)
 {

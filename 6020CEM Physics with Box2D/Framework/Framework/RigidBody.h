@@ -106,7 +106,6 @@ public:
 	RigidBody(Vector2 _pos, RigidBodySettings _bodySettings = RigidBodySettings());
 	~RigidBody();
 
-	// Inherited via Component
 	void Start() override;
 
 	void Update();
