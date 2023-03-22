@@ -52,6 +52,15 @@
     <Filter Include="Source Files\Components\Headers\UI">
       <UniqueIdentifier>{863633b1-db68-4867-bec9-b0641d0e223d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\PlayerScripts">
+      <UniqueIdentifier>{ba8dea35-b98f-471f-8f9a-e2197aabbe99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PlayerScripts\Cpp">
+      <UniqueIdentifier>{8de044eb-cdcb-4e3f-9170-c647c6581b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PlayerScripts\Header">
+      <UniqueIdentifier>{20360b4a-decc-4047-bb64-44ac17af3ca4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

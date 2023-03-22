@@ -4,6 +4,7 @@
 #include "UiScreenView_btnImage.h"
 #include "UiScreenView_btnText.h"
 
+
 UiEngine* UiEngine::instance;
 
 UiEngine::UiEngine()
@@ -21,6 +22,33 @@ UiEngine* UiEngine::GetInstance()
         instance = new UiEngine();
     }
     return instance;
+}
+
+void UiEngine::Update()
+{
+    //draws all image items
+    for (UiScreenView_Image* screenViewImage : allScreenViewImages)
+    {
+        screenViewImage->Update();
+    }
+
+    //draws all button image items
+    for (UiScreenView_btnImage* screenViewBtnImage : allScreenViewBtnImages)
+    {
+        screenViewBtnImage->Update();
+    }
+
+    //draws all button Text items
+    for (UiScreenView_btnText* screenViewBtnText : allScreenViewBtnTexts)
+    {
+        screenViewBtnText->Update();
+    }
+
+    //draws all text items
+    for (UiScreenView_Text* screenViewText : allScreenViewTexts)
+    {
+        screenViewText->Update();
+    }
 }
 
 void UiEngine::DrawAllUi(sf::RenderWindow* _GameEngineWindow)

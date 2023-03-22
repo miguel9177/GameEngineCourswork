@@ -9,9 +9,19 @@ private:
 	sf::Text sfmlText;
 	Transform* transform;
 	bool isUiBeingDrawned = false;
+	bool worldObject = false;
+
+	struct uiTransformInformation
+	{
+		Vector2 pos;
+		Vector2 offset;
+		float rot;
+		Vector2 scale;
+	};
+	uiTransformInformation uiTransformInformation;
 
 public:
-	UiScreenView_Text(std::string _textToDisplay, Transform* _transform);
+	UiScreenView_Text(std::string _textToDisplay, Transform* _transform, bool _worldObject = false);
 	~UiScreenView_Text();
 	void SetFont(sf::Font _newFont);
 	void SetText(sf::String _newText);
@@ -25,5 +35,6 @@ public:
 	void RemoveUiFromScreen();
 	inline bool IsBeingDrawned() { return isUiBeingDrawned; }
 	inline sf::Text* GetSfmlText() { return &sfmlText; };
+	void Update();
 };
 

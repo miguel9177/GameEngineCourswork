@@ -16,7 +16,7 @@ private:
 
     //this will update the window events
     void GameEngine::UpdateWindowEvents();
-
+    
 public:
 
     bool isDebugMode = false;
@@ -34,5 +34,8 @@ public:
     bool isGameEngineRunning();
 
     inline sf::Vector2u GetWindowSize() { return graphicsEngine->GetEngineWindow()->getSize(); };
+    void MoveCamera(Vector2 _newPos);
+    Vector2 GetCameraPosition();
+    Vector2 GetCameraSize();
 };
 

@@ -59,5 +59,6 @@ public:
             allScreenViewBtnTexts.erase(it);
     };
 
+    void Update();
     void DrawAllUi(sf::RenderWindow* _GameEngineWindow);
 };

@@ -2,11 +2,12 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
-
+class Vector2;
 class GraphicsEngine
 {    
     //this stores the game engine window
     sf::RenderWindow window;
+    sf::View cameraView;
     static sf::Font gameEngineFont;
 
 public:
@@ -23,6 +24,14 @@ public:
     sf::RenderWindow* GetEngineWindow();
 
     static inline sf::Font* GetGameEngineFont() { return &gameEngineFont; };
+
+#pragma region Functionality functions
+    
+    void MoveCamera(Vector2 _newPos);
+    Vector2 GetCameraPosition();
+    Vector2 GetCameraSize();
+
+#pragma endregion
 
 #pragma region DEBUG FUNCTIONS
 

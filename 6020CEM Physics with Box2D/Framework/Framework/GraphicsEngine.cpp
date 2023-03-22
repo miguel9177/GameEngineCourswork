@@ -28,6 +28,11 @@ sf::RenderWindow* GraphicsEngine::InitializeWindow(float width, float height)
         std::cout << "Font did not load!" << "\n" << std::endl;
     }
 
+    //Creates the camera view
+    cameraView = sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
+    //make the window use the new created view
+    window.setView(cameraView);
+
     return &window;
 }
 
@@ -67,6 +72,28 @@ sf::RenderWindow* GraphicsEngine::GetEngineWindow()
     return &window;
 }
 
+#pragma region Functionality functions
+
+//this moves the camera to the selected position
+void GraphicsEngine::MoveCamera(Vector2 _newPos)
+{
+    cameraView.setCenter(_newPos * 200);
+    //cameraView.move(_newPos);
+    window.setView(cameraView);
+}
+
+Vector2 GraphicsEngine::GetCameraPosition()
+{
+    return Vector2(cameraView.getCenter().x, cameraView.getCenter().y);
+}
+
+Vector2 GraphicsEngine::GetCameraSize()
+{
+    return Vector2(cameraView.getSize().x, cameraView.getSize().y);
+}
+
+#pragma endregion
+
 #pragma region Debug
 
 void GraphicsEngine::Debug_WriteDebugInformation()
@@ -78,12 +105,16 @@ void GraphicsEngine::Debug_WriteDebugInformation()
         garbageCollectionText.setFont(gameEngineFont);
         garbageCollectionText.setString(GarbageCollector::GetMemoryUsageText());
         garbageCollectionText.setCharacterSize(15);
-        garbageCollectionText.setFillColor(sf::Color::Green);
+        garbageCollectionText.setFillColor(sf::Color::Black);
         garbageCollectionText.setStyle(sf::Text::Regular);
 
         //this positions the text at the top right corner
         float textRightPadding = 20; 
-        garbageCollectionText.setPosition(window.getSize().x - garbageCollectionText.getLocalBounds().width - textRightPadding, textRightPadding);
+        Vector2 txtPosition = Vector2(window.getSize().x - garbageCollectionText.getLocalBounds().width - textRightPadding, textRightPadding);
+        //adjust the position of the ui depending on the camera position
+        txtPosition.x += cameraView.getCenter().x - window.getSize().x / 2.0f;
+        txtPosition.y += cameraView.getCenter().y - window.getSize().y / 2.0f;
+        garbageCollectionText.setPosition(txtPosition.x, txtPosition.y);
 
         window.draw(garbageCollectionText);
     }

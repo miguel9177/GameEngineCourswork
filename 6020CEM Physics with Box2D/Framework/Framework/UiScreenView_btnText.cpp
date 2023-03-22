@@ -6,7 +6,7 @@
 #include <functional>
 #include "UiScreenView_Text.h"
 
-UiScreenView_btnText::UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform) : texture(_newImage), transform(_transform), textTansform(_textTransform), ui_text(_textToDisplay, _textTransform)
+UiScreenView_btnText::UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform, bool _worldObject) : texture(_newImage), transform(_transform), textTansform(_textTransform), ui_text(_textToDisplay, _textTransform), worldObject(_worldObject)
 {
 	//if the texture is not 0, it means theres a texture assigned
 	if (texture != nullptr && texture->getSize() != sf::Vector2u(0, 0))
@@ -34,6 +34,17 @@ UiScreenView_btnText::~UiScreenView_btnText()
 {
 	delete texture;
 	delete transform;
+}
+
+void UiScreenView_btnText::Update()
+{
+	//if we are a world object we dont want to reposition the ui
+	if (worldObject)
+		return;
+
+	SetUiPosition(uiTransformInformation.pos, uiTransformInformation.offset);
+	SetUiRotation(uiTransformInformation.rot);
+	SetUiScale(uiTransformInformation.scale);
 }
 
 #pragma region Set Data
@@ -68,6 +79,10 @@ void UiScreenView_btnText::SetTextUiPosition(Vector2 _newPos, Vector2 _offset)
 	float xPos = windowSize.x * _newPos.x;
 	float yPos = windowSize.y * _newPos.y;
 
+	//adjust the position of the ui depending on the camera position
+	xPos += GameEngine::GetInstance()->GetCameraPosition().x - windowSize.x / 2.0f;
+	yPos += GameEngine::GetInstance()->GetCameraPosition().y - windowSize.y / 2.0f;
+
 	//move the origin to its center
 	sf::FloatRect textBounds = ui_text.GetSfmlText()->getLocalBounds();
 	ui_text.GetSfmlText()->setOrigin(textBounds.width / 2, textBounds.height / 2);
@@ -92,9 +107,16 @@ void UiScreenView_btnText::SetTextUiScale(Vector2 _newScale)
 /// <param name="_newPos">NEEDS TO BE A VALUE FROM 0 TO 1</param>
 void UiScreenView_btnText::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 {
+	uiTransformInformation.pos = _newPos;
+	uiTransformInformation.offset = _offset;
+
 	sf::Vector2u windowSize = GameEngine::GetInstance()->GetWindowSize();
 	float xPos = windowSize.x * _newPos.x;
 	float yPos = windowSize.y * _newPos.y;
+
+	//adjust the position of the ui depending on the camera position
+	xPos += GameEngine::GetInstance()->GetCameraPosition().x - windowSize.x / 2.0f;
+	yPos += GameEngine::GetInstance()->GetCameraPosition().y - windowSize.y / 2.0f;
 
 	//move the origin to its center
 	sf::FloatRect textBounds = sprite.getLocalBounds();
@@ -106,11 +128,15 @@ void UiScreenView_btnText::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 
 void UiScreenView_btnText::SetUiRotation(float _newRot)
 {
+	uiTransformInformation.rot = _newRot;
+
 	sprite.setRotation(_newRot);
 }
 
 void UiScreenView_btnText::SetUiScale(Vector2 _newScale)
 {
+	uiTransformInformation.scale = _newScale;
+
 	float scaleX = _newScale.x * Shape::defaultPixelsForBasicShapes / texture->getSize().x;
 	float scaleY = _newScale.y * Shape::defaultPixelsForBasicShapes / texture->getSize().y;
 	sprite.setScale(scaleX, scaleY);
@@ -145,6 +171,7 @@ void UiScreenView_btnText::UserReleasedLeftMouseButton()
 		InvokeButtonReleasedEvent();
 	}
 }
+
 
 void UiScreenView_btnText::SubscribeToBtnOnPressEvent(std::function<void()> function)
 {
@@ -214,10 +241,15 @@ void UiScreenView_btnText::InvokeButtonReleasedEvent()
 
 bool UiScreenView_btnText::isButtonBeingHovered()
 {
-	Vector2 mousePosition = InputsEngine::GetInstance()->GetMouseState().position;
+	Vector2 screenMousePos = InputsEngine::GetInstance()->GetMouseState().position;
+	Vector2 viewCenter = GameEngine::GetInstance()->GetCameraPosition();
+	Vector2 viewSize = GameEngine::GetInstance()->GetCameraSize();
+
+	sf::Vector2f worldMousePos = sf::Vector2f(screenMousePos.x + viewCenter.x - viewSize.x / 2.0f, screenMousePos.y + viewCenter.y - viewSize.y / 2.0f);
+
 	sf::FloatRect buttonBounds = sprite.getGlobalBounds();
 
-	if (buttonBounds.contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+	if (buttonBounds.contains(worldMousePos))
 		return true;
 	else
 		return false;

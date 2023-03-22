@@ -7,7 +7,7 @@
 /// </summary>
 /// <param name="_textToDisplay"></param>
 /// <param name="_transform">position needs to be from 0 to 1</param>
-UiScreenView_Text::UiScreenView_Text(std::string _textToDisplay, Transform* _transform)
+UiScreenView_Text::UiScreenView_Text(std::string _textToDisplay, Transform* _transform, bool _worldObject) : worldObject(_worldObject)
 {
 	transform = _transform;
 	sfmlText.setFont(*GraphicsEngine::GetGameEngineFont());
@@ -52,9 +52,16 @@ void UiScreenView_Text::SetTextColor(sf::Color _newColor)
 /// <param name="_newPos">NEEDS TO BE A VALUE FROM 0 TO 1</param>
 void UiScreenView_Text::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 {
+	uiTransformInformation.pos = _newPos;
+	uiTransformInformation.offset = _offset;
+
 	sf::Vector2u windowSize = GameEngine::GetInstance()->GetWindowSize();
 	float xPos = windowSize.x * _newPos.x;
 	float yPos = windowSize.y * _newPos.y;
+
+	//adjust the position of the ui depending on the camera position
+	xPos += GameEngine::GetInstance()->GetCameraPosition().x - windowSize.x / 2.0f;
+	yPos += GameEngine::GetInstance()->GetCameraPosition().y - windowSize.y / 2.0f;
 
 	//move the origin to its center
 	sf::FloatRect textBounds = sfmlText.getLocalBounds();
@@ -66,11 +73,15 @@ void UiScreenView_Text::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 
 void UiScreenView_Text::SetUiRotation(float _newRot)
 {
+	uiTransformInformation.rot = _newRot;
+
 	sfmlText.setRotation(_newRot);
 }
 
 void UiScreenView_Text::SetUiScale(Vector2 _newScale)
 {
+	uiTransformInformation.scale = _newScale;
+
 	sfmlText.setScale(_newScale);
 }
 
@@ -89,4 +100,15 @@ void UiScreenView_Text::RemoveUiFromScreen()
 {
 	isUiBeingDrawned = false;
 	UiEngine::GetInstance()->RemoveUiScreenViewTextFromUiEngine(this);
+}
+
+void UiScreenView_Text::Update()
+{
+	//if we are a world object we dont want to reposition the ui
+	if (worldObject)
+		return;
+
+	SetUiPosition(uiTransformInformation.pos, uiTransformInformation.offset);
+	SetUiRotation(uiTransformInformation.rot);
+	SetUiScale(uiTransformInformation.scale);
 }

@@ -15,12 +15,22 @@ private:
 	Transform* textTansform;
 	bool pressing = false;
 	bool isUiBeingDrawned = false;
+	bool worldObject = false;
+
+	struct uiTransformInformation
+	{
+		Vector2 pos;
+		Vector2 offset;
+		float rot;
+		Vector2 scale;
+	};
+	uiTransformInformation uiTransformInformation;
 
 	std::vector<std::function<void()>> allSubscribedOnButtonPressEvent;
 	std::vector<std::function<void()>> allSubscribedOnButtonReleasedEvent;
 
 public:
-	UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform);
+	UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform, bool _worldObject = false);
 	~UiScreenView_btnText();
 	void SetFont(sf::Font _newFont);
 	void SetText(sf::String _newText);
@@ -37,6 +47,7 @@ public:
 	void AddUiToScreen();
 	void RemoveUiFromScreen();
 	inline bool IsBeingDrawned() { return isUiBeingDrawned; }
+	void Update();
 
 	void SubscribeToBtnOnPressEvent(std::function<void()> function);
 	void UnsubscribeToBtnOnPressEvent(std::function<void()> function);

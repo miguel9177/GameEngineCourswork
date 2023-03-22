@@ -130,7 +130,7 @@ int main()
     SquareCollider* squareColl2 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
     sf::Texture testTexture2;
-    if (!testTexture2.loadFromFile("../Textures/whiteSquare.png"))
+    if (!testTexture2.loadFromFile("../Textures/WhiteSquare.png"))
     {
         std::cout << "Texture did not load!" << "\n" << std::endl;
     }
@@ -159,7 +159,7 @@ int main()
     SquareCollider* squareColl3 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
     sf::Texture testTexture3;
-    if (!testTexture2.loadFromFile("../Textures/whiteSquare.png"))
+    if (!testTexture2.loadFromFile("../Textures/WhiteSquare.png"))
     {
         std::cout << "Texture did not load!" << "\n" << std::endl;
     }
@@ -187,7 +187,9 @@ int main()
     {
         GameEngine::GetInstance()->Update();
         GameEngine::GetInstance()->Render();
-        
+        GameEngine::GetInstance()->MoveCamera(obj1->GetPosition());
+
+
         if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::A].pressing)
         {
             //std::cout << "PRessed A" << std::endl;
