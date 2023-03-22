@@ -30,6 +30,8 @@ public:
     void MoveCamera(Vector2 _newPos);
     Vector2 GetCameraPosition();
     Vector2 GetCameraSize();
+    void SetCameraSize(Vector2 _newSize);
+    void SetCameraViewPort(sf::FloatRect _newViewPort);
 
 #pragma endregion
 

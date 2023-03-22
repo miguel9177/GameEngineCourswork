@@ -75,10 +75,10 @@ void UiScreenView_btnText::SetTextColor(sf::Color _newColor)
 /// <param name="_newPos">NEEDS TO BE A VALUE FROM 0 TO 1</param>
 void UiScreenView_btnText::SetTextUiPosition(Vector2 _newPos, Vector2 _offset)
 {
-	sf::Vector2u windowSize = GameEngine::GetInstance()->GetWindowSize();
+	Vector2 windowSize = GameEngine::GetInstance()->GetCameraSize();
 	float xPos = windowSize.x * _newPos.x;
 	float yPos = windowSize.y * _newPos.y;
-
+	
 	//adjust the position of the ui depending on the camera position
 	xPos += GameEngine::GetInstance()->GetCameraPosition().x - windowSize.x / 2.0f;
 	yPos += GameEngine::GetInstance()->GetCameraPosition().y - windowSize.y / 2.0f;
@@ -110,7 +110,7 @@ void UiScreenView_btnText::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 	uiTransformInformation.pos = _newPos;
 	uiTransformInformation.offset = _offset;
 
-	sf::Vector2u windowSize = GameEngine::GetInstance()->GetWindowSize();
+	Vector2 windowSize = GameEngine::GetInstance()->GetCameraSize();;
 	float xPos = windowSize.x * _newPos.x;
 	float yPos = windowSize.y * _newPos.y;
 

@@ -57,6 +57,13 @@ void GameEngine::UpdateWindowEvents()
 
     while (graphicsEngine->GetEngineWindow()->pollEvent(windowEvents))
     {
+        if (windowEvents.type == sf::Event::Resized)
+        {
+            //since the camera has been resized, we get the new width and new height, and resize it
+            float newCameraWidth = windowEvents.size.width;
+            float newCameraHeight = windowEvents.size.height;
+            graphicsEngine->SetCameraSize(Vector2(newCameraWidth, newCameraHeight));
+        }
         InputsEngine::GetInstance()->ReceiveInputFromWindow(windowEvents);
     }    
 }

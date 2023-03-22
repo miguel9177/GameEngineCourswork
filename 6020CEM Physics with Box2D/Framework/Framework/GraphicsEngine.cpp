@@ -92,6 +92,16 @@ Vector2 GraphicsEngine::GetCameraSize()
     return Vector2(cameraView.getSize().x, cameraView.getSize().y);
 }
 
+void GraphicsEngine::SetCameraSize(Vector2 _newSize)
+{
+    cameraView.setSize(_newSize.x, _newSize.y);
+}
+
+void GraphicsEngine::SetCameraViewPort(sf::FloatRect _newViewPort)
+{
+    cameraView.setViewport(_newViewPort);
+}
+
 #pragma endregion
 
 #pragma region Debug

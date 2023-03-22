@@ -37,5 +37,6 @@ public:
     void MoveCamera(Vector2 _newPos);
     Vector2 GetCameraPosition();
     Vector2 GetCameraSize();
+    
 };
 

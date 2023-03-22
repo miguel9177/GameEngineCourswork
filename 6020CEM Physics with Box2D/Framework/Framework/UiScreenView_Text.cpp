@@ -55,7 +55,7 @@ void UiScreenView_Text::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 	uiTransformInformation.pos = _newPos;
 	uiTransformInformation.offset = _offset;
 
-	sf::Vector2u windowSize = GameEngine::GetInstance()->GetWindowSize();
+	Vector2 windowSize = GameEngine::GetInstance()->GetCameraSize();
 	float xPos = windowSize.x * _newPos.x;
 	float yPos = windowSize.y * _newPos.y;
 
