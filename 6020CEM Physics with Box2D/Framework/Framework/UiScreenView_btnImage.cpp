@@ -65,6 +65,17 @@ sf::Sprite UiScreenView_btnImage::GetComponentToDraw()
 
 void UiScreenView_btnImage::UserPressedLeftMouseButton()
 {
+	Vector2 mousePosition = InputsEngine::GetInstance()->GetMouseState().position;
+	sf::FloatRect buttonBounds = sprite.getGlobalBounds();
+
+	if (buttonBounds.contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+	{
+		std::cout << "clicked button" << std::endl;
+	}
+	else
+	{
+		std::cout << "Not clicked button" << std::endl;
+	}
 }
 
 void UiScreenView_btnImage::SubscribeToBtnOnPressEvent(void(*functionToCallBack)())
