@@ -54,6 +54,7 @@ void testUserMouseKeyReleasedLeft() { std::cout << "Released Left Mouse Button" 
 void testUserMouseKeyReleasedMidle() { std::cout << "Released Midle Mouse Button" << std::endl; }
 
 void testUserMouseMoved(Vector2 pos_) { std::cout << "Mouse position: X: " << pos_.x << " Y: " << pos_.y << std::endl; }
+void testUserMouseMoved2(Vector2 pos_) { std::cout << "Mouse position2: X: " << pos_.x << " Y: " << pos_.y << std::endl; }
 
 void testUserMouseScrollWheel(float delta_) { std::cout << "Mouse scrolled wheel " << delta_ << std::endl; }
 
@@ -82,8 +83,7 @@ int main()
     EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
     EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);
 
-    EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
-    EventQueue::GetInstance()->UnsubscribeToMouseMovedEvent(&testUserMouseMoved);
+    //EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
     EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
 
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);

@@ -55,7 +55,17 @@ private:
     std::map<sf::Keyboard::Key, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnKeyReleaseEvent;
     std::map<sf::Mouse::Button, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnMouseKeyPressEvent;
     std::map<sf::Mouse::Button, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnMouseKeyReleaseEvent;
-    std::vector<std::shared_ptr<std::function<void(Vector2 _pos)>>> allSubscribedOnMouseMovedEvent;
+    std::vector<std::function<void(Vector2 _pos)>> allSubscribedOnMouseMovedEvent;
     std::vector<std::shared_ptr<std::function<void(float _delta)>>> allSubscribedOnMouseWheelScrolledEvent;
+
+    //this was taken from https://stackoverflow.com/questions/20833453/comparing-stdfunctions-for-equality
+    //it basically gets the function adrees so that we can easaly compare it
+    template<typename T, typename... U>
+    inline size_t getAddress(std::function<T(U...)> f) {
+        typedef T(fnType)(U...);
+        fnType** fnPointer = f.template target<fnType*>();
+        return (size_t)*fnPointer;
+    }
+
 };
 

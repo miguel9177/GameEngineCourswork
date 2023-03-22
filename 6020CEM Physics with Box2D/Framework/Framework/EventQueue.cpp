@@ -88,14 +88,22 @@ void EventQueue::UnsubscribeToMouseKeyReleasedEvent(sf::Mouse::Button _mouseButt
 
 void EventQueue::SubscribeToMouseMovedEvent(std::function<void(Vector2 _pos)> function)
 {
-    allSubscribedOnMouseMovedEvent.push_back(std::make_shared<std::function<void(Vector2)>>(function));
+    allSubscribedOnMouseMovedEvent.push_back(std::function<void(Vector2)>(function));
 }
 
 void EventQueue::UnsubscribeToMouseMovedEvent(std::function<void(Vector2 _pos)> function)
 {
-    auto& subscribers = allSubscribedOnMouseMovedEvent;
-    auto function_ptr = std::make_shared<std::function<void(Vector2 _pos)>>(function);
-    subscribers.erase(std::remove(subscribers.begin(), subscribers.end(), function_ptr), subscribers.end());
+    for (unsigned int i = 0; i < allSubscribedOnMouseMovedEvent.size();)
+    {
+        if (allSubscribedOnMouseMovedEvent[i] != nullptr && getAddress(allSubscribedOnMouseMovedEvent[i]) == getAddress(function))
+        {
+            allSubscribedOnMouseMovedEvent.erase(allSubscribedOnMouseMovedEvent.begin() + i);
+        }
+        else
+        {
+            i++;
+        }
+    }
 }
 
 void EventQueue::SubscribeToMouseWheelScrolledEvent(std::function<void(float _delta)> function)
@@ -180,7 +188,7 @@ void EventQueue::InvokeMouseMovedEvents(Vector2 _pos)
     {
         if (callback != nullptr)
         {
-            (*callback)(_pos);
+            callback(_pos);
         }
     }
 }
