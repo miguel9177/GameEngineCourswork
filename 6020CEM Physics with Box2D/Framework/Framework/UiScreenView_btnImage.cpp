@@ -5,7 +5,7 @@
 #include "EventQueue.h"
 #include <functional>
 
-UiScreenView_btnImage::UiScreenView_btnImage(sf::Texture* _newImage, Transform* _transform)
+UiScreenView_btnImage::UiScreenView_btnImage(sf::Texture* _newImage, Transform* _transform) : texture(_newImage), transform(_transform)
 {
 	//if the texture is not 0, it means theres a texture assigned
 	if (texture != nullptr && texture->getSize() != sf::Vector2u(0, 0))
@@ -15,8 +15,8 @@ UiScreenView_btnImage::UiScreenView_btnImage(sf::Texture* _newImage, Transform* 
 		SetUiRotation(transform->rotation);
 		SetUiScale(transform->scale);
 		UiEngine::GetInstance()->AddUiScreenViewButtonImageToUiEngine(this);
-		//std::function<void()> callback = std::bind(&UiScreenView_btnImage::UserPressedLeftMouseButton, this);
-		//EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Left, callback);
+		std::function<void()> callback = std::bind(&UiScreenView_btnImage::UserPressedLeftMouseButton, this);
+		EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Left, callback);
 	}
 }
 

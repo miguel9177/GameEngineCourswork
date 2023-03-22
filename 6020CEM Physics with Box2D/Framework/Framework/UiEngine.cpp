@@ -1,6 +1,7 @@
 #include "UiEngine.h"
 #include "UiScreenView_Text.h"
 #include "UiScreenView_Image.h"
+#include "UiScreenView_btnImage.h"
 
 UiEngine* UiEngine::instance;
 
@@ -33,5 +34,11 @@ void UiEngine::DrawAllUi(sf::RenderWindow* _GameEngineWindow)
     for (UiScreenView_Image* screenViewImage : allScreenViewImages)
     {
         _GameEngineWindow->draw(screenViewImage->GetComponentToDraw());
+    }
+
+    //draws all button image items
+    for (UiScreenView_btnImage* screenViewBtnImage : allScreenViewBtnImages)
+    {
+        _GameEngineWindow->draw(screenViewBtnImage->GetComponentToDraw());
     }
 }

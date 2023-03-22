@@ -3,8 +3,10 @@
 #include <vector>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <functional>
+#include <memory>
+#include "Vector2.h"
 
-class Vector2;
 class EventQueue
 {
 private:
@@ -19,26 +21,26 @@ public:
     //this gives the instance of the graphics engine, and if theres no instance of it, it creates one
     static EventQueue* GetInstance();
 
-    void SubscribeToVoidEvent(voidEvents eventToSubscribeTo, void (*functionToCallBack)());
-    void UnsubscribeToVoidEvent(voidEvents eventToSubscribeTo, void (*functionToCallBack)());
+    void SubscribeToVoidEvent(voidEvents eventToSubscribeTo, std::function<void()> function);
+    void UnsubscribeToVoidEvent(voidEvents eventToSubscribeTo, std::function<void()> function);
 
-    void SubscribeToKeyPressEvent(sf::Keyboard::Key, void (*functionToCallBack)());
-    void UnsubscribeToKeyPressEvent(sf::Keyboard::Key, void (*functionToCallBack)());
+    void SubscribeToKeyPressEvent(sf::Keyboard::Key, std::function<void()> function);
+    void UnsubscribeToKeyPressEvent(sf::Keyboard::Key, std::function<void()> function);
 
-    void SubscribeToKeyReleasedEvent(sf::Keyboard::Key, void (*functionToCallBack)());
-    void UnsubscribeToKeyReleasedEvent(sf::Keyboard::Key, void (*functionToCallBack)());
+    void SubscribeToKeyReleasedEvent(sf::Keyboard::Key, std::function<void()> function);
+    void UnsubscribeToKeyReleasedEvent(sf::Keyboard::Key, std::function<void()> function);
 
-    void SubscribeToMouseKeyPressEvent(sf::Mouse::Button, void (*functionToCallBack)());
-    void UnsubscribeToMouseKeyPressEvent(sf::Mouse::Button, void (*functionToCallBack)());
+    void SubscribeToMouseKeyPressEvent(sf::Mouse::Button, std::function<void()> function);
+    void UnsubscribeToMouseKeyPressEvent(sf::Mouse::Button, std::function<void()> function);
 
-    void SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button, void (*functionToCallBack)());
-    void UnsubscribeToMouseKeyReleasedEvent(sf::Mouse::Button, void (*functionToCallBack)());
+    void SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button, std::function<void()> function);
+    void UnsubscribeToMouseKeyReleasedEvent(sf::Mouse::Button, std::function<void()> function);
 
-    void SubscribeToMouseMovedEvent(void (*functionToCallBack)(Vector2 _pos));
-    void UnsubscribeToMouseMovedEvent(void (*functionToCallBack)(Vector2 _pos));
+    void SubscribeToMouseMovedEvent(std::function<void(Vector2 _pos)> function);
+    void UnsubscribeToMouseMovedEvent(std::function<void(Vector2 _pos)> function);
 
-    void SubscribeToMouseWheelScrolledEvent(void (*functionToCallBack)(float _delta));
-    void UnsubscribeToMouseWheelScrolledEvent(void (*functionToCallBack)(float _delta));
+    void SubscribeToMouseWheelScrolledEvent(std::function<void(float _delta)> function);
+    void UnsubscribeToMouseWheelScrolledEvent(std::function<void(float _delta)> function);
 
     void InvokeVoidEvents(voidEvents eventToSubscribeTo);
     void InvokeKeyPressedEvents(sf::Keyboard::Key);
@@ -48,12 +50,12 @@ public:
     void InvokeMouseMovedEvents(Vector2 _pos);
     void InvokeMouseWheelScrolledEvents(float _mouseWheelDelta);
 private:
-    std::map<voidEvents, std::vector<void (*)()>> allSubscribedVoidEvents;
-    std::map<sf::Keyboard::Key, std::vector<void (*)()>> allSubscribedOnKeyPressEvent;
-    std::map<sf::Keyboard::Key, std::vector<void (*)()>> allSubscribedOnKeyReleaseEvent;
-    std::map<sf::Mouse::Button, std::vector<void (*)()>> allSubscribedOnMouseKeyPressEvent;
-    std::map<sf::Mouse::Button, std::vector<void (*)()>> allSubscribedOnMouseKeyReleaseEvent;
-    std::vector<void (*)(Vector2 _pos)> allSubscribedOnMouseMovedEvent;
-    std::vector<void (*)(float _delta)> allSubscribedOnMouseWheelScrolledEvent;
+    std::map<voidEvents, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedVoidEvents;
+    std::map<sf::Keyboard::Key, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnKeyPressEvent;
+    std::map<sf::Keyboard::Key, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnKeyReleaseEvent;
+    std::map<sf::Mouse::Button, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnMouseKeyPressEvent;
+    std::map<sf::Mouse::Button, std::vector<std::shared_ptr<std::function<void()>>>> allSubscribedOnMouseKeyReleaseEvent;
+    std::vector<std::shared_ptr<std::function<void(Vector2 _pos)>>> allSubscribedOnMouseMovedEvent;
+    std::vector<std::shared_ptr<std::function<void(float _delta)>>> allSubscribedOnMouseWheelScrolledEvent;
 };
 

@@ -13,6 +13,7 @@
 #include "UiEngine.h"
 #include "UiScreenView_Text.h"
 #include "UiScreenView_Image.h"
+#include "UiScreenView_btnImage.h"
 
 void test()
 {
@@ -65,24 +66,25 @@ int main()
     GameEngine::GetInstance()->InitializeEngine(1920,1080);
     GameEngine::GetInstance()->isDebugMode = true;
     
-    //EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
-    //EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
-    //EventQueue::GetInstance()->UnsubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test3);
+    EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
+    EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
+    EventQueue::GetInstance()->UnsubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test3);
 
-    //EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::A, &testUserKeyPressedA);
-    //EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::D, &testUserKeyPressedD);
-    //EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::A, &testUserKeyReleasedA);
-    //EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::D, &testUserKeyReleasedD);
+    EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::A, &testUserKeyPressedA);
+    EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::D, &testUserKeyPressedD);
+    EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::A, &testUserKeyReleasedA);
+    EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::D, &testUserKeyReleasedD);
 
-    //EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Right, &testUserMouseKeyPressedRight);
-    //EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Left, &testUserMouseKeyPressedLeft);
-    //EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Middle, &testUserMouseKeyPressedMidle);
-    //EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Right, &testUserMouseKeyReleasedRight);
-    //EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
-    //EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);
+    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Right, &testUserMouseKeyPressedRight);
+    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Left, &testUserMouseKeyPressedLeft);
+    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Middle, &testUserMouseKeyPressedMidle);
+    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Right, &testUserMouseKeyReleasedRight);
+    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
+    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);
 
-    ////EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
-    //EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
+    EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
+    EventQueue::GetInstance()->UnsubscribeToMouseMovedEvent(&testUserMouseMoved);
+    EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
 
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);
 
@@ -208,12 +210,20 @@ int main()
 #pragma region Testing UI
 
     UiScreenView_Text* ui_txtText1 = new UiScreenView_Text("string 1 working on UiEngine", new Transform(Vector2(0.5f, 0.0f), 0, Vector2(1, 1)));
+
     sf::Texture ui_texture1;
     if (!ui_texture1.loadFromFile("../Textures/keyboardcat.jpg"))
     {
         std::cout << "Texture did not load!" << "\n" << std::endl;
     }
     UiScreenView_Image* ui_img1 = new UiScreenView_Image(&ui_texture1 ,new Transform(Vector2(0.9f, 0.7f), 90, Vector2(2, 2)));
+
+    sf::Texture ui_texture2;
+    if (!ui_texture2.loadFromFile("../Textures/keyboardcat.jpg"))
+    {
+        std::cout << "Texture did not load!" << "\n" << std::endl;
+    }
+    UiScreenView_btnImage* ui_btnImg1 = new UiScreenView_btnImage(&ui_texture2, new Transform(Vector2(0, 0.5), 90, Vector2(2, 2)));
 
 #pragma endregion
 
