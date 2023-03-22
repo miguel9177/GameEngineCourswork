@@ -49,6 +49,15 @@ public:
     void InvokeMouseKeyReleasedEvents(sf::Mouse::Button _mouseButton);
     void InvokeMouseMovedEvents(Vector2 _pos);
     void InvokeMouseWheelScrolledEvents(float _mouseWheelDelta);
+
+    //this was taken from https://stackoverflow.com/questions/20833453/comparing-stdfunctions-for-equality
+    //it basically gets the function adrees so that we can easaly compare it
+    template<typename T, typename... U>
+    static inline size_t getAddress(std::function<T(U...)> f) {
+        typedef T(fnType)(U...);
+        fnType** fnPointer = f.template target<fnType*>();
+        return (size_t)*fnPointer;
+    }
 private:
     std::map<voidEvents, std::vector<std::function<void()>>> allSubscribedVoidEvents;
     std::map<sf::Keyboard::Key, std::vector<std::function<void()>>> allSubscribedOnKeyPressEvent;
@@ -57,15 +66,6 @@ private:
     std::map<sf::Mouse::Button, std::vector<std::function<void()>>> allSubscribedOnMouseKeyReleaseEvent;
     std::vector<std::function<void(Vector2 _pos)>> allSubscribedOnMouseMovedEvent;
     std::vector<std::function<void(float _delta)>> allSubscribedOnMouseWheelScrolledEvent;
-
-    //this was taken from https://stackoverflow.com/questions/20833453/comparing-stdfunctions-for-equality
-    //it basically gets the function adrees so that we can easaly compare it
-    template<typename T, typename... U>
-    inline size_t getAddress(std::function<T(U...)> f) {
-        typedef T(fnType)(U...);
-        fnType** fnPointer = f.template target<fnType*>();
-        return (size_t)*fnPointer;
-    }
 
 };
 

@@ -2,15 +2,18 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Transform.h"
-
+#include <functional>
 class UiScreenView_btnImage
 {
 private:
 	sf::Sprite sprite;
 	sf::Texture* texture;
 	Transform* transform;
+	bool pressing = false;
 	
-	std::vector<void (*)(float _delta)> allSubscribedOnButtonPressEvent;
+	std::vector<std::function<void()>> allSubscribedOnButtonPressEvent;
+	std::vector<std::function<void()>> allSubscribedOnButtonReleasedEvent;
+
 public:
 	UiScreenView_btnImage(sf::Texture* _newImage, Transform* _transform);
 	~UiScreenView_btnImage();
@@ -19,9 +22,14 @@ public:
 	void SetUiScale(Vector2 _newScale);
 	sf::Sprite GetComponentToDraw();
 
-	void SubscribeToBtnOnPressEvent(void (*functionToCallBack)());
-	void UnsubscribeToBtnOnPressEvent(void (*functionToCallBack)());
-	void SubscribeToBtnOnReleasedEvent(void (*functionToCallBack)());
-	void UnsubscribeToBtnOnReleasedEvent(void (*functionToCallBack)());
+	void SubscribeToBtnOnPressEvent(std::function<void()> function);
+	void UnsubscribeToBtnOnPressEvent(std::function<void()> function);
+	void SubscribeToBtnOnReleasedEvent(std::function<void()> function);
+	void UnsubscribeToBtnOnReleasedEvent(std::function<void()> function);
+
+private:
+	void InvokeButtonPressedEvent();
+	void InvokeButtonReleasedEvent();
 	void UserPressedLeftMouseButton();
+	void UserReleasedLeftMouseButton();
 };
