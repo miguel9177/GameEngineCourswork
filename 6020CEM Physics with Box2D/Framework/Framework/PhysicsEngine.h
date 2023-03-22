@@ -20,7 +20,7 @@ private:
     ~PhysicsEngine();
 public:
 
-    //this gives the instance of the graphics engine, and if theres no instance of it, it creates one
+    //this gives the instance of the Physics engine, and if theres no instance of it, it creates one
     static PhysicsEngine* GetInstance();
 
     b2Body* CreateRigidBody(b2BodyDef* bodyDefenition);

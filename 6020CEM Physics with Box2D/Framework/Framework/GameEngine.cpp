@@ -1,4 +1,5 @@
 #include "GameEngine.h"
+#include "EngineFunctionalityManager.h"
 
 GameEngine* GameEngine::instance;
 
@@ -25,6 +26,7 @@ GameEngine* GameEngine::GetInstance()
 void GameEngine::InitializeEngine(float width, float height)
 {
     graphicsEngine->InitializeWindow(width, height);
+    EngineFunctionalityManager::GetInstance();
 }
 
 void GameEngine::Update()

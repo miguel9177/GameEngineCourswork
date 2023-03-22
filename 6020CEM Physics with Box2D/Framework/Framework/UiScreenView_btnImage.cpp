@@ -46,7 +46,7 @@ void UiScreenView_btnImage::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 	sprite.setOrigin(textBounds.width / 2, textBounds.height / 2);
 
 	//move the sfml text to the correct position
-	sprite.setPosition(xPos + _offset.x, yPos + _offset.x);
+	sprite.setPosition(xPos + _offset.x, yPos + _offset.y);
 }
 
 void UiScreenView_btnImage::SetUiRotation(float _newRot)

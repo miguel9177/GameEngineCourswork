@@ -15,6 +15,7 @@
 #include "UiScreenView_Image.h"
 #include "UiScreenView_btnImage.h"
 #include "UiScreenView_btnText.h"
+#include "EngineFunctionalityManager.h"
 
 void test()
 {
@@ -66,7 +67,6 @@ void testUserMouseScrollWheel(float delta_) { std::cout << "Mouse scrolled wheel
 int main()
 {
     GameEngine::GetInstance()->InitializeEngine(1920,1080);
-    GameEngine::GetInstance()->isDebugMode = true;
     
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
@@ -83,6 +83,8 @@ int main()
     EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Right, &testUserMouseKeyReleasedRight);
     EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
     EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);
+
+ 
 
     //EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
     EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
@@ -175,41 +177,7 @@ int main()
     
 #pragma endregion
 
-#pragma region Testing UI
-
-    UiScreenView_Text* ui_txtText1 = new UiScreenView_Text("string 1 working on UiEngine", new Transform(Vector2(0.5f, 0.0f), 0, Vector2(1, 1)));
-    ui_txtText1->AddUiToScreen();
-
-    sf::Texture ui_texture1;
-    if (!ui_texture1.loadFromFile("../Textures/keyboardcat.jpg"))
-    {
-        std::cout << "Texture did not load!" << "\n" << std::endl;
-    }
-    UiScreenView_Image* ui_img1 = new UiScreenView_Image(&ui_texture1 ,new Transform(Vector2(0.9f, 0.7f), 90, Vector2(2, 2)));
-    ui_img1->AddUiToScreen();
-
-    sf::Texture ui_texture2;
-    if (!ui_texture2.loadFromFile("../Textures/keyboardcat.jpg"))
-    {
-        std::cout << "Texture did not load!" << "\n" << std::endl;
-    }
-    UiScreenView_btnImage* ui_btnImg1 = new UiScreenView_btnImage(&ui_texture2, new Transform(Vector2(0, 0.5), 90, Vector2(2, 2)));
-    ui_btnImg1->AddUiToScreen();
-
-    sf::Texture ui_texture3;
-    if (!ui_texture3.loadFromFile("../Textures/whiteSquare.png"))
-    {
-        std::cout << "Texture did not load!" << "\n" << std::endl;
-    }
-    UiScreenView_btnText* ui_btnText1 = new UiScreenView_btnText(&ui_texture3, new Transform(Vector2(0.5, 0.5), 0, Vector2(2,1)), "button1", new Transform(Vector2(0.5f, 0.5f), 0, Vector2(1, 1)));
-    ui_btnText1->SetFontSize(25);
-    ui_btnText1->SetTextColor(sf::Color::Black);
-    ui_btnText1->SetTextUiPosition(Vector2(0.5f, 0.5f), Vector2(-10, 0));
-    ui_btnText1->AddUiToScreen();
-    ui_btnText1->SubscribeToBtnOnPressEvent(test);
-    ui_btnText1->SubscribeToBtnOnReleasedEvent(test2);
-
-#pragma endregion
+    
 
     Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);
     RigidBody* rbToCheckPos = obj1->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);

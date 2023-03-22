@@ -127,6 +127,7 @@
     <ClCompile Include="Com_Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Com_Mesh.cpp" />
+    <ClCompile Include="EngineFunctionalityManager.cpp" />
     <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="CommunImports.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Com_Mesh.h" />
+    <ClInclude Include="EngineFunctionalityManager.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />

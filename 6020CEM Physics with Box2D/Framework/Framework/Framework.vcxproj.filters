@@ -117,6 +117,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Components\Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="EngineFunctionalityManager.cpp">
+      <Filter>Source Files\Engines\Cpps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Source Files\Components\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFunctionalityManager.h">
+      <Filter>Source Files\Engines\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
