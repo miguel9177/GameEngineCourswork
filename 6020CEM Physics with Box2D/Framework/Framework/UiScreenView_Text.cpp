@@ -18,7 +18,6 @@ UiScreenView_Text::UiScreenView_Text(std::string _textToDisplay, Transform* _tra
 	sfmlText.setFillColor(sf::Color::White);
 	sfmlText.setStyle(sf::Text::Regular);
 	SetUiPosition(transform->position);
-	UiEngine::GetInstance()->AddUiScreenViewTextToUiEngine(this);
 
 }
 
@@ -78,4 +77,16 @@ void UiScreenView_Text::SetUiScale(Vector2 _newScale)
 sf::Text UiScreenView_Text::GetComponentToDraw()
 {
 	return sfmlText;
+}
+
+void UiScreenView_Text::AddUiToScreen()
+{
+	isUiBeingDrawned = true;
+	UiEngine::GetInstance()->AddUiScreenViewTextToUiEngine(this);
+}
+
+void UiScreenView_Text::RemoveUiFromScreen()
+{
+	isUiBeingDrawned = false;
+	UiEngine::GetInstance()->RemoveUiScreenViewTextFromUiEngine(this);
 }

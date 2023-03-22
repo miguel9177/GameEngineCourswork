@@ -180,6 +180,7 @@ int main()
 #pragma region Testing UI
 
     UiScreenView_Text* ui_txtText1 = new UiScreenView_Text("string 1 working on UiEngine", new Transform(Vector2(0.5f, 0.0f), 0, Vector2(1, 1)));
+    ui_txtText1->AddUiToScreen();
 
     sf::Texture ui_texture1;
     if (!ui_texture1.loadFromFile("../Textures/keyboardcat.jpg"))
@@ -187,6 +188,7 @@ int main()
         std::cout << "Texture did not load!" << "\n" << std::endl;
     }
     UiScreenView_Image* ui_img1 = new UiScreenView_Image(&ui_texture1 ,new Transform(Vector2(0.9f, 0.7f), 90, Vector2(2, 2)));
+    ui_img1->AddUiToScreen();
 
     sf::Texture ui_texture2;
     if (!ui_texture2.loadFromFile("../Textures/keyboardcat.jpg"))
@@ -194,7 +196,9 @@ int main()
         std::cout << "Texture did not load!" << "\n" << std::endl;
     }
     UiScreenView_btnImage* ui_btnImg1 = new UiScreenView_btnImage(&ui_texture2, new Transform(Vector2(0, 0.5), 90, Vector2(2, 2)));
-    
+    ui_btnImg1->AddUiToScreen();
+    ui_btnImg1->SubscribeToBtnOnPressEvent(test);
+
 #pragma endregion
 
     Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);

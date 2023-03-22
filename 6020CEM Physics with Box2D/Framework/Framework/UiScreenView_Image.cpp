@@ -12,7 +12,6 @@ UiScreenView_Image::UiScreenView_Image(sf::Texture* _newImage, Transform* _trans
 		SetUiPosition(transform->position);
 		SetUiRotation(transform->rotation);
 		SetUiScale(transform->scale);
-		UiEngine::GetInstance()->AddUiScreenViewImageToUiEngine(this);
 	}
 }
 
@@ -56,3 +55,20 @@ sf::Sprite UiScreenView_Image::GetComponentToDraw()
 {
 	return sprite;
 }
+
+#pragma region helper functions
+
+void UiScreenView_Image::AddUiToScreen()
+{
+	isUiBeingDrawned = true;
+	UiEngine::GetInstance()->AddUiScreenViewImageToUiEngine(this);
+}
+
+void UiScreenView_Image::RemoveUiFromScreen()
+{
+	isUiBeingDrawned = false;
+	UiEngine::GetInstance()->RemoveUiScreenViewImageFromUiEngine(this);
+}
+
+#pragma endregion
+

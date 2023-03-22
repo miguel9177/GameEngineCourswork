@@ -8,6 +8,8 @@ class UiScreenView_Text
 private:
 	sf::Text sfmlText;
 	Transform* transform;
+	bool isUiBeingDrawned = false;
+
 public:
 	UiScreenView_Text(std::string _textToDisplay, Transform* _transform);
 	~UiScreenView_Text();
@@ -19,5 +21,8 @@ public:
 	void SetUiRotation(float _newRot);
 	void SetUiScale(Vector2 _newScale);
 	sf::Text GetComponentToDraw();
+	void AddUiToScreen();
+	void RemoveUiFromScreen();
+	inline bool IsBeingDrawned() { return isUiBeingDrawned; }
 };
 

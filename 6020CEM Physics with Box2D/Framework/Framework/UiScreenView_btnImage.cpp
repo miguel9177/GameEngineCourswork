@@ -14,7 +14,6 @@ UiScreenView_btnImage::UiScreenView_btnImage(sf::Texture* _newImage, Transform* 
 		SetUiPosition(transform->position);
 		SetUiRotation(transform->rotation);
 		SetUiScale(transform->scale);
-		UiEngine::GetInstance()->AddUiScreenViewButtonImageToUiEngine(this);
 
 		//this subscribes to the left mouse click event, in order for it to call the function UserPressedLeftMouseButton everytime the user presses left mouse button
 		std::function<void()> mousePressCallback = std::bind(&UiScreenView_btnImage::UserPressedLeftMouseButton, this);
@@ -71,6 +70,9 @@ sf::Sprite UiScreenView_btnImage::GetComponentToDraw()
 
 void UiScreenView_btnImage::UserPressedLeftMouseButton()
 {
+	if (!isUiBeingDrawned)
+		return;
+
 	if (isButtonBeingHovered() && !pressing)
 	{
 		pressing = true;
@@ -162,6 +164,18 @@ bool UiScreenView_btnImage::isButtonBeingHovered()
 		return true;
 	else 
 		return false;
+}
+
+void UiScreenView_btnImage::AddUiToScreen()
+{
+	isUiBeingDrawned = true;
+	UiEngine::GetInstance()->AddUiScreenViewButtonImageToUiEngine(this);
+}
+
+void UiScreenView_btnImage::RemoveUiFromScreen()
+{
+	isUiBeingDrawned = false;
+	UiEngine::GetInstance()->RemoveUiScreenViewButtonImageFromUiEngine(this);
 }
 
 #pragma endregion

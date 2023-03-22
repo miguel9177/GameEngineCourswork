@@ -10,6 +10,7 @@ private:
 	sf::Texture* texture;
 	Transform* transform;
 	bool pressing = false;
+	bool isUiBeingDrawned = false;
 	
 	std::vector<std::function<void()>> allSubscribedOnButtonPressEvent;
 	std::vector<std::function<void()>> allSubscribedOnButtonReleasedEvent;
@@ -22,6 +23,9 @@ public:
 	void SetUiScale(Vector2 _newScale);
 	sf::Sprite GetComponentToDraw();
 	bool isButtonBeingHovered();
+	void AddUiToScreen();
+	void RemoveUiFromScreen();
+	inline bool IsBeingDrawned() { return isUiBeingDrawned; }
 
 	void SubscribeToBtnOnPressEvent(std::function<void()> function);
 	void UnsubscribeToBtnOnPressEvent(std::function<void()> function);
