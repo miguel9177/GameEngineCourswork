@@ -46,7 +46,7 @@ void EngineFunctionalityManager::CreateEngineUI()
     uiImg_TopNavbar->AddUiToScreen();
 
 
-#pragma region Creation of 3 UI buttons (Play, Debug, Stop)
+#pragma region Creation of 4 UI buttons (Play, Debug, Stop, Save Button)
     
     {
         //this code creates a new button in this case the play button
@@ -96,6 +96,23 @@ void EngineFunctionalityManager::CreateEngineUI()
         //adds the button to the screem
         uiBtnImg_StopButton->AddUiToScreen();
     }
+
+    {
+        //this code creates a new button in this case the stop button
+        sf::Texture* uiTexture_SaveButton = new sf::Texture();
+        if (!uiTexture_SaveButton->loadFromFile("../Textures/SaveSceneButton.png"))
+        {
+            std::cout << "Texture did not load!" << "\n" << std::endl;
+        }
+
+        uiBtnImg_SaveButton = new UiScreenView_btnImage(uiTexture_SaveButton, new Transform(Vector2(0.5f, 0), 0, Vector2(1, 1)));
+        uiBtnImg_SaveButton->SetUiPosition(Vector2(0, 0), Vector2(25, 38));
+        //this subscribes to the on debug button press callback
+        std::function<void()> onSaveButtonPressedCallback = std::bind(&EngineFunctionalityManager::OnSaveButtonClicked, this);
+        uiBtnImg_SaveButton->SubscribeToBtnOnPressEvent(onSaveButtonPressedCallback);
+        //adds the button to the screem
+        uiBtnImg_SaveButton->AddUiToScreen();
+    }
 #pragma endregion
 
    
@@ -132,6 +149,11 @@ void EngineFunctionalityManager::OnDebugButtonClicked()
 void EngineFunctionalityManager::OnStopButtonClicked()
 {
     
+}
+
+void EngineFunctionalityManager::OnSaveButtonClicked()
+{
+    std::cout << "Save button pressed " << std::endl;
 }
 
 #pragma endregion

@@ -9,6 +9,7 @@ private:
 	UiScreenView_btnImage* uiBtnImg_PlayButton;
 	UiScreenView_btnImage* uiBtnImg_DebugButton;
 	UiScreenView_btnImage* uiBtnImg_StopButton;
+	UiScreenView_btnImage* uiBtnImg_SaveButton;
 #pragma endregion
 
 	static EngineFunctionalityManager* instance;
@@ -20,6 +21,7 @@ private:
 	void OnPlayButtonClicked();
 	void OnDebugButtonClicked();
 	void OnStopButtonClicked();
+	void OnSaveButtonClicked();
 
 #pragma endregion
 
