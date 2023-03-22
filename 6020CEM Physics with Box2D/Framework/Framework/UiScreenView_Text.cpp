@@ -50,7 +50,7 @@ void UiScreenView_Text::SetTextColor(sf::Color _newColor)
 /// 
 /// </summary>
 /// <param name="_newPos">NEEDS TO BE A VALUE FROM 0 TO 1</param>
-void UiScreenView_Text::SetUiPosition(Vector2 _newPos)
+void UiScreenView_Text::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 {
 	sf::Vector2u windowSize = GameEngine::GetInstance()->GetWindowSize();
 	float xPos = windowSize.x * _newPos.x;
@@ -61,7 +61,7 @@ void UiScreenView_Text::SetUiPosition(Vector2 _newPos)
 	sfmlText.setOrigin(textBounds.width / 2, textBounds.height / 2);
 
 	//move the sfml text to the correct position
-	sfmlText.setPosition(xPos, yPos);
+	sfmlText.setPosition(xPos + _offset.x, yPos + _offset.y);
 }
 
 void UiScreenView_Text::SetUiRotation(float _newRot)

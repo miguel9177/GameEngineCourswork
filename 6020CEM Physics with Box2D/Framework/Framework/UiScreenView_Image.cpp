@@ -25,7 +25,7 @@ UiScreenView_Image::~UiScreenView_Image()
 /// 
 /// </summary>
 /// <param name="_newPos">NEEDS TO BE A VALUE FROM 0 TO 1</param>
-void UiScreenView_Image::SetUiPosition(Vector2 _newPos)
+void UiScreenView_Image::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 {
 	sf::Vector2u windowSize = GameEngine::GetInstance()->GetWindowSize();
 	float xPos = windowSize.x * _newPos.x;
@@ -36,7 +36,7 @@ void UiScreenView_Image::SetUiPosition(Vector2 _newPos)
 	sprite.setOrigin(textBounds.width / 2, textBounds.height / 2);
 
 	//move the sfml text to the correct position
-	sprite.setPosition(xPos, yPos);
+	sprite.setPosition(xPos + _offset.x, yPos + _offset.y);
 }
 
 void UiScreenView_Image::SetUiRotation(float _newRot)

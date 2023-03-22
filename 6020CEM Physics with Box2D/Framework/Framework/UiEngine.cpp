@@ -25,12 +25,6 @@ UiEngine* UiEngine::GetInstance()
 
 void UiEngine::DrawAllUi(sf::RenderWindow* _GameEngineWindow)
 {
-    //draws all text items
-    for (UiScreenView_Text* screenViewText : allScreenViewTexts) 
-    {
-        _GameEngineWindow->draw(screenViewText->GetComponentToDraw());
-    }
-
     //draws all image items
     for (UiScreenView_Image* screenViewImage : allScreenViewImages)
     {
@@ -47,5 +41,11 @@ void UiEngine::DrawAllUi(sf::RenderWindow* _GameEngineWindow)
     for (UiScreenView_btnText* screenViewBtnText : allScreenViewBtnTexts)
     {
         _GameEngineWindow->draw(screenViewBtnText->GetComponentToDraw());
+    }
+
+    //draws all text items
+    for (UiScreenView_Text* screenViewText : allScreenViewTexts)
+    {
+        _GameEngineWindow->draw(screenViewText->GetComponentToDraw());
     }
 }

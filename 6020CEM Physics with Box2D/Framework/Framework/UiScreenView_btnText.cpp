@@ -6,11 +6,15 @@
 #include <functional>
 #include "UiScreenView_Text.h"
 
-UiScreenView_btnText::UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay) : texture(_newImage), transform(_transform), ui_text(_textToDisplay, _transform)
+UiScreenView_btnText::UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform) : texture(_newImage), transform(_transform), textTansform(_textTransform), ui_text(_textToDisplay, _textTransform)
 {
 	//if the texture is not 0, it means theres a texture assigned
 	if (texture != nullptr && texture->getSize() != sf::Vector2u(0, 0))
 	{
+		SetTextUiPosition(_textTransform->position);
+		SetTextUiRotation(_textTransform->rotation);
+		SetTextUiScale(_textTransform->scale);
+
 		sprite.setTexture(*texture);
 		SetUiPosition(transform->position);
 		SetUiRotation(transform->rotation);
@@ -32,11 +36,61 @@ UiScreenView_btnText::~UiScreenView_btnText()
 	delete transform;
 }
 
+#pragma region Set Data
+
+void UiScreenView_btnText::SetFont(sf::Font _newFont)
+{
+	ui_text.SetFont(_newFont);
+}
+
+void UiScreenView_btnText::SetText(sf::String _newText)
+{
+	ui_text.SetText(_newText);
+}
+
+void UiScreenView_btnText::SetFontSize(float _newSize)
+{
+	ui_text.SetFontSize(_newSize);
+}
+
+void UiScreenView_btnText::SetTextColor(sf::Color _newColor)
+{
+	ui_text.SetTextColor(_newColor);
+}
+
 /// <summary>
 /// NEEDS TO BE A VALUE FROM 0 TO 1
 /// </summary>
 /// <param name="_newPos">NEEDS TO BE A VALUE FROM 0 TO 1</param>
-void UiScreenView_btnText::SetUiPosition(Vector2 _newPos)
+void UiScreenView_btnText::SetTextUiPosition(Vector2 _newPos, Vector2 _offset)
+{
+	sf::Vector2u windowSize = GameEngine::GetInstance()->GetWindowSize();
+	float xPos = windowSize.x * _newPos.x;
+	float yPos = windowSize.y * _newPos.y;
+
+	//move the origin to its center
+	sf::FloatRect textBounds = ui_text.GetSfmlText()->getLocalBounds();
+	ui_text.GetSfmlText()->setOrigin(textBounds.width / 2, textBounds.height / 2);
+
+	//move the sfml text to the correct position
+	ui_text.GetSfmlText()->setPosition(xPos + _offset.x, yPos + _offset.y);
+}
+
+void UiScreenView_btnText::SetTextUiRotation(float _newRot)
+{
+	ui_text.GetSfmlText()->setRotation(_newRot);
+}
+
+void UiScreenView_btnText::SetTextUiScale(Vector2 _newScale)
+{
+	ui_text.GetSfmlText()->setScale(_newScale);
+}
+
+/// <summary>
+/// NEEDS TO BE A VALUE FROM 0 TO 1
+/// </summary>
+/// <param name="_newPos">NEEDS TO BE A VALUE FROM 0 TO 1</param>
+void UiScreenView_btnText::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 {
 	sf::Vector2u windowSize = GameEngine::GetInstance()->GetWindowSize();
 	float xPos = windowSize.x * _newPos.x;
@@ -47,7 +101,7 @@ void UiScreenView_btnText::SetUiPosition(Vector2 _newPos)
 	sprite.setOrigin(textBounds.width / 2, textBounds.height / 2);
 
 	//move the sfml text to the correct position
-	sprite.setPosition(xPos, yPos);
+	sprite.setPosition(xPos + _offset.x, yPos + _offset.y);
 }
 
 void UiScreenView_btnText::SetUiRotation(float _newRot)
@@ -61,6 +115,8 @@ void UiScreenView_btnText::SetUiScale(Vector2 _newScale)
 	float scaleY = _newScale.y * Shape::defaultPixelsForBasicShapes / texture->getSize().y;
 	sprite.setScale(scaleX, scaleY);
 }
+
+#pragma endregion
 
 sf::Sprite UiScreenView_btnText::GetComponentToDraw()
 {
@@ -171,12 +227,14 @@ void UiScreenView_btnText::AddUiToScreen()
 {
 	isUiBeingDrawned = true;
 	UiEngine::GetInstance()->AddUiScreenViewButtonTextToUiEngine(this);
+	UiEngine::GetInstance()->AddUiScreenViewTextToUiEngine(&ui_text);
 }
 
 void UiScreenView_btnText::RemoveUiFromScreen()
 {
 	isUiBeingDrawned = false;
 	UiEngine::GetInstance()->RemoveUiScreenViewButtonTextFromUiEngine(this);
+	UiEngine::GetInstance()->RemoveUiScreenViewTextFromUiEngine(&ui_text);
 }
 
 #pragma endregion

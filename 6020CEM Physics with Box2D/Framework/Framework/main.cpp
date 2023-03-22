@@ -14,6 +14,7 @@
 #include "UiScreenView_Text.h"
 #include "UiScreenView_Image.h"
 #include "UiScreenView_btnImage.h"
+#include "UiScreenView_btnText.h"
 
 void test()
 {
@@ -114,9 +115,6 @@ int main()
     Scene::GetInstance()->AddObject(obj1);
 
 
-
-
-
     //Object 2
     GameObject* obj2 = new GameObject("obj2", new Transform(Vector2(1,1.2), 0, Vector2(1,1)));
 
@@ -197,7 +195,19 @@ int main()
     }
     UiScreenView_btnImage* ui_btnImg1 = new UiScreenView_btnImage(&ui_texture2, new Transform(Vector2(0, 0.5), 90, Vector2(2, 2)));
     ui_btnImg1->AddUiToScreen();
-    ui_btnImg1->SubscribeToBtnOnPressEvent(test);
+
+    sf::Texture ui_texture3;
+    if (!ui_texture3.loadFromFile("../Textures/whiteSquare.png"))
+    {
+        std::cout << "Texture did not load!" << "\n" << std::endl;
+    }
+    UiScreenView_btnText* ui_btnText1 = new UiScreenView_btnText(&ui_texture3, new Transform(Vector2(0.5, 0.5), 0, Vector2(2,1)), "button1", new Transform(Vector2(0.5f, 0.5f), 0, Vector2(1, 1)));
+    ui_btnText1->SetFontSize(25);
+    ui_btnText1->SetTextColor(sf::Color::Black);
+    ui_btnText1->SetTextUiPosition(Vector2(0.5f, 0.5f), Vector2(-10, 0));
+    ui_btnText1->AddUiToScreen();
+    ui_btnText1->SubscribeToBtnOnPressEvent(test);
+    ui_btnText1->SubscribeToBtnOnReleasedEvent(test2);
 
 #pragma endregion
 

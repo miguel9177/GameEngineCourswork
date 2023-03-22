@@ -12,6 +12,7 @@ private:
 	sf::Texture* texture;
 	UiScreenView_Text ui_text;
 	Transform* transform;
+	Transform* textTansform;
 	bool pressing = false;
 	bool isUiBeingDrawned = false;
 
@@ -19,9 +20,16 @@ private:
 	std::vector<std::function<void()>> allSubscribedOnButtonReleasedEvent;
 
 public:
-	UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay);
+	UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform);
 	~UiScreenView_btnText();
-	void SetUiPosition(Vector2 _newPos);
+	void SetFont(sf::Font _newFont);
+	void SetText(sf::String _newText);
+	void SetFontSize(float _newSize);
+	void SetTextColor(sf::Color _newColor);
+	void SetTextUiPosition(Vector2 _newPos, Vector2 _offset = Vector2(0, 0));
+	void SetTextUiRotation(float _newRot);
+	void SetTextUiScale(Vector2 _newScale);
+	void SetUiPosition(Vector2 _newPos, Vector2 _offset = Vector2(0, 0));
 	void SetUiRotation(float _newRot);
 	void SetUiScale(Vector2 _newScale);
 	sf::Sprite GetComponentToDraw();

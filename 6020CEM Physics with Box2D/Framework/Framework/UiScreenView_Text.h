@@ -17,12 +17,13 @@ public:
 	void SetText(sf::String _newText);
 	void SetFontSize(float _newSize);
 	void SetTextColor(sf::Color _newColor);
-	void SetUiPosition(Vector2 _newPos);
+	void SetUiPosition(Vector2 _newPos, Vector2 _offset = Vector2(0, 0));
 	void SetUiRotation(float _newRot);
 	void SetUiScale(Vector2 _newScale);
 	sf::Text GetComponentToDraw();
 	void AddUiToScreen();
 	void RemoveUiFromScreen();
 	inline bool IsBeingDrawned() { return isUiBeingDrawned; }
+	inline sf::Text* GetSfmlText() { return &sfmlText; };
 };
 

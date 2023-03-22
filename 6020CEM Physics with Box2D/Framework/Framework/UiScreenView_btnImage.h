@@ -18,7 +18,7 @@ private:
 public:
 	UiScreenView_btnImage(sf::Texture* _newImage, Transform* _transform);
 	~UiScreenView_btnImage();
-	void SetUiPosition(Vector2 _newPos);
+	void SetUiPosition(Vector2 _newPos, Vector2 _offset = Vector2(0, 0));
 	void SetUiRotation(float _newRot);
 	void SetUiScale(Vector2 _newScale);
 	sf::Sprite GetComponentToDraw();
