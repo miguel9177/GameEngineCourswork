@@ -1,5 +1,7 @@
 #pragma once
 #include <jsoncpp/json/json.h>
+
+class Com_Mesh;
 class EngineJsonReader
 {
 private:
@@ -25,5 +27,10 @@ public:
 #pragma region writing Json functions
 	void SaveScene();
 #pragma endregion
+
+#pragma region Helper Functions
+	Com_Mesh* CreateComMeshFromJsonData(Json::Value jsonData_);
+#pragma endregion
+
 };
 

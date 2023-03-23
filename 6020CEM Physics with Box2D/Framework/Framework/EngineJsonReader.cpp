@@ -69,47 +69,11 @@ void EngineJsonReader::LoadSceneToPlay()
             //this gets the current component json data
             Json::Value currentComponent_Json_Data = allcomponents_json_Data[currentComponent_json_Name];
 
-            //TODO: CREATE HELPER FUNCTIONS FOR THIS, FOR EXAMPLE EVERY COMPONENT CAN HAVE A HELPER FUNCTION THAT CREATES THE COMPONENT RECEIVED
-
             //if the current component is called Com_Mesh
             if (currentComponent_json_Name == "Com_Mesh")
             {
-                //CC MEANS CURRENT COMPONENT
-                
-                //gets the texture of the com_mesh
-                std::string cc_json_Com_Mesh_texture = currentComponent_Json_Data["Texture"].asString();
-                
-#pragma region Getting the shape box data
-                //gets all the shape box data
-                Json::Value cc_json_shapeBox_Data = currentComponent_Json_Data["Shape_Box"];
-                //this gets the pos offset of the shape box
-                Vector2 cc_shapeBox_posOffset(
-                    cc_json_shapeBox_Data["positionOffsetFromGameObject"]["x"].asFloat(),
-                    cc_json_shapeBox_Data["positionOffsetFromGameObject"]["y"].asFloat()
-                );
-                //this gets the rot offset of the shape box
-                float cc_shapeBox_rotOffset = cc_json_shapeBox_Data["rotOffsetFromGameObject"].asFloat();
-                //this gets the scale offset of the shape box
-                Vector2 cc_shapeBox_scaleOffset(
-                    cc_json_shapeBox_Data["scaleOffsetFromGameObject"]["x"].asFloat(),
-                    cc_json_shapeBox_Data["scaleOffsetFromGameObject"]["y"].asFloat()
-                );
-#pragma endregion
-
-#pragma region Creating the Com_Mesh
-
-                Shape_Box* shapeBox = new Shape_Box(cc_shapeBox_posOffset, cc_shapeBox_rotOffset, cc_shapeBox_scaleOffset);
-                sf::Texture* texture = new sf::Texture();
-                if (!texture->loadFromFile("../Textures/keyboardcat.jpg"))
-                {
-                    std::cout << "Texture did not load!" << "\n" << std::endl;
-                }
-
-                Com_Mesh* comMesh = new Com_Mesh(texture, shapeBox);
-
-#pragma endregion
                 //finaly in the end i add the com mesh to the gameobject
-                gameObject->AddComponent(comMesh);
+                gameObject->AddComponent(CreateComMeshFromJsonData(currentComponent_Json_Data));
             }
         }
         //adds the gameobject to the gameobject vector list
@@ -124,4 +88,46 @@ void EngineJsonReader::SaveScene()
 {
 }
 
+
+#pragma region Helper Function
+
+Com_Mesh* EngineJsonReader::CreateComMeshFromJsonData(Json::Value jsonData_)
+{
+    //gets the texture of the com_mesh
+    std::string json_Com_Mesh_texture = jsonData_["Texture"].asString();
+
+    #pragma region Getting the json data
+        //gets all the shape box data
+        Json::Value json_shapeBox_Data = jsonData_["Shape_Box"];
+        //this gets the pos offset of the shape box
+        Vector2 shapeBox_posOffset(
+            json_shapeBox_Data["positionOffsetFromGameObject"]["x"].asFloat(),
+            json_shapeBox_Data["positionOffsetFromGameObject"]["y"].asFloat()
+        );
+        //this gets the rot offset of the shape box
+        float shapeBox_rotOffset = json_shapeBox_Data["rotOffsetFromGameObject"].asFloat();
+        //this gets the scale offset of the shape box
+        Vector2 shapeBox_scaleOffset(
+            json_shapeBox_Data["scaleOffsetFromGameObject"]["x"].asFloat(),
+            json_shapeBox_Data["scaleOffsetFromGameObject"]["y"].asFloat()
+        );
+    #pragma endregion
+
+    #pragma region Creating the component
+
+        Shape_Box* shapeBox = new Shape_Box(shapeBox_posOffset, shapeBox_rotOffset, shapeBox_scaleOffset);
+        sf::Texture* texture = new sf::Texture();
+        if (!texture->loadFromFile("../Textures/keyboardcat.jpg"))
+        {
+            std::cout << "Texture did not load!" << "\n" << std::endl;
+        }
+
+        Com_Mesh* comMesh = new Com_Mesh(texture, shapeBox);
+
+    #pragma endregion
+
+    return comMesh;
+}
+
+#pragma endregion
 
