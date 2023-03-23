@@ -10,10 +10,7 @@ EngineJsonReader* EngineJsonReader::instance;
 
 EngineJsonReader::EngineJsonReader()
 {
-    //read the data from the test1.JsonFile
-    std::ifstream fileStream(gameSceneDataPath);
-    fileStream >> gameSceneData;
-    fileStream.close();
+   
 }
 
 EngineJsonReader::~EngineJsonReader()
@@ -35,6 +32,11 @@ void EngineJsonReader::LoadEditorScene()
 
 void EngineJsonReader::LoadSceneToPlay()
 {
+    //read the data from the test1.JsonFile
+    std::ifstream fileStream(gameSceneDataPath);
+    fileStream >> gameSceneData;
+    fileStream.close();
+
     std::vector<GameObject*> gameObjects;
 
     //this will loop through all the game objects in the json file
