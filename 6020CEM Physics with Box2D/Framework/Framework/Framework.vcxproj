@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Com_Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Com_Mesh.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="UiScreenView_Text.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Com_Collider.h" />
     <ClInclude Include="CommunImports.h" />
     <ClInclude Include="Component.h" />

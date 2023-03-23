@@ -59,8 +59,8 @@ void GameObject::AddComponent(Component* componentToAdd)
     //if the component we are adding is a collider component
     if (componentToAdd->GetTypeOfComponent() == Component::typeOfComponent::Collider)
     {
-        //if the component we are adding is a collider
-        if (componentToAdd->GetUniqueIdIdentifier() == Com_Collider::uniqueComponentIdIdentifier)
+        //if the component we are adding is a collider (if the id is in between the collider ids)
+        if (componentToAdd->GetUniqueIdIdentifier() >= Com_Collider::minimumColliderComponentIdIdentifier && componentToAdd->GetUniqueIdIdentifier() < Com_Collider::minimumColliderComponentIdIdentifier + 100)
         {
             if (!HasRigidBody())
             {

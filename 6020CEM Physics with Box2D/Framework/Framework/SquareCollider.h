@@ -15,6 +15,7 @@ private:
 
 	void CreateCollider();
 public:
+	static const unsigned int uniqueComponentIdIdentifier = 101;
 
 	b2FixtureDef* GetColliderBox2dDefenition() override;
 

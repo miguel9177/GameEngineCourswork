@@ -141,6 +141,9 @@
     <ClCompile Include="EngineJsonReader.cpp">
       <Filter>Source Files\Engines\Cpps</Filter>
     </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>Source Files\Components\Cpps\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -229,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="EngineJsonReader.h">
       <Filter>Source Files\Engines\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>Source Files\Components\Headers\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

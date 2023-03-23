@@ -9,6 +9,7 @@
 #include "Shape_Box.h"
 #include "RigidBody.h"
 #include "SquareCollider.h"
+#include "CircleCollider.h"
 #include "Component.h"
 #include "UiEngine.h"
 #include "UiScreenView_Text.h"
@@ -111,7 +112,7 @@ int main()
     RigidBodySettings bodySettings_ = RigidBodySettings(dynamicBody, 1, 1, false, true, false, true, 0);
     RigidBody* rb = new RigidBody(bodySettings_);
     
-    SquareCollider* squareColl = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
+    CircleCollider* squareColl = new CircleCollider(0.1f, Vector2(0, 0));
 
     SB_TestScript* playerScript = new SB_TestScript();
 

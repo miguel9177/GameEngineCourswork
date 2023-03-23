@@ -55,8 +55,12 @@ void GraphicsEngine::Render()
             //if we are on debug mode, draw the colliders and the origin points of the meshes
             if (GameEngine::GetInstance()->isDebugMode) 
             {
-                b2Fixture* fixture = mesh->gameObject->TryGetRigidBody()->Debug_GetB2Body()->GetFixtureList();
-                Debug_DrawCollider(fixture, sf::Color::Green);
+                //if the mesh has a rigidbody, draw the colliders
+                if (mesh->gameObject->HasRigidBody())
+                {
+                    b2Fixture* fixture = mesh->gameObject->TryGetRigidBody()->Debug_GetB2Body()->GetFixtureList();
+                    Debug_DrawCollider(fixture, sf::Color::Green);
+                }
                 window.draw(*mesh->Debug_GetOriginPointToRender());
                 Debug_WriteDebugInformation();
             }

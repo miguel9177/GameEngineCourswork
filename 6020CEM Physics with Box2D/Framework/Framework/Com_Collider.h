@@ -12,10 +12,11 @@ public:
 private:
 	ColliderType typeOfCollider;
 public:
-	static const unsigned int uniqueComponentIdIdentifier = 100;
+	//this is the minimum value of the collider identifiers, all colliders should have values between 100 and 199
+	static const unsigned int minimumColliderComponentIdIdentifier = 100;
 
-	Com_Collider(ColliderType type_);
-	Com_Collider(ColliderType type_, float _mass, float _friction, float _bouciness);
+	Com_Collider(ColliderType type_, unsigned int uniqueComponentIdIdentifier);
+	Com_Collider(ColliderType type_, float _mass, float _friction, float _bouciness, unsigned int uniqueComponentIdIdentifier);
 
 	ColliderType GetColliderType();
 
