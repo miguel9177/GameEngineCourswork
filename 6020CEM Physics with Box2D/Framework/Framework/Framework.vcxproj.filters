@@ -144,6 +144,9 @@
     <ClCompile Include="CircleCollider.cpp">
       <Filter>Source Files\Components\Cpps\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="ScriptLoaderManager.cpp">
+      <Filter>Source Files\PlayerScripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="CircleCollider.h">
       <Filter>Source Files\Components\Headers\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptLoaderManager.h">
+      <Filter>Source Files\PlayerScripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

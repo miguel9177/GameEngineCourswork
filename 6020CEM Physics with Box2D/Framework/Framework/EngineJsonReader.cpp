@@ -8,7 +8,7 @@
 #include "RigidBody.h"
 #include "CircleCollider.h"
 #include "SquareCollider.h"
-
+#include "ScriptLoaderManager.h"
 
 EngineJsonReader* EngineJsonReader::instance;
 
@@ -159,6 +159,11 @@ void EngineJsonReader::SaveScene()
                     CircleCollider* circleColl = static_cast<CircleCollider*>(component);
                     json_go_Components["CircleCollider"] = ConvertCircleColliderToJson(circleColl);
                 }
+                else if (component->GetUniqueIdIdentifier() > ScriptBehaviour::minimumUniqueComponentIdIdentifier)
+                {
+                    ScriptBehaviour* scriptBehaviour = static_cast<ScriptBehaviour*>(component);
+                    json_go_Components["ScriptBehaviour"] = ConvertScriptBehaviourToJson(scriptBehaviour);
+                }
             }
         }
         json_go_data["Components"] = json_go_Components;
@@ -271,6 +276,7 @@ Json::Value EngineJsonReader::ConvertRigidBodyToJson(RigidBody* rb)
     return json_go_component_RigidBody;
 }
 
+
 CircleCollider* EngineJsonReader::CreateCircleColliderFromJsonData(Json::Value jsonData_)
 {
 #pragma region Getting the json data
@@ -309,5 +315,20 @@ Json::Value EngineJsonReader::ConvertCircleColliderToJson(CircleCollider* circle
     return json_go_component_CircleColl;
 }
 
+ScriptBehaviour* EngineJsonReader::CreateScriptBehaviourFromJsonData(Json::Value jsonData_)
+{
+    return nullptr;
+}
+
+Json::Value EngineJsonReader::ConvertScriptBehaviourToJson(ScriptBehaviour* scriptBehaviour)
+{
+    Json::Value json_go_component_ScriptBehaviour;
+
+#pragma region Saving the json data
+    json_go_component_ScriptBehaviour["uniqueIdIdentifier"] = scriptBehaviour->GetUniqueIdIdentifier();
+#pragma endregion
+
+    return json_go_component_ScriptBehaviour;
+}
 #pragma endregion
 

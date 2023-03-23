@@ -4,6 +4,7 @@
 class Com_Mesh;
 class RigidBody;
 class CircleCollider;
+class ScriptBehaviour;
 class EngineJsonReader
 {
 private:
@@ -31,6 +32,7 @@ public:
 	void SaveScene();
 #pragma endregion
 
+//the create functions create the desired object and returns them, the convert receives an object and returns their json equivalent
 #pragma region Helper Functions
 	Com_Mesh* CreateComMeshFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertComMeshToJson(Com_Mesh* comMesh);
@@ -40,6 +42,9 @@ public:
 
 	CircleCollider* CreateCircleColliderFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertCircleColliderToJson(CircleCollider* circleColl);
+
+	ScriptBehaviour* CreateScriptBehaviourFromJsonData(Json::Value jsonData_);
+	Json::Value ConvertScriptBehaviourToJson(ScriptBehaviour* scriptBehaviour);
 #pragma endregion
 
 };

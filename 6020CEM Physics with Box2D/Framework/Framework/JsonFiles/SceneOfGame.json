@@ -46,6 +46,10 @@
 					"rbSettings_important" : true,
 					"rbSettings_type" : 2,
 					"rb_useGravity" : false
+				},
+				"ScriptBehaviour" : 
+				{
+					"uniqueIdIdentifier" : 10001
 				}
 			},
 			"Name" : "obj1",
@@ -53,8 +57,8 @@
 			{
 				"position" : 
 				{
-					"x" : -3.4660418033599854,
-					"y" : 0.0
+					"x" : -0.33010035753250122,
+					"y" : 2.0749201774597168
 				},
 				"rotation" : 0.0,
 				"scale" : 
