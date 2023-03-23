@@ -1,19 +1,64 @@
 {
-  "GameObject": {
-    "Name": "obj1",
-
-    "Transform": {
-      "position": {
-        "x": 5,
-        "y": 5
+  "GameObjects": [
+    {
+      "Name": "obj1",
+      "Transform": {
+        "position": {
+          "x": 5,
+          "y": 5
+        },
+        "rotation": 0,
+        "scale": {
+          "x": 5,
+          "y": 5
+        }
       },
-
-      "rotation": 0,
-
-      "scale": {
-        "x": 5,
-        "y": 5
+      "Components": {
+        "Com_Mesh": {
+          "Texture": "../Textures/keyboardcat.jpg",
+          "Shape_Box": {
+            "positionOffsetFromGameObject": {
+              "x": 0,
+              "y": 0
+            },
+            "rotOffsetFromGameObject": 0,
+            "scaleOffsetFromGameObject": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "Name": "obj2",
+      "Transform": {
+        "position": {
+          "x": 10,
+          "y": 10
+        },
+        "rotation": 0,
+        "scale": {
+          "x": 2,
+          "y": 2
+        }
+      },
+      "Components": {
+        "Com_Mesh": {
+          "Texture": "../Textures/SaveSceneButton.png",
+          "Shape_Box": {
+            "positionOffsetFromGameObject": {
+              "x": 0,
+              "y": 0
+            },
+            "rotOffsetFromGameObject": 0,
+            "scaleOffsetFromGameObject": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        }
       }
     }
-  }
+  ]
 }
