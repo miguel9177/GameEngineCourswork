@@ -8,5 +8,10 @@ public:
 	SB_TestScript();
 	void Start() override;
 	void Update() override;
+
+	inline SB_TestScript* Clone() override 
+	{
+		return new SB_TestScript(*this);
+	}
 };
 

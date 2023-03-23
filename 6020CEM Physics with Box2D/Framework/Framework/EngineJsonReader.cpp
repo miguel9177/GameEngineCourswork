@@ -8,7 +8,7 @@
 #include "RigidBody.h"
 #include "CircleCollider.h"
 #include "SquareCollider.h"
-#include "ScriptLoaderManager.h"
+#include "AllUserScipts/ScriptLoaderManager.h"
 
 EngineJsonReader* EngineJsonReader::instance;
 
@@ -93,6 +93,11 @@ void EngineJsonReader::LoadSceneToPlay()
             {
                 //i store the gameobject collider in a list so that i can then add all colliders to the rb
                 allColliders_currentGameObject.push_back(CreateCircleColliderFromJsonData(currentComponent_Json_Data));
+            }
+            else if (currentComponent_json_Name == "ScriptBehaviour")
+            {
+                //i add the script to the game object
+                currentGameObject->AddComponent(CreateScriptBehaviourFromJsonData(currentComponent_Json_Data));
             }
         }
 
@@ -315,9 +320,18 @@ Json::Value EngineJsonReader::ConvertCircleColliderToJson(CircleCollider* circle
     return json_go_component_CircleColl;
 }
 
+
 ScriptBehaviour* EngineJsonReader::CreateScriptBehaviourFromJsonData(Json::Value jsonData_)
 {
-    return nullptr;
+#pragma region Getting the json data
+    float scriptBehaviour_uniqueId = jsonData_["uniqueIdIdentifier"].asUInt();
+#pragma endregion
+
+#pragma region Creating the component
+    ScriptBehaviour* scriptBehaviour = ScriptLoaderManager::GetInstance()->GetScript(scriptBehaviour_uniqueId);
+#pragma endregion
+
+    return scriptBehaviour;
 }
 
 Json::Value EngineJsonReader::ConvertScriptBehaviourToJson(ScriptBehaviour* scriptBehaviour)

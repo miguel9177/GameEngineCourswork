@@ -149,7 +149,7 @@
     <ClCompile Include="AllUserScipts\SB_TestScript.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ScriptBehaviour.cpp" />
-    <ClCompile Include="ScriptLoaderManager.cpp" />
+    <ClCompile Include="AllUserScipts\ScriptLoaderManager.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Shape_Box.cpp" />
     <ClCompile Include="SquareCollider.cpp" />
@@ -177,7 +177,7 @@
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="AllUserScipts\SB_TestScript.h" />
     <ClInclude Include="ScriptBehaviour.h" />
-    <ClInclude Include="ScriptLoaderManager.h" />
+    <ClInclude Include="AllUserScipts\ScriptLoaderManager.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Shape_Box.h" />
     <ClInclude Include="SquareCollider.h" />

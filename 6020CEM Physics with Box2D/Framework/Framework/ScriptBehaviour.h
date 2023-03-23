@@ -12,5 +12,6 @@ public:
 	ScriptBehaviour(unsigned int uniqueIdIdentifier_);
 	virtual void Start();
 	virtual void Update();
+	virtual ScriptBehaviour* Clone() = 0;
 };
 

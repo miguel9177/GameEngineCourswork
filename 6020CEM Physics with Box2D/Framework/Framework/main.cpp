@@ -98,26 +98,26 @@ int main()
 
 #pragma region creating a game object with a mesh with and shape and a texture
     
-    GameObject* obj1 = new GameObject("obj1", new Transform(Vector2(0, 0), 0, Vector2(1.5, 1.5)));
-    
-    Shape_Box* shapeBox = new Shape_Box();
+    //GameObject* obj1 = new GameObject("obj1", new Transform(Vector2(0, 0), 0, Vector2(1.5, 1.5)));
+    //
+    //Shape_Box* shapeBox = new Shape_Box();
 
-    Com_Mesh* obj1Mesh = new Com_Mesh("../Textures/keyboardcat.jpg", shapeBox);
+    //Com_Mesh* obj1Mesh = new Com_Mesh("../Textures/keyboardcat.jpg", shapeBox);
 
-    RigidBodySettings bodySettings_ = RigidBodySettings(dynamicBody, 1, 1, false, true, false, true, 0);
-    RigidBody* rb = new RigidBody(bodySettings_);
-    
-    CircleCollider* squareColl = new CircleCollider(0.1f, Vector2(0, 0));
+    //RigidBodySettings bodySettings_ = RigidBodySettings(dynamicBody, 1, 1, false, true, false, true, 0);
+    //RigidBody* rb = new RigidBody(bodySettings_);
+    //
+    //CircleCollider* squareColl = new CircleCollider(0.1f, Vector2(0, 0));
 
-    SB_TestScript* playerScript = new SB_TestScript();
+    //SB_TestScript* playerScript = new SB_TestScript();
 
-    obj1->AddComponent(playerScript);
-    obj1->AddComponent(rb);
-    obj1->AddComponent(squareColl);
-    obj1->AddComponent(obj1Mesh);
+    //obj1->AddComponent(playerScript);
+    //obj1->AddComponent(rb);
+    //obj1->AddComponent(squareColl);
+    //obj1->AddComponent(obj1Mesh);
 
-    //add an object to the scene
-    Scene::GetInstance()->AddObject(obj1);
+    ////add an object to the scene
+    //Scene::GetInstance()->AddObject(obj1);
 
 
     ////Object 2
@@ -166,8 +166,8 @@ int main()
     
 #pragma endregion
 
-    Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);
-    RigidBody* rbToCheckPos = obj1->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);
+   /* Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);
+    RigidBody* rbToCheckPos = obj1->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);*/
 
     float forceToAply = 0.1f;
     while (GameEngine::GetInstance()->isGameEngineRunning())
@@ -175,28 +175,28 @@ int main()
         GameEngine::GetInstance()->Update();
         GameEngine::GetInstance()->Render();
         
-        GameEngine::GetInstance()->MoveCamera(obj1->GetPosition());
-        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::A].pressing)
-        {
-            //std::cout << "PRessed A" << std::endl;
-            rbToCheckPos->AddForceToCenter(Vector2(-forceToAply, 0.f));
-        }
-        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::D].pressing)
-        {
-            //std::cout << "PRessed D" << std::endl;
-            rbToCheckPos->AddForceToCenter(Vector2(+forceToAply, 0.f));
-        }
+        //GameEngine::GetInstance()->MoveCamera(obj1->GetPosition());
+        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::A].pressing)
+        //{
+        //    //std::cout << "PRessed A" << std::endl;
+        //    rbToCheckPos->AddForceToCenter(Vector2(-forceToAply, 0.f));
+        //}
+        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::D].pressing)
+        //{
+        //    //std::cout << "PRessed D" << std::endl;
+        //    rbToCheckPos->AddForceToCenter(Vector2(+forceToAply, 0.f));
+        //}
 
-        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::W].pressing)
-        {
-            //std::cout << "PRessed W" << std::endl;
-            rbToCheckPos->AddForceToCenter(Vector2(0.f, -forceToAply));
-        }
-        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::S].pressing)
-        {
-            //std::cout << "PRessed S" << std::endl;
-            rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
-        }
+        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::W].pressing)
+        //{
+        //    //std::cout << "PRessed W" << std::endl;
+        //    rbToCheckPos->AddForceToCenter(Vector2(0.f, -forceToAply));
+        //}
+        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::S].pressing)
+        //{
+        //    //std::cout << "PRessed S" << std::endl;
+        //    rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
+        //}
 
         //std::cout << InputsEngine::GetInstance()->GetMouseState().wheelDelta << std::endl;
 

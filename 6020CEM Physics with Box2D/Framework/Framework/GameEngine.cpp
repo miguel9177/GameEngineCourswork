@@ -2,6 +2,7 @@
 #include "EngineFunctionalityManager.h"
 #include "UiEngine.h"
 #include "Scene.h"
+#include "AllUserScipts/ScriptLoaderManager.h"
 
 GameEngine* GameEngine::instance;
 
@@ -28,7 +29,9 @@ GameEngine* GameEngine::GetInstance()
 void GameEngine::InitializeEngine(float width, float height)
 {
     graphicsEngine->InitializeWindow(width, height);
+    ScriptLoaderManager::GetInstance()->InitializeVectorOfScripts();
     EngineFunctionalityManager::GetInstance();
+    
 }
 
 void GameEngine::Update()
