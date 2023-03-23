@@ -50,22 +50,18 @@ void GraphicsEngine::Render()
         {
             //draw the mesh
             window.draw(*mesh->GetMeshToRender());
-            UiEngine::GetInstance()->DrawAllUi(&window);
-            
-            //if we are on debug mode, draw the colliders and the origin points of the meshes
-            if (GameEngine::GetInstance()->isDebugMode) 
-            {
-                //if the mesh has a rigidbody, draw the colliders
-                if (mesh->gameObject->HasRigidBody())
-                {
-                    b2Fixture* fixture = mesh->gameObject->TryGetRigidBody()->Debug_GetB2Body()->GetFixtureList();
-                    Debug_DrawCollider(fixture, sf::Color::Green);
-                }
-                window.draw(*mesh->Debug_GetOriginPointToRender());
-                Debug_WriteDebugInformation();
-            }
+            window.draw(*mesh->Debug_GetOriginPointToRender());
         }
     }
+
+    //if we are on debug mode, draw the colliders and the origin points of the meshes
+    if (GameEngine::GetInstance()->isDebugMode)
+        DrawDebugModeInformation();
+
+    UiEngine::GetInstance()->DrawAllUi(&window);
+
+    if(GameEngine::GetInstance()->isDebugMode)
+        Debug_WriteDebugInformation();
 
     // Display the window
     window.display();
@@ -109,6 +105,28 @@ void GraphicsEngine::SetCameraViewPort(sf::FloatRect _newViewPort)
 #pragma endregion
 
 #pragma region Debug
+
+void GraphicsEngine::DrawDebugModeInformation()
+{
+    //if the mesh has a rigidbody, draw the colliders
+    for (std::vector<RigidBody*>::iterator it = Scene::GetInstance()->GetAllRigidBodys()->begin(); it != Scene::GetInstance()->GetAllRigidBodys()->end(); ++it)
+    {
+        RigidBody* rb = *it;
+        b2Fixture* fixture = rb->Debug_GetB2Body()->GetFixtureList();
+        Debug_DrawCollider(fixture, sf::Color::Green);
+    }
+    //goes through every mesh on the scene and draws it
+    for (std::vector<Com_Mesh*>::iterator it = Scene::GetInstance()->GetAllMeshes()->begin(); it != Scene::GetInstance()->GetAllMeshes()->end(); ++it)
+    {
+        Com_Mesh* mesh = *it;
+        //if the mesh has a shape
+        if (mesh->GetShape() != nullptr)
+        {
+            //draw the origin point
+            window.draw(*mesh->Debug_GetOriginPointToRender());
+        }
+    }
+}
 
 void GraphicsEngine::Debug_WriteDebugInformation()
 {

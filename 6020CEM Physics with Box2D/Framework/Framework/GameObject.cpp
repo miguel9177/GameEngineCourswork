@@ -13,22 +13,23 @@ GameObject::~GameObject()
 {
 	delete transform;
 
-    // Iterate over each key-value pair in the map
-    for (auto& typeOfComponent_ : allComponents) {
-        // Get the vector of components
+    //goes trough all components types
+    for (auto& typeOfComponent_ : allComponents) 
+    {
+        //gets the components of this type
         auto& componentVector = typeOfComponent_.second;
 
-        // Iterate over each component in the vector
+        // loop through every component of this type
         for (auto& component : componentVector) {
-            // Delete the component
+            //deletes it
             delete component;
         }
 
-        // Clear the vector
+        //cleans the vector
         componentVector.clear();
     }
 
-    // Clear the map
+    //cleans the map
     allComponents.clear();
 }
 

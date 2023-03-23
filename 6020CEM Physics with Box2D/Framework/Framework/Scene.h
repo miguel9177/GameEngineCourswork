@@ -35,5 +35,20 @@ public:
 
     //this will get all the scripts from the scene
     std::vector<ScriptBehaviour*>* GetAllScripts();
+
+private:
+
+#pragma region Functioality Functions
+
+    void EnteredPlayMode();
+    void EnteredEditMode();
+
+#pragma endregion
+
+#pragma region Utility Functions
+    
+    void DeleteAllGameObjects();
+
+#pragma endregion
 };
 

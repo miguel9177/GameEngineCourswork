@@ -5,6 +5,7 @@
 #include "UiScreenView_btnText.h"
 #include "GameEngine.h"
 #include "EngineJsonReader.h"
+#include "EventQueue.h"
 
 EngineFunctionalityManager* EngineFunctionalityManager::instance;
 
@@ -139,6 +140,7 @@ void EngineFunctionalityManager::CreateEngineUI()
 
 void EngineFunctionalityManager::OnPlayButtonClicked()
 {
+    EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::EnteredPlayMode);
     EngineJsonReader::GetInstance()->LoadSceneToPlay();
 }
 
@@ -149,7 +151,7 @@ void EngineFunctionalityManager::OnDebugButtonClicked()
 
 void EngineFunctionalityManager::OnStopButtonClicked()
 {
-    
+    EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::EnteredEditMode);
 }
 
 void EngineFunctionalityManager::OnSaveButtonClicked()

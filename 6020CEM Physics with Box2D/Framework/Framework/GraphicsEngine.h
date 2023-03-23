@@ -37,6 +37,8 @@ public:
 
 #pragma region DEBUG FUNCTIONS
 
+    void DrawDebugModeInformation();
+
     //this draws the square colliders (only  activated in debug mode)
 	inline void Debug_DrawCollider(b2Fixture* fixture_ , const sf::Color& color)
 	{

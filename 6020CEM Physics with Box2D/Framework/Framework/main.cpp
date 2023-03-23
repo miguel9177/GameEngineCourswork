@@ -111,93 +111,93 @@ int main()
 
     SB_TestScript* playerScript = new SB_TestScript();
 
-    obj1->AddComponent(playerScript);
-    obj1->AddComponent(rb);
-    obj1->AddComponent(squareColl);
+    //obj1->AddComponent(playerScript);
+    //obj1->AddComponent(rb);
+    //obj1->AddComponent(squareColl);
     obj1->AddComponent(obj1Mesh);
 
     //add an object to the scene
     Scene::GetInstance()->AddObject(obj1);
 
 
-    //Object 2
-    GameObject* obj2 = new GameObject("obj2", new Transform(Vector2(1,1.2), 0, Vector2(1,1)));
+    ////Object 2
+    //GameObject* obj2 = new GameObject("obj2", new Transform(Vector2(1,1.2), 0, Vector2(1,1)));
 
-    Shape_Box* shapeBox2 = new Shape_Box();
+    //Shape_Box* shapeBox2 = new Shape_Box();
 
-    Com_Mesh* obj2Mesh = new Com_Mesh();
+    //Com_Mesh* obj2Mesh = new Com_Mesh();
 
-    RigidBodySettings bodySettings = RigidBodySettings(dynamicBody, 1, 1, false, true, false, false, 0);
-    RigidBody* rb2 = new RigidBody(bodySettings);
+    //RigidBodySettings bodySettings = RigidBodySettings(dynamicBody, 1, 1, false, true, false, false, 0);
+    //RigidBody* rb2 = new RigidBody(bodySettings);
 
-    SquareCollider* squareColl2 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
-    
-    obj2Mesh->SetShape(shapeBox2);
-    obj2Mesh->SetTexture("../Textures/WhiteSquare.png");
+    //SquareCollider* squareColl2 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
+    //
+    //obj2Mesh->SetShape(shapeBox2);
+    //obj2Mesh->SetTexture("../Textures/WhiteSquare.png");
 
-    obj2->AddComponent(obj2Mesh);
-    obj2->AddComponent(rb2);
-    obj2->AddComponent(squareColl2);
+    //obj2->AddComponent(obj2Mesh);
+    //obj2->AddComponent(rb2);
+    //obj2->AddComponent(squareColl2);
 
-    //add an object to the scene
-    Scene::GetInstance()->AddObject(obj2);
+    ////add an object to the scene
+    //Scene::GetInstance()->AddObject(obj2);
 
-    //Object 3
-    GameObject* obj3 = new GameObject("obj3", new Transform(Vector2(1, 1.2), 0, Vector2(1.5, 1.5)));
+    ////Object 3
+    //GameObject* obj3 = new GameObject("obj3", new Transform(Vector2(1, 1.2), 0, Vector2(1.5, 1.5)));
 
-    Shape_Box* shapeBox3 = new Shape_Box();
+    //Shape_Box* shapeBox3 = new Shape_Box();
 
-    Com_Mesh* obj3Mesh = new Com_Mesh();
+    //Com_Mesh* obj3Mesh = new Com_Mesh();
 
-    RigidBodySettings bodySettings3 = RigidBodySettings(staticBody, 1, 1, false, true, false, false, 0);
-    RigidBody* rb3 = new RigidBody(bodySettings3);
+    //RigidBodySettings bodySettings3 = RigidBodySettings(staticBody, 1, 1, false, true, false, false, 0);
+    //RigidBody* rb3 = new RigidBody(bodySettings3);
 
-    SquareCollider* squareColl3 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
+    //SquareCollider* squareColl3 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
-    obj3Mesh->SetShape(shapeBox3);
-    obj3Mesh->SetTexture("../Textures/WhiteSquare.png");
+    //obj3Mesh->SetShape(shapeBox3);
+    //obj3Mesh->SetTexture("../Textures/WhiteSquare.png");
 
-    obj3->AddComponent(obj3Mesh);
-    obj3->AddComponent(rb3);
-    obj3->AddComponent(squareColl3);
+    //obj3->AddComponent(obj3Mesh);
+    //obj3->AddComponent(rb3);
+    //obj3->AddComponent(squareColl3);
 
-    //add an object to the scene
-    Scene::GetInstance()->AddObject(obj3);
+    ////add an object to the scene
+    //Scene::GetInstance()->AddObject(obj3);
     
 #pragma endregion
 
-    Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);
-    RigidBody* rbToCheckPos = obj1->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);
+    //Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);
+    //RigidBody* rbToCheckPos = obj1->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);
 
     float forceToAply = 0.1f;
     while (GameEngine::GetInstance()->isGameEngineRunning())
     {
         GameEngine::GetInstance()->Update();
         GameEngine::GetInstance()->Render();
-        GameEngine::GetInstance()->MoveCamera(obj1->GetPosition());
+        //GameEngine::GetInstance()->MoveCamera(obj1->GetPosition());
 
 
-        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::A].pressing)
-        {
-            //std::cout << "PRessed A" << std::endl;
-            rbToCheckPos->AddForceToCenter(Vector2(-forceToAply, 0.f));
-        }
-        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::D].pressing)
-        {
-            //std::cout << "PRessed D" << std::endl;
-            rbToCheckPos->AddForceToCenter(Vector2(+forceToAply, 0.f));
-        }
+        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::A].pressing)
+        //{
+        //    //std::cout << "PRessed A" << std::endl;
+        //    rbToCheckPos->AddForceToCenter(Vector2(-forceToAply, 0.f));
+        //}
+        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::D].pressing)
+        //{
+        //    //std::cout << "PRessed D" << std::endl;
+        //    rbToCheckPos->AddForceToCenter(Vector2(+forceToAply, 0.f));
+        //}
 
-        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::W].pressing)
-        {
-            //std::cout << "PRessed W" << std::endl;
-            rbToCheckPos->AddForceToCenter(Vector2(0.f, -forceToAply));
-        }
-        if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::S].pressing)
-        {
-            //std::cout << "PRessed S" << std::endl;
-            rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
-        }
+        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::W].pressing)
+        //{
+        //    //std::cout << "PRessed W" << std::endl;
+        //    rbToCheckPos->AddForceToCenter(Vector2(0.f, -forceToAply));
+        //}
+        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::S].pressing)
+        //{
+        //    //std::cout << "PRessed S" << std::endl;
+        //    rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
+        //}
 
         //std::cout << InputsEngine::GetInstance()->GetMouseState().wheelDelta << std::endl;
 

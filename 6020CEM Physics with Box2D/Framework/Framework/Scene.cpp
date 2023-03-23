@@ -5,6 +5,11 @@ Scene* Scene::instance;
 
 Scene::Scene()
 {
+    std::function<void()> onEnteredPlayModeCallback = std::bind(&Scene::EnteredPlayMode, this);
+    EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::EnteredPlayMode, onEnteredPlayModeCallback);
+
+    std::function<void()> onEnteredEditModeCallback = std::bind(&Scene::EnteredEditMode, this);
+    EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::EnteredEditMode, onEnteredEditModeCallback);
 }
 
 Scene::~Scene()
@@ -88,3 +93,35 @@ std::vector<ScriptBehaviour*>* Scene::GetAllScripts()
 {
     return &allScriptBehaviours;
 }
+
+#pragma region Functionality functions
+
+//this is called if we entered play mode (in here we load all the player scripts, rigidbodys and let the user play the game)
+void Scene::EnteredPlayMode()
+{
+    DeleteAllGameObjects();
+}
+
+//this is called if we entered Edit mode (in here we load all the player Meshes without its scripts)
+void Scene::EnteredEditMode()
+{
+}
+
+#pragma endregion
+
+#pragma region Utility Functions
+
+void Scene::DeleteAllGameObjects()
+{
+    // Delete all GameObjects
+    for (GameObject* gameObject : allSceneGameObjects) {
+        delete gameObject;
+    }
+    allSceneGameObjects.clear();
+    allMeshes.clear();
+    allRigidBodys.clear();
+    allScriptBehaviours.clear();
+}
+
+#pragma endregion
+
