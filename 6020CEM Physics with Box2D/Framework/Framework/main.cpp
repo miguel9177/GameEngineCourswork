@@ -174,9 +174,8 @@ int main()
     {
         GameEngine::GetInstance()->Update();
         GameEngine::GetInstance()->Render();
+        
         //GameEngine::GetInstance()->MoveCamera(obj1->GetPosition());
-
-
         //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::A].pressing)
         //{
         //    //std::cout << "PRessed A" << std::endl;

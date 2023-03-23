@@ -33,5 +33,16 @@ public:
 	CircleCollider(float radius, Vector2 _offsetPos, float _offsetAngle, float _mass, float _friction, float _bouciness);
 
 #pragma endregion
+
+#pragma region Getters
+
+	inline float GetRadius() { return radius; };
+	inline Vector2 GetPosOffset() { return posOffset; };
+	inline float GetOffsetAngle() { return offsetAngle; };
+	inline float GetMass() { return mass; };
+	inline float GetFriction() { return friction; };
+	inline float GetBouciness() { return bouciness; };
+
+#pragma endregion
 };
 

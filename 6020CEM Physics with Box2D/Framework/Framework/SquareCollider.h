@@ -35,5 +35,16 @@ public:
 
 #pragma endregion
 
+
+#pragma region Getters
+
+	inline Vector2 GetHalfSize() { return halfSize; };
+	inline Vector2 GetPosOffset() { return posOffset; };
+	inline float GetOffsetAngle() { return offsetAngle; };
+	inline float GetMass() { return mass; };
+	inline float GetFriction() { return friction; };
+	inline float GetBouciness() { return bouciness; };
+
+#pragma endregion
 };
 

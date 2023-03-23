@@ -3,6 +3,7 @@
 
 class Com_Mesh;
 class RigidBody;
+class CircleCollider;
 class EngineJsonReader
 {
 private:
@@ -36,6 +37,9 @@ public:
 
 	RigidBody* CreateRigidBodyFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertRigidBodyToJson(RigidBody* rb);
+
+	CircleCollider* CreateCircleColliderFromJsonData(Json::Value jsonData_);
+	Json::Value ConvertCircleColliderToJson(CircleCollider* circleColl);
 #pragma endregion
 
 };

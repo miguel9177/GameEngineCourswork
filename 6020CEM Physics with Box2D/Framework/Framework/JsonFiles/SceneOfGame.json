@@ -4,6 +4,19 @@
 		{
 			"Components" : 
 			{
+				"CircleCollider" : 
+				{
+					"bouciness" : 0.40000000596046448,
+					"friction" : 0.5,
+					"mass" : 1.0,
+					"offsetAngle" : 0.0,
+					"posOffset" : 
+					{
+						"x" : 0.0,
+						"y" : 0.0
+					},
+					"radius" : 0.10000000149011612
+				},
 				"Com_Mesh" : 
 				{
 					"Shape_Box" : 
@@ -20,19 +33,19 @@
 							"y" : 0.0
 						}
 					},
-					"Texture" : "../Textures/keyboardcat.jpg"
+					"texture" : "../Textures/keyboardcat.jpg"
 				},
 				"RigidBody" : 
 				{
-					"AllowSleep" : false,
-					"AngularDrag" : 1.0,
-					"Awake" : true,
-					"Drag" : 1.0,
-					"FreezeRotation" : false,
-					"GravityScale" : 0.0,
-					"Important" : true,
-					"RigidBodyType" : 2,
-					"UseGravity" : false
+					"rbSettings_allowSleep" : false,
+					"rbSettings_angularDrag" : 1.0,
+					"rbSettings_awake" : true,
+					"rbSettings_drag" : 1.0,
+					"rbSettings_freezeRotation" : false,
+					"rbSettings_gravityScale" : 0.0,
+					"rbSettings_important" : true,
+					"rbSettings_type" : 2,
+					"rb_useGravity" : false
 				}
 			},
 			"Name" : "obj1",
@@ -40,7 +53,7 @@
 			{
 				"position" : 
 				{
-					"x" : 0.0,
+					"x" : -3.4660418033599854,
 					"y" : 0.0
 				},
 				"rotation" : 0.0,
