@@ -61,6 +61,9 @@
     <Filter Include="Source Files\PlayerScripts\Header">
       <UniqueIdentifier>{20360b4a-decc-4047-bb64-44ac17af3ca4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JsonFiles">
+      <UniqueIdentifier>{4fe37130-456f-4120-a6a9-441c4d51e273}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -134,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="ScriptBehaviour.cpp">
       <Filter>Source Files\PlayerScripts</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineJsonReader.cpp">
+      <Filter>Source Files\Engines\Cpps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,5 +227,13 @@
     <ClInclude Include="ScriptBehaviour.h">
       <Filter>Source Files\PlayerScripts</Filter>
     </ClInclude>
+    <ClInclude Include="EngineJsonReader.h">
+      <Filter>Source Files\Engines\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="JsonFiles\SceneOfGame.json">
+      <Filter>JsonFiles</Filter>
+    </None>
   </ItemGroup>
 </Project>

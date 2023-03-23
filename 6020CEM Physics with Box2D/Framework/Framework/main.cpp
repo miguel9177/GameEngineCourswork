@@ -17,6 +17,8 @@
 #include "UiScreenView_btnText.h"
 #include "EngineFunctionalityManager.h"
 #include "AllUserScipts/SB_TestScript.h"
+#include <fstream>
+#include <jsoncpp/json/json.h>
 
 void test()
 {
@@ -68,8 +70,8 @@ void testUserMouseScrollWheel(float delta_) { std::cout << "Mouse scrolled wheel
 int main()
 {
     GameEngine::GetInstance()->InitializeEngine(1920,1080);
-    
-    EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
+  
+   /* EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
 
     EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::A, &testUserKeyPressedA);
@@ -83,14 +85,15 @@ int main()
     EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Middle, &testUserMouseKeyPressedMidle);
     EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Right, &testUserMouseKeyReleasedRight);
     EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
-    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);
+    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);*/
 
  
 
     //EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
-    EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
+    /*EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
 
-    EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);
+    EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);*/
+
 
 #pragma region creating a game object with a mesh with and shape and a texture
     

@@ -4,6 +4,7 @@
 #include "UiScreenView_btnImage.h"
 #include "UiScreenView_btnText.h"
 #include "GameEngine.h"
+#include "EngineJsonReader.h"
 
 EngineFunctionalityManager* EngineFunctionalityManager::instance;
 
@@ -138,7 +139,7 @@ void EngineFunctionalityManager::CreateEngineUI()
 
 void EngineFunctionalityManager::OnPlayButtonClicked()
 {
-    
+    EngineJsonReader::GetInstance()->LoadSceneToPlay();
 }
 
 void EngineFunctionalityManager::OnDebugButtonClicked()

@@ -1,0 +1,19 @@
+{
+  "GameObject": {
+    "Name": "obj1",
+
+    "Transform": {
+      "position": {
+        "x": 5,
+        "y": 5
+      },
+
+      "rotation": 0,
+
+      "scale": {
+        "x": 5,
+        "y": 5
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 #include "Com_Collider.h"
 #include <Box2D/Box2D.h>
+
 Com_Collider::Com_Collider(ColliderType type_) : Component(Component::typeOfComponent::Collider, uniqueComponentIdIdentifier)
 {
 	typeOfCollider = type_;
