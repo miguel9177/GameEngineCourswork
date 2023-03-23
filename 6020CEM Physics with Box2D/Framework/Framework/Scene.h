@@ -25,6 +25,9 @@ public:
     void AddObject(GameObject* gameObject);
 
     //this will get all the meshes from the scene
+    std::vector<GameObject*>* GetAllObjects();
+
+    //this will get all the meshes from the scene
     std::vector<Com_Mesh*>* GetAllMeshes();
 
     //this will get all the rigidbodys from the scene

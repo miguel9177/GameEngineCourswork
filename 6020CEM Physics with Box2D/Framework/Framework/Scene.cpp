@@ -67,6 +67,11 @@ void Scene::AddObject(GameObject* gameObject)
     }
 }
 
+std::vector<GameObject*>* Scene::GetAllObjects()
+{
+    return &allSceneGameObjects;
+}
+
 //this will get all the meshes from the scene
 std::vector<Com_Mesh*>* Scene::GetAllMeshes()
 {

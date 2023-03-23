@@ -1,5 +1,7 @@
 #include "Com_Mesh.h"
 #include "GameObject.h"
+#include <iostream>
+
 
 
 const float Com_Mesh::scalingFactor = 200.f;
@@ -13,9 +15,14 @@ Com_Mesh::Com_Mesh() : Component(Component::typeOfComponent::Mesh, uniqueCompone
 	
 }
 
-Com_Mesh::Com_Mesh(sf::Texture* texture_, Shape* shape_) : Component(Component::typeOfComponent::Mesh, uniqueComponentIdIdentifier)
+Com_Mesh::Com_Mesh(std::string texturePath_, Shape* shape_) : Component(Component::typeOfComponent::Mesh, uniqueComponentIdIdentifier)
 {
-	texture = texture_;
+	texturePath = texturePath_;
+	texture = new sf::Texture();
+	if (!texture->loadFromFile(texturePath))
+	{
+		std::cout << "Texture did not load!" << "\n" << std::endl;
+	}
 	shape = shape_;
 
 	// Create a small circle to represent the origin point
@@ -45,9 +52,14 @@ void Com_Mesh::Start()
 }
 
 //this lets the user add a texture to the mesh
-void Com_Mesh::SetTexture(sf::Texture* texture_)
+void Com_Mesh::SetTexture(std::string texturePath_)
 {
-	texture = texture_;
+	texturePath = texturePath_;
+	texture = new sf::Texture();
+	if (!texture->loadFromFile(texturePath))
+	{
+		std::cout << "Texture did not load!" << "\n" << std::endl;
+	}
 	
 	//if the texture is not 0, it means theres a texture assigned
 	if (texture != nullptr && texture->getSize() != sf::Vector2u(0, 0) && shape != nullptr)
@@ -82,6 +94,11 @@ void Com_Mesh::SetShape(Shape* shape_)
 sf::Texture* Com_Mesh::GetTexture()
 {
 	return texture;
+}
+
+std::string Com_Mesh::GetTexturePath()
+{
+	return texturePath;
 }
 
 //this lets the user add a shape to the Mesh

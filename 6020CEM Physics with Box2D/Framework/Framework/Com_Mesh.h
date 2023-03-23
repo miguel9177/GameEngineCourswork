@@ -8,6 +8,7 @@ class Com_Mesh : public Component
 {
 private:
 	sf::Texture* texture;
+	std::string texturePath;
 	Shape* shape;
 	sf::CircleShape* debug_OriginPointShape;
 public :
@@ -16,20 +17,21 @@ public :
 
 	Com_Mesh();
 
-	Com_Mesh(sf::Texture* texture_, Shape* shape_);
+	Com_Mesh(std::string texturePath_, Shape* shape_);
 
 	~Com_Mesh();
 
 	void Start() override;
 
 	//this lets the user add a texture to the mesh
-	void SetTexture(sf::Texture* texture_);
+	void SetTexture(std::string texture_);
 
 	//this lets the user add a shape to the Mesh
 	void SetShape(Shape* shape_);
 
 	//returns the current texture
 	sf::Texture* GetTexture();
+	std::string GetTexturePath();
 	//returns the current shape
 	Shape* GetShape();
 	//returns the mesh all prepared to be drawn, with correct position, rotation and texture

@@ -1,64 +1,119 @@
 {
-  "GameObjects": [
-    {
-      "Name": "obj1",
-      "Transform": {
-        "position": {
-          "x": 5,
-          "y": 5
-        },
-        "rotation": 0,
-        "scale": {
-          "x": 5,
-          "y": 5
-        }
-      },
-      "Components": {
-        "Com_Mesh": {
-          "Texture": "../Textures/keyboardcat.jpg",
-          "Shape_Box": {
-            "positionOffsetFromGameObject": {
-              "x": 0,
-              "y": 0
-            },
-            "rotOffsetFromGameObject": 0,
-            "scaleOffsetFromGameObject": {
-              "x": 0,
-              "y": 0
-            }
-          }
-        }
-      }
-    },
-    {
-      "Name": "obj2",
-      "Transform": {
-        "position": {
-          "x": 10,
-          "y": 10
-        },
-        "rotation": 0,
-        "scale": {
-          "x": 2,
-          "y": 2
-        }
-      },
-      "Components": {
-        "Com_Mesh": {
-          "Texture": "../Textures/SaveSceneButton.png",
-          "Shape_Box": {
-            "positionOffsetFromGameObject": {
-              "x": 0,
-              "y": 0
-            },
-            "rotOffsetFromGameObject": 0,
-            "scaleOffsetFromGameObject": {
-              "x": 0,
-              "y": 0
-            }
-          }
-        }
-      }
-    }
-  ]
+	"GameObjects" : 
+	[
+		{
+			"Components" : 
+			{
+				"Com_Mesh" : 
+				{
+					"Shape_Box" : 
+					{
+						"positionOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						"rotOffsetFromGameObject" : 0.0,
+						"scaleOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					},
+					"Texture" : "../Textures/keyboardcat.jpg"
+				}
+			},
+			"Name" : "obj1",
+			"Transform" : 
+			{
+				"position" : 
+				{
+					"x" : 3.0284974575042725,
+					"y" : 1.8527275323867798
+				},
+				"rotation" : -130.35928344726562,
+				"scale" : 
+				{
+					"x" : 1.5,
+					"y" : 1.5
+				}
+			}
+		},
+		{
+			"Components" : 
+			{
+				"Com_Mesh" : 
+				{
+					"Shape_Box" : 
+					{
+						"positionOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						"rotOffsetFromGameObject" : 0.0,
+						"scaleOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					},
+					"Texture" : "../Textures/WhiteSquare.png"
+				}
+			},
+			"Name" : "obj2",
+			"Transform" : 
+			{
+				"position" : 
+				{
+					"x" : 1.9497753381729126,
+					"y" : 1.3932005167007446
+				},
+				"rotation" : -141.9283447265625,
+				"scale" : 
+				{
+					"x" : 1.0,
+					"y" : 1.0
+				}
+			}
+		},
+		{
+			"Components" : 
+			{
+				"Com_Mesh" : 
+				{
+					"Shape_Box" : 
+					{
+						"positionOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						"rotOffsetFromGameObject" : 0.0,
+						"scaleOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					},
+					"Texture" : "../Textures/WhiteSquare.png"
+				}
+			},
+			"Name" : "obj3",
+			"Transform" : 
+			{
+				"position" : 
+				{
+					"x" : 1.0,
+					"y" : 1.2000000476837158
+				},
+				"rotation" : 0.0,
+				"scale" : 
+				{
+					"x" : 1.5,
+					"y" : 1.5
+				}
+			}
+		}
+	]
 }

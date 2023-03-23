@@ -9,6 +9,7 @@ private:
 	EngineJsonReader();
 	~EngineJsonReader();
 
+	const std::string gameSceneDataPath = "JsonFiles/SceneOfGame.json";
 	Json::Value gameSceneData;
 public:
 	static EngineJsonReader* GetInstance();

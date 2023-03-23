@@ -155,6 +155,7 @@ void EngineFunctionalityManager::OnStopButtonClicked()
 void EngineFunctionalityManager::OnSaveButtonClicked()
 {
     std::cout << "Save button pressed " << std::endl;
+    EngineJsonReader::GetInstance()->SaveScene();
 }
 
 #pragma endregion

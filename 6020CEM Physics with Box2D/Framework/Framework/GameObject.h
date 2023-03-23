@@ -73,6 +73,7 @@ public:
 	void SetScale(Vector2 _newScale);
 	bool HasRigidBody();
 	RigidBody* TryGetRigidBody();
+	inline std::map<Component::typeOfComponent, std::vector<Component*>>* GetAllComponents() { return &allComponents; };
 #pragma endregion
 
 };

@@ -101,13 +101,8 @@ int main()
     GameObject* obj1 = new GameObject("obj1", new Transform(Vector2(1, 0), 0, Vector2(1.5, 1.5)));
     
     Shape_Box* shapeBox = new Shape_Box();
-    sf::Texture testTexture;
-    if (!testTexture.loadFromFile("../Textures/keyboardcat.jpg"))
-    {
-        std::cout << "Texture did not load!" << "\n" << std::endl;
-    }
 
-    Com_Mesh* obj1Mesh = new Com_Mesh(&testTexture, shapeBox);
+    Com_Mesh* obj1Mesh = new Com_Mesh("../Textures/keyboardcat.jpg", shapeBox);
 
     RigidBodySettings bodySettings_ = RigidBodySettings(dynamicBody, 1, 1, false, true, false, true, 0);
     RigidBody* rb = new RigidBody(bodySettings_);
@@ -136,16 +131,9 @@ int main()
     RigidBody* rb2 = new RigidBody(bodySettings);
 
     SquareCollider* squareColl2 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
-
-    sf::Texture testTexture2;
-    if (!testTexture2.loadFromFile("../Textures/WhiteSquare.png"))
-    {
-        std::cout << "Texture did not load!" << "\n" << std::endl;
-    }
-
     
     obj2Mesh->SetShape(shapeBox2);
-    obj2Mesh->SetTexture(&testTexture2);
+    obj2Mesh->SetTexture("../Textures/WhiteSquare.png");
 
     obj2->AddComponent(obj2Mesh);
     obj2->AddComponent(rb2);
@@ -166,14 +154,8 @@ int main()
 
     SquareCollider* squareColl3 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
-    sf::Texture testTexture3;
-    if (!testTexture2.loadFromFile("../Textures/WhiteSquare.png"))
-    {
-        std::cout << "Texture did not load!" << "\n" << std::endl;
-    }
-
     obj3Mesh->SetShape(shapeBox3);
-    obj3Mesh->SetTexture(&testTexture3);
+    obj3Mesh->SetTexture("../Textures/WhiteSquare.png");
 
     obj3->AddComponent(obj3Mesh);
     obj3->AddComponent(rb3);

@@ -11,7 +11,7 @@ EngineJsonReader* EngineJsonReader::instance;
 EngineJsonReader::EngineJsonReader()
 {
     //read the data from the test1.JsonFile
-    std::ifstream fileStream("JsonFiles/SceneOfGame.json");
+    std::ifstream fileStream(gameSceneDataPath);
     fileStream >> gameSceneData;
     fileStream.close();
 }
@@ -86,8 +86,74 @@ void EngineJsonReader::LoadSceneToPlay()
 
 void EngineJsonReader::SaveScene()
 {
-}
+    Json::Value root;
+    Json::Value jsonGameObjects(Json::arrayValue);
 
+    for (GameObject* currentGameObject : *Scene::GetInstance()->GetAllObjects())
+    {
+        Json::Value json_go_data;
+
+#pragma region Save GameObject information
+        
+        json_go_data["Name"] = currentGameObject->name;
+
+        //this saves all the gameobject transform data
+        Transform* go_Transform = currentGameObject->GetTransform();
+        json_go_data["Transform"]["position"]["x"] = go_Transform->position.x;
+        json_go_data["Transform"]["position"]["y"] = go_Transform->position.y;
+        json_go_data["Transform"]["rotation"] = go_Transform->rotation;
+        json_go_data["Transform"]["scale"]["x"] = go_Transform->scale.x;
+        json_go_data["Transform"]["scale"]["y"] = go_Transform->scale.y;
+#pragma endregion
+
+        //this will store all gamobject components
+        Json::Value json_go_Components;
+
+        //this gets all the components (std::map<Component::typeOfComponent, std::vector<Component*>>*) and loops through every item
+        for (const auto& std_pair_components : *currentGameObject->GetAllComponents())
+        {
+            //this loops through every component skiping the type of component, since we dont need it
+            for (Component* component : std_pair_components.second) 
+            {
+                //if the component is a Com_Mesh
+                if (component->GetUniqueIdIdentifier() == Com_Mesh::uniqueComponentIdIdentifier) 
+                {
+                    Com_Mesh* comMesh = static_cast<Com_Mesh*>(component);
+
+                    Json::Value json_go_component_ComMesh;
+                    json_go_component_ComMesh["Texture"] = comMesh->GetTexturePath();
+
+                    Json::Value jsonShapeBox;
+                    jsonShapeBox["positionOffsetFromGameObject"]["x"] = comMesh->GetShape()->positionOffsetFromGameObject.x;
+                    jsonShapeBox["positionOffsetFromGameObject"]["y"] = comMesh->GetShape()->positionOffsetFromGameObject.y;
+                    jsonShapeBox["rotOffsetFromGameObject"] = comMesh->GetShape()->rotOffsetFromGameObject;
+                    jsonShapeBox["scaleOffsetFromGameObject"]["x"] = comMesh->GetShape()->scaleOffsetFromGameObject.x;
+                    jsonShapeBox["scaleOffsetFromGameObject"]["y"] = comMesh->GetShape()->scaleOffsetFromGameObject.y;
+
+                    json_go_component_ComMesh["Shape_Box"] = jsonShapeBox;
+                    json_go_Components["Com_Mesh"] = json_go_component_ComMesh;
+                }
+                
+            }
+        }
+        json_go_data["Components"] = json_go_Components;
+        jsonGameObjects.append(json_go_data);
+    }
+
+    root["GameObjects"] = jsonGameObjects;
+
+    // Write the data to the JSON file
+    std::ofstream fileStream(gameSceneDataPath);
+    if (fileStream.is_open())
+    {
+        fileStream << root;
+        fileStream.close();
+    }
+    else
+    {
+        std::cout << "Error: Unable to open file for writing: " << gameSceneDataPath << std::endl;
+    }
+}
 
 #pragma region Helper Function
 
@@ -116,13 +182,7 @@ Com_Mesh* EngineJsonReader::CreateComMeshFromJsonData(Json::Value jsonData_)
     #pragma region Creating the component
 
         Shape_Box* shapeBox = new Shape_Box(shapeBox_posOffset, shapeBox_rotOffset, shapeBox_scaleOffset);
-        sf::Texture* texture = new sf::Texture();
-        if (!texture->loadFromFile("../Textures/keyboardcat.jpg"))
-        {
-            std::cout << "Texture did not load!" << "\n" << std::endl;
-        }
-
-        Com_Mesh* comMesh = new Com_Mesh(texture, shapeBox);
+        Com_Mesh* comMesh = new Com_Mesh(json_Com_Mesh_texture, shapeBox);
 
     #pragma endregion
 
