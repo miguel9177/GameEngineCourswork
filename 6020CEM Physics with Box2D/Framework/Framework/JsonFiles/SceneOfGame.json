@@ -21,6 +21,18 @@
 						}
 					},
 					"Texture" : "../Textures/keyboardcat.jpg"
+				},
+				"RigidBody" : 
+				{
+					"AllowSleep" : false,
+					"AngularDrag" : 1.0,
+					"Awake" : true,
+					"Drag" : 1.0,
+					"FreezeRotation" : false,
+					"GravityScale" : 0.0,
+					"Important" : true,
+					"RigidBodyType" : 2,
+					"UseGravity" : false
 				}
 			},
 			"Name" : "obj1",
@@ -28,84 +40,8 @@
 			{
 				"position" : 
 				{
-					"x" : 1.0,
+					"x" : 0.0,
 					"y" : 0.0
-				},
-				"rotation" : 0.0,
-				"scale" : 
-				{
-					"x" : 1.5,
-					"y" : 1.5
-				}
-			}
-		},
-		{
-			"Components" : 
-			{
-				"Com_Mesh" : 
-				{
-					"Shape_Box" : 
-					{
-						"positionOffsetFromGameObject" : 
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						"rotOffsetFromGameObject" : 0.0,
-						"scaleOffsetFromGameObject" : 
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						}
-					},
-					"Texture" : "../Textures/WhiteSquare.png"
-				}
-			},
-			"Name" : "obj2",
-			"Transform" : 
-			{
-				"position" : 
-				{
-					"x" : 1.0164119005203247,
-					"y" : 1.5199992656707764
-				},
-				"rotation" : 2.1196448869886808e-05,
-				"scale" : 
-				{
-					"x" : 1.0,
-					"y" : 1.0
-				}
-			}
-		},
-		{
-			"Components" : 
-			{
-				"Com_Mesh" : 
-				{
-					"Shape_Box" : 
-					{
-						"positionOffsetFromGameObject" : 
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						},
-						"rotOffsetFromGameObject" : 0.0,
-						"scaleOffsetFromGameObject" : 
-						{
-							"x" : 0.0,
-							"y" : 0.0
-						}
-					},
-					"Texture" : "../Textures/WhiteSquare.png"
-				}
-			},
-			"Name" : "obj3",
-			"Transform" : 
-			{
-				"position" : 
-				{
-					"x" : 1.0,
-					"y" : 1.2000000476837158
 				},
 				"rotation" : 0.0,
 				"scale" : 

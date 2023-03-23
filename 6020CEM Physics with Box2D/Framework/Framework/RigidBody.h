@@ -103,7 +103,8 @@ public:
 	bool useGravity = false;
 
 	RigidBody(RigidBodySettings _bodySettings = RigidBodySettings());
-	RigidBody(Vector2 _pos, RigidBodySettings _bodySettings = RigidBodySettings());
+
+	//RigidBody(Vector2 _pos, RigidBodySettings _bodySettings = RigidBodySettings());
 	~RigidBody();
 
 	void Start() override;
@@ -197,6 +198,14 @@ public:
 		{
 			bodySettings.important = _important;
 			body->SetBullet(_important);
+		}
+
+		inline float GetGravityScale() { return bodySettings.gravityScale; }
+
+		inline void SetGravityScale(float _gravityScale)
+		{
+			bodySettings.gravityScale = _gravityScale;
+			body->SetGravityScale(_gravityScale);
 		}
 
 		inline Vector2 GetLinearVelocity() { return body->GetLinearVelocity(); }

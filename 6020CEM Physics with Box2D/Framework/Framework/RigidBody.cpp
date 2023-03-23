@@ -26,26 +26,26 @@ RigidBody::RigidBody(RigidBodySettings _bodySettings) : Component(Component::typ
 	
 }
 
-RigidBody::RigidBody(Vector2 pos_, RigidBodySettings _bodySettings) : Component(Component::typeOfComponent::Physics, uniqueComponentIdIdentifier)
-{
-	//creates a temp body defenition so that we can create a rigidbody
-	bodySettings = _bodySettings;
-
-	//creates a temp body defenition so that we can create a rigidbody
-	b2BodyDef bodyDef;
-	bodyDef.type = _bodySettings.ConvertTypeToBox2DType(_bodySettings.type);
-	bodyDef.linearDamping = _bodySettings.drag;
-	bodyDef.angularDamping = _bodySettings.angularDrag;
-	bodyDef.allowSleep = _bodySettings.allowSleep;
-	bodyDef.awake = _bodySettings.awake;
-	bodyDef.fixedRotation = _bodySettings.freezeRotation;
-	bodyDef.bullet = _bodySettings.important;
-	bodyDef.gravityScale = _bodySettings.gravityScale;
-	bodyDef.position = pos_;
-
-	//creates the rigidbody
-	body = PhysicsEngine::GetInstance()->CreateRigidBody(&bodyDef);
-}
+//RigidBody::RigidBody(Vector2 pos_, RigidBodySettings _bodySettings) : Component(Component::typeOfComponent::Physics, uniqueComponentIdIdentifier)
+//{
+//	//creates a temp body defenition so that we can create a rigidbody
+//	bodySettings = _bodySettings;
+//
+//	//creates a temp body defenition so that we can create a rigidbody
+//	b2BodyDef bodyDef;
+//	bodyDef.type = _bodySettings.ConvertTypeToBox2DType(_bodySettings.type);
+//	bodyDef.linearDamping = _bodySettings.drag;
+//	bodyDef.angularDamping = _bodySettings.angularDrag;
+//	bodyDef.allowSleep = _bodySettings.allowSleep;
+//	bodyDef.awake = _bodySettings.awake;
+//	bodyDef.fixedRotation = _bodySettings.freezeRotation;
+//	bodyDef.bullet = _bodySettings.important;
+//	bodyDef.gravityScale = _bodySettings.gravityScale;
+//	bodyDef.position = pos_;
+//
+//	//creates the rigidbody
+//	body = PhysicsEngine::GetInstance()->CreateRigidBody(&bodyDef);
+//}
 
 RigidBody::~RigidBody()
 {

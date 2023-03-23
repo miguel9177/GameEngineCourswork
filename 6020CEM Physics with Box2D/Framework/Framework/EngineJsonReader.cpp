@@ -5,6 +5,7 @@
 #include "Com_Mesh.h"
 #include "Shape_Box.h"
 #include "Scene.h"
+#include "RigidBody.h"
 
 EngineJsonReader* EngineJsonReader::instance;
 
@@ -77,6 +78,11 @@ void EngineJsonReader::LoadSceneToPlay()
                 //finaly in the end i add the com mesh to the gameobject
                 gameObject->AddComponent(CreateComMeshFromJsonData(currentComponent_Json_Data));
             }
+            else if (currentComponent_json_Name == "RigidBody")
+            {
+                //finaly in the end i add the rb to the gameobject
+                gameObject->AddComponent(CreateRigidBodyFromJsonData(currentComponent_Json_Data));
+            }
         }
         //adds the gameobject to the gameobject vector list
         gameObjects.push_back(gameObject);
@@ -121,21 +127,13 @@ void EngineJsonReader::SaveScene()
                 if (component->GetUniqueIdIdentifier() == Com_Mesh::uniqueComponentIdIdentifier) 
                 {
                     Com_Mesh* comMesh = static_cast<Com_Mesh*>(component);
-
-                    Json::Value json_go_component_ComMesh;
-                    json_go_component_ComMesh["Texture"] = comMesh->GetTexturePath();
-
-                    Json::Value jsonShapeBox;
-                    jsonShapeBox["positionOffsetFromGameObject"]["x"] = comMesh->GetShape()->positionOffsetFromGameObject.x;
-                    jsonShapeBox["positionOffsetFromGameObject"]["y"] = comMesh->GetShape()->positionOffsetFromGameObject.y;
-                    jsonShapeBox["rotOffsetFromGameObject"] = comMesh->GetShape()->rotOffsetFromGameObject;
-                    jsonShapeBox["scaleOffsetFromGameObject"]["x"] = comMesh->GetShape()->scaleOffsetFromGameObject.x;
-                    jsonShapeBox["scaleOffsetFromGameObject"]["y"] = comMesh->GetShape()->scaleOffsetFromGameObject.y;
-
-                    json_go_component_ComMesh["Shape_Box"] = jsonShapeBox;
-                    json_go_Components["Com_Mesh"] = json_go_component_ComMesh;
+                    json_go_Components["Com_Mesh"] = ConvertComMeshToJson(comMesh);
                 }
-                
+                else if (component->GetUniqueIdIdentifier() == RigidBody::uniqueComponentIdIdentifier)
+                {
+                    RigidBody* rigidBody = static_cast<RigidBody*>(component);
+                    json_go_Components["RigidBody"] = ConvertRigidBodyToJson(rigidBody);
+                }
             }
         }
         json_go_data["Components"] = json_go_Components;
@@ -189,6 +187,63 @@ Com_Mesh* EngineJsonReader::CreateComMeshFromJsonData(Json::Value jsonData_)
     #pragma endregion
 
     return comMesh;
+}
+
+Json::Value EngineJsonReader::ConvertComMeshToJson(Com_Mesh* comMesh)
+{
+    Json::Value json_go_component_ComMesh;
+    json_go_component_ComMesh["Texture"] = comMesh->GetTexturePath();
+
+    Json::Value jsonShapeBox;
+    jsonShapeBox["positionOffsetFromGameObject"]["x"] = comMesh->GetShape()->positionOffsetFromGameObject.x;
+    jsonShapeBox["positionOffsetFromGameObject"]["y"] = comMesh->GetShape()->positionOffsetFromGameObject.y;
+    jsonShapeBox["rotOffsetFromGameObject"] = comMesh->GetShape()->rotOffsetFromGameObject;
+    jsonShapeBox["scaleOffsetFromGameObject"]["x"] = comMesh->GetShape()->scaleOffsetFromGameObject.x;
+    jsonShapeBox["scaleOffsetFromGameObject"]["y"] = comMesh->GetShape()->scaleOffsetFromGameObject.y;
+
+    json_go_component_ComMesh["Shape_Box"] = jsonShapeBox;
+    return json_go_component_ComMesh;
+}
+
+
+RigidBody* EngineJsonReader::CreateRigidBodyFromJsonData(Json::Value jsonData_)
+{
+#pragma region Getting the json data
+    RigidBodySettings rbSettings;
+    rbSettings.type = static_cast<RigidBodyType>(jsonData_["RigidBodyType"].asInt());
+    rbSettings.drag = jsonData_["Drag"].asFloat();
+    rbSettings.angularDrag = jsonData_["AngularDrag"].asFloat();
+    rbSettings.allowSleep = jsonData_["AllowSleep"].asBool();
+    rbSettings.awake = jsonData_["Awake"].asBool();
+    rbSettings.freezeRotation = jsonData_["FreezeRotation"].asBool();
+    rbSettings.important = jsonData_["Important"].asBool();
+    rbSettings.gravityScale = jsonData_["GravityScale"].asFloat();
+    bool rb_useGravity = jsonData_["UseGravity"].asBool();
+#pragma endregion
+
+#pragma region Creating the component
+    RigidBody* rigidBody = new RigidBody(rbSettings);
+    rigidBody->useGravity = rb_useGravity;
+#pragma endregion
+
+    return rigidBody;
+}
+
+Json::Value EngineJsonReader::ConvertRigidBodyToJson(RigidBody* rb)
+{
+    Json::Value json_go_component_RigidBody;
+
+    json_go_component_RigidBody["RigidBodyType"] = static_cast<int>(rb->GetRbType());
+    json_go_component_RigidBody["Drag"] = rb->GetDrag();
+    json_go_component_RigidBody["AngularDrag"] = rb->GetAngularDrag();
+    json_go_component_RigidBody["AllowSleep"] = rb->GetAllowSleep();
+    json_go_component_RigidBody["Awake"] = rb->GetAwake();
+    json_go_component_RigidBody["FreezeRotation"] = rb->GetFreezedRotation();
+    json_go_component_RigidBody["Important"] = rb->IsImportant();
+    json_go_component_RigidBody["GravityScale"] = rb->GetGravityScale();
+    json_go_component_RigidBody["UseGravity"] = rb->useGravity;
+
+    return json_go_component_RigidBody;
 }
 
 #pragma endregion

@@ -2,6 +2,7 @@
 #include <jsoncpp/json/json.h>
 
 class Com_Mesh;
+class RigidBody;
 class EngineJsonReader
 {
 private:
@@ -31,6 +32,10 @@ public:
 
 #pragma region Helper Functions
 	Com_Mesh* CreateComMeshFromJsonData(Json::Value jsonData_);
+	Json::Value ConvertComMeshToJson(Com_Mesh* comMesh);
+
+	RigidBody* CreateRigidBodyFromJsonData(Json::Value jsonData_);
+	Json::Value ConvertRigidBodyToJson(RigidBody* rb);
 #pragma endregion
 
 };
