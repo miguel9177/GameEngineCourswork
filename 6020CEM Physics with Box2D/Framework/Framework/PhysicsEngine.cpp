@@ -2,10 +2,11 @@
 #include "RigidBody.h"
 #include <vector>
 #include "Scene.h"
+#include <iostream>
 
 PhysicsEngine* PhysicsEngine::instance;
 
-PhysicsEngine::PhysicsEngine() : gravity(0.0f, 0.0f), world(gravity)
+PhysicsEngine::PhysicsEngine() : gravity(0.0f, 0.0f)
 {
 }
 
@@ -25,11 +26,20 @@ PhysicsEngine* PhysicsEngine::GetInstance()
 
 b2Body* PhysicsEngine::CreateRigidBody(b2BodyDef* bodyDefenition_)
 {
-    return world.CreateBody(bodyDefenition_);
+    if (world == nullptr)
+    {
+        std::cout << "Error: trying to create a rigidbody in a not initialized physics world, please call the functions startPhyscisWorld!" << std::endl;
+        return nullptr;
+    }
+    return world->CreateBody(bodyDefenition_);
 }
 
 void PhysicsEngine::Update()
 {
+    if (world == nullptr)
+        return;
+    
+
     // Iterate through all rigidbodies
     for (std::vector<RigidBody*>::iterator it = Scene::GetInstance()->GetAllRigidBodys()->begin(); it != Scene::GetInstance()->GetAllRigidBodys()->end(); ++it)
     {
@@ -40,5 +50,16 @@ void PhysicsEngine::Update()
             rb->Update();
     }
 
-    world.Step(timeStep, velocityIterations, positionIterations);
+    world->Step(timeStep, velocityIterations, positionIterations);
+}
+
+void PhysicsEngine::StartPhysicsWorld()
+{
+    world = new b2World(gravity);
+}
+
+void PhysicsEngine::StopPhysicsWorld()
+{
+    delete world;
+    world = nullptr;
 }

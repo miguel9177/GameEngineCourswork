@@ -13,7 +13,7 @@ private:
     const int32 positionIterations = 2;
 
     b2Vec2 gravity;
-    b2World world;
+    b2World* world;
 
     PhysicsEngine();
 
@@ -26,5 +26,9 @@ public:
     b2Body* CreateRigidBody(b2BodyDef* bodyDefenition);
 
     void Update();
+
+    void StartPhysicsWorld();
+
+    void StopPhysicsWorld();
 };
 

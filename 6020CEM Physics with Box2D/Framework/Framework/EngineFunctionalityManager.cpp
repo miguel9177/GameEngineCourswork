@@ -6,6 +6,7 @@
 #include "GameEngine.h"
 #include "EngineJsonReader.h"
 #include "EventQueue.h"
+#include "PhysicsEngine.h"
 
 EngineFunctionalityManager* EngineFunctionalityManager::instance;
 
@@ -140,6 +141,8 @@ void EngineFunctionalityManager::CreateEngineUI()
 
 void EngineFunctionalityManager::OnPlayButtonClicked()
 {
+    PhysicsEngine::GetInstance()->StopPhysicsWorld();
+    PhysicsEngine::GetInstance()->StartPhysicsWorld();
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::EnteredPlayMode);
     EngineJsonReader::GetInstance()->LoadSceneToPlay();
 }
