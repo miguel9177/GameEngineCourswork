@@ -5,18 +5,20 @@
 			"Components" : 
 			{
 				"CircleCollider" : 
-				{
-					"bouciness" : 0.40000000596046448,
-					"friction" : 0.5,
-					"mass" : 1.0,
-					"offsetAngle" : 0.0,
-					"posOffset" : 
+				[
 					{
-						"x" : 0.0,
-						"y" : 0.0
-					},
-					"radius" : 0.10000000149011612
-				},
+						"bouciness" : 0.40000000596046448,
+						"friction" : 0.5,
+						"mass" : 1.0,
+						"offsetAngle" : 0.0,
+						"posOffset" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						"radius" : 0.10000000149011612
+					}
+				],
 				"Com_Mesh" : 
 				{
 					"Shape_Box" : 
@@ -48,23 +50,97 @@
 					"rb_useGravity" : false
 				},
 				"ScriptBehaviour" : 
-				{
-					"uniqueIdIdentifier" : 10001
-				}
+				[
+					{
+						"uniqueIdIdentifier" : 10002
+					},
+					{
+						"uniqueIdIdentifier" : 10003
+					}
+				]
 			},
 			"Name" : "obj1",
 			"Transform" : 
 			{
 				"position" : 
 				{
-					"x" : -0.82524985074996948,
-					"y" : 2.0513267517089844
+					"x" : 1.7853533029556274,
+					"y" : 2.0366694927215576
 				},
-				"rotation" : 0.0,
+				"rotation" : -17.478891372680664,
 				"scale" : 
 				{
 					"x" : 1.5,
 					"y" : 1.5
+				}
+			}
+		},
+		{
+			"Components" : 
+			{
+				"Com_Mesh" : 
+				{
+					"Shape_Box" : 
+					{
+						"positionOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						"rotOffsetFromGameObject" : 0.0,
+						"scaleOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					},
+					"texture" : "../Textures/WhiteSquare.png"
+				},
+				"RigidBody" : 
+				{
+					"rbSettings_allowSleep" : false,
+					"rbSettings_angularDrag" : 1.0,
+					"rbSettings_awake" : true,
+					"rbSettings_drag" : 1.0,
+					"rbSettings_freezeRotation" : false,
+					"rbSettings_gravityScale" : 0.0,
+					"rbSettings_important" : false,
+					"rbSettings_type" : 2,
+					"rb_useGravity" : false
+				},
+				"SquareCollider" : 
+				[
+					{
+						"bouciness" : 0.40000000596046448,
+						"friction" : 0.5,
+						"halfSize" : 
+						{
+							"x" : 0.12200000137090683,
+							"y" : 0.12200000137090683
+						},
+						"mass" : 1.0,
+						"offsetAngle" : 0.0,
+						"posOffset" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					}
+				]
+			},
+			"Name" : "obj2",
+			"Transform" : 
+			{
+				"position" : 
+				{
+					"x" : 2.0996253490447998,
+					"y" : 2.1972007751464844
+				},
+				"rotation" : -269.30657958984375,
+				"scale" : 
+				{
+					"x" : 1.0,
+					"y" : 1.0
 				}
 			}
 		}

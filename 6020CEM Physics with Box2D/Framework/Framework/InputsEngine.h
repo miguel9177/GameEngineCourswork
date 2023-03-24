@@ -50,7 +50,8 @@ public:
     void ReceiveInputFromWindow(sf::Event event_);
 
     std::vector<sf::Event>* GetAllEvents();
-    inline std::unordered_map<sf::Keyboard::Key, KeyPressInformation> GetKeyStates() { return keysState; };
+    //we return a const reference so that we dont have to copy the key state
+    inline const std::unordered_map<sf::Keyboard::Key, KeyPressInformation>& GetKeyStates() const { return keysState; };
     inline MouseState GetMouseState() { return mouseState; };
 };
 

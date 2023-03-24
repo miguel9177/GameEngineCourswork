@@ -147,6 +147,12 @@
     <ClCompile Include="AllUserScipts\ScriptLoaderManager.cpp">
       <Filter>Source Files\PlayerScripts</Filter>
     </ClCompile>
+    <ClCompile Include="AllUserScipts\SB_CharacterMovement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AllUserScipts\SB_CameraFollowPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -241,6 +247,12 @@
     </ClInclude>
     <ClInclude Include="AllUserScipts\ScriptLoaderManager.h">
       <Filter>Source Files\PlayerScripts</Filter>
+    </ClInclude>
+    <ClInclude Include="AllUserScipts\SB_CharacterMovement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AllUserScipts\SB_CameraFollowPlayer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

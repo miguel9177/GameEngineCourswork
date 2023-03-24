@@ -4,6 +4,7 @@
 class Com_Mesh;
 class RigidBody;
 class CircleCollider;
+class SquareCollider;
 class ScriptBehaviour;
 class EngineJsonReader
 {
@@ -42,6 +43,9 @@ public:
 
 	CircleCollider* CreateCircleColliderFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertCircleColliderToJson(CircleCollider* circleColl);
+
+	SquareCollider* CreateSquareColliderFromJsonData(Json::Value jsonData_);
+	Json::Value ConvertSquareColliderToJson(SquareCollider* circleColl);
 
 	ScriptBehaviour* CreateScriptBehaviourFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertScriptBehaviourToJson(ScriptBehaviour* scriptBehaviour);

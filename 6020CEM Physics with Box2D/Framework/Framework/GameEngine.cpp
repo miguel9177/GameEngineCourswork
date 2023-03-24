@@ -39,8 +39,8 @@ void GameEngine::Update()
     UpdateWindowEvents();
     PhysicsEngine::GetInstance()->Update();
     InputsEngine::GetInstance()->Update(graphicsEngine->GetEngineWindow());
-    UiEngine::GetInstance()->Update();
     Scene::GetInstance()->Update();
+    UiEngine::GetInstance()->Update();
 }
 
 void GameEngine::Render()

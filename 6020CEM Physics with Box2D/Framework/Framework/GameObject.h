@@ -31,23 +31,20 @@ public:
 	//this will try and get the given component, its inline since the visual studio compiler wasnt letting it be in the cpp
 	template<typename T>
 	inline T* TryGetComponent(Component::typeOfComponent componentType_) 
-	{
-		// Get the type of component to check
-	    Component::typeOfComponent componentType = componentType_;
-	
-	    // Check if the type of component exists in the map
-	    auto it = allComponents.find(componentType);
+	{	
+	    //this checks if the components exists and stores the components aswell in a map
+	    auto it = allComponents.find(componentType_);
 	    if (it == allComponents.end()) {
 	        return nullptr;
 	    }
 	
-	    // Get the vector of components for the given type
+	    //gets all the comppnents of the correct type
 	    std::vector<Component*>& componentsOfType = it->second;
 	
-	    // Loop through the vector of components
+	    //loops trhough all of them
 	    for (std::vector<Component*>::iterator it = componentsOfType.begin(); it != componentsOfType.end(); ++it)
 	    {
-	        // do something with each component in the vector
+	        //returns the requested component
 	        Component* component = *it;
 	        if (dynamic_cast<T*>(component) != nullptr)
 	            return dynamic_cast<T*>(component);

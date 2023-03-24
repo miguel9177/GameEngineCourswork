@@ -20,6 +20,8 @@
 #include "AllUserScipts/SB_TestScript.h"
 #include <fstream>
 #include <jsoncpp/json/json.h>
+#include "AllUserScipts/SB_CharacterMovement.h"
+#include "AllUserScipts/SB_CameraFollowPlayer.h"
 
 void test()
 {
@@ -88,8 +90,6 @@ int main()
     EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
     EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);*/
 
- 
-
     //EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
     /*EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
 
@@ -109,10 +109,12 @@ int main()
     //
     //CircleCollider* squareColl = new CircleCollider(0.1f, Vector2(0, 0));
 
-    //SB_TestScript* playerScript = new SB_TestScript();
+    //SB_CharacterMovement* playerScript1 = new SB_CharacterMovement();
+    //SB_CameraFollowPlayer* playerScript2 = new SB_CameraFollowPlayer();
 
-    //obj1->AddComponent(playerScript);
     //obj1->AddComponent(rb);
+    //obj1->AddComponent(playerScript1);
+    //obj1->AddComponent(playerScript2);
     //obj1->AddComponent(squareColl);
     //obj1->AddComponent(obj1Mesh);
 

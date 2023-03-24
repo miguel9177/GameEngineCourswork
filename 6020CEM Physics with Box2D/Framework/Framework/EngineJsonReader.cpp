@@ -72,6 +72,8 @@ void EngineJsonReader::LoadSceneToPlay()
         //i store the rb and colls in variables so that i can add the colliders after adding the rigidbody
         RigidBody* rb_currentGameObject = nullptr;
         std::vector<Com_Collider*> allColliders_currentGameObject;
+        //we want to add the scripts as the last thing, since we dont know its depencies, so if we put it in last the character will already have everything 
+        std::vector<ScriptBehaviour*>allScripts_currentGameObject;
         
         for (const auto& currentComponent_json_Name : allcomponents_json_Data.getMemberNames())
         {
@@ -94,10 +96,15 @@ void EngineJsonReader::LoadSceneToPlay()
                 //i store the gameobject collider in a list so that i can then add all colliders to the rb
                 allColliders_currentGameObject.push_back(CreateCircleColliderFromJsonData(currentComponent_Json_Data));
             }
+            else if (currentComponent_json_Name == "SquareCollider")
+            {
+                //i store the gameobject collider in a list so that i can then add all colliders to the rb
+                allColliders_currentGameObject.push_back(CreateSquareColliderFromJsonData(currentComponent_Json_Data));
+            }
             else if (currentComponent_json_Name == "ScriptBehaviour")
             {
                 //i add the script to the game object
-                currentGameObject->AddComponent(CreateScriptBehaviourFromJsonData(currentComponent_Json_Data));
+                allScripts_currentGameObject.push_back(CreateScriptBehaviourFromJsonData(currentComponent_Json_Data));
             }
         }
 
@@ -110,6 +117,9 @@ void EngineJsonReader::LoadSceneToPlay()
             for (const auto currentColl : allColliders_currentGameObject)
                 currentGameObject->AddComponent(currentColl);
         }
+        //after adding everything, we add all scripts
+        for (const auto currentScript : allScripts_currentGameObject)
+            currentGameObject->AddComponent(currentScript);
 
         //add an object to the scene
         Scene::GetInstance()->AddObject(currentGameObject);
@@ -162,12 +172,17 @@ void EngineJsonReader::SaveScene()
                 else if (component->GetUniqueIdIdentifier() == CircleCollider::uniqueComponentIdIdentifier)
                 {
                     CircleCollider* circleColl = static_cast<CircleCollider*>(component);
-                    json_go_Components["CircleCollider"] = ConvertCircleColliderToJson(circleColl);
+                    json_go_Components["CircleCollider"].append(ConvertCircleColliderToJson(circleColl));
+                }
+                else if (component->GetUniqueIdIdentifier() == SquareCollider::uniqueComponentIdIdentifier)
+                {
+                    SquareCollider* squareColl = static_cast<SquareCollider*>(component);
+                    json_go_Components["SquareCollider"].append(ConvertSquareColliderToJson(squareColl));
                 }
                 else if (component->GetUniqueIdIdentifier() > ScriptBehaviour::minimumUniqueComponentIdIdentifier)
                 {
                     ScriptBehaviour* scriptBehaviour = static_cast<ScriptBehaviour*>(component);
-                    json_go_Components["ScriptBehaviour"] = ConvertScriptBehaviourToJson(scriptBehaviour);
+                    json_go_Components["ScriptBehaviour"].append(ConvertScriptBehaviourToJson(scriptBehaviour));
                 }
             }
         }
@@ -318,6 +333,49 @@ Json::Value EngineJsonReader::ConvertCircleColliderToJson(CircleCollider* circle
 #pragma endregion
 
     return json_go_component_CircleColl;
+}
+
+
+SquareCollider* EngineJsonReader::CreateSquareColliderFromJsonData(Json::Value jsonData_)
+{
+#pragma region Getting the json data
+    Vector2 squareColl_halfSize(
+        jsonData_["halfSize"]["x"].asFloat(),
+        jsonData_["halfSize"]["y"].asFloat()
+    );
+    Vector2 squareColl_posOffset(
+        jsonData_["posOffset"]["x"].asFloat(),
+        jsonData_["posOffset"]["y"].asFloat()
+    );
+    float squareColl_offsetAngle = jsonData_["offsetAngle"].asFloat();
+    float squareColl_mass = jsonData_["mass"].asFloat();
+    float squareColl_friction = jsonData_["friction"].asFloat();
+    float squareColl_bounciness = jsonData_["bouciness"].asFloat();
+#pragma endregion
+
+#pragma region Creating the component
+    SquareCollider* squareCollider = new SquareCollider(squareColl_halfSize, squareColl_posOffset, squareColl_offsetAngle, squareColl_mass, squareColl_friction, squareColl_bounciness);
+#pragma endregion
+
+    return squareCollider;
+}
+
+Json::Value EngineJsonReader::ConvertSquareColliderToJson(SquareCollider* squareColl)
+{
+    Json::Value json_go_component_SquareColl;
+
+#pragma region Saving the json data
+    json_go_component_SquareColl["halfSize"]["x"] = squareColl->GetHalfSize().x;
+    json_go_component_SquareColl["halfSize"]["y"] = squareColl->GetHalfSize().y;
+    json_go_component_SquareColl["posOffset"]["x"] = squareColl->GetPosOffset().x;
+    json_go_component_SquareColl["posOffset"]["y"] = squareColl->GetPosOffset().y;
+    json_go_component_SquareColl["offsetAngle"] = squareColl->GetOffsetAngle();
+    json_go_component_SquareColl["mass"] = squareColl->GetMass();
+    json_go_component_SquareColl["friction"] = squareColl->GetFriction();
+    json_go_component_SquareColl["bouciness"] = squareColl->GetBouciness();
+#pragma endregion
+
+    return json_go_component_SquareColl;
 }
 
 

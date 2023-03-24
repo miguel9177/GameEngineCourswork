@@ -147,6 +147,8 @@
     <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="AllUserScipts\SB_TestScript.cpp" />
+    <ClCompile Include="AllUserScipts\SB_CharacterMovement.cpp" />
+    <ClCompile Include="AllUserScipts\SB_CameraFollowPlayer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ScriptBehaviour.cpp" />
     <ClCompile Include="AllUserScipts\ScriptLoaderManager.cpp" />
@@ -176,6 +178,8 @@
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="RigidBody.h" />
     <ClInclude Include="AllUserScipts\SB_TestScript.h" />
+    <ClInclude Include="AllUserScipts\SB_CharacterMovement.h" />
+    <ClInclude Include="AllUserScipts\SB_CameraFollowPlayer.h" />
     <ClInclude Include="ScriptBehaviour.h" />
     <ClInclude Include="AllUserScipts\ScriptLoaderManager.h" />
     <ClInclude Include="Shape.h" />
