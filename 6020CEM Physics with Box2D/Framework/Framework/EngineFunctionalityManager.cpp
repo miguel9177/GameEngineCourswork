@@ -154,6 +154,7 @@ void EngineFunctionalityManager::OnDebugButtonClicked()
 
 void EngineFunctionalityManager::OnStopButtonClicked()
 {
+    PhysicsEngine::GetInstance()->StopPhysicsWorld();
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::EnteredEditMode);
 }
 

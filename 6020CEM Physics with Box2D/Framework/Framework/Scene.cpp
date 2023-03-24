@@ -105,6 +105,7 @@ void Scene::EnteredPlayMode()
 //this is called if we entered Edit mode (in here we load all the player Meshes without its scripts)
 void Scene::EnteredEditMode()
 {
+    DeleteAllGameObjects();
 }
 
 #pragma endregion
