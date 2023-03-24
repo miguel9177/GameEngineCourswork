@@ -44,6 +44,7 @@ Com_Mesh::~Com_Mesh()
 {
 	delete texture;
 	delete shape;
+	delete debug_OriginPointShape;
 }
 
 //this is called by the component
@@ -55,6 +56,10 @@ void Com_Mesh::Start()
 void Com_Mesh::SetTexture(std::string texturePath_)
 {
 	texturePath = texturePath_;
+	
+	if (texture != nullptr)
+		delete texture;
+
 	texture = new sf::Texture();
 	if (!texture->loadFromFile(texturePath))
 	{

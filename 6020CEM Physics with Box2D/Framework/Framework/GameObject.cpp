@@ -28,7 +28,7 @@ GameObject::~GameObject()
         //cleans the vector
         componentVector.clear();
     }
-
+    
     //cleans the map
     allComponents.clear();
 }
