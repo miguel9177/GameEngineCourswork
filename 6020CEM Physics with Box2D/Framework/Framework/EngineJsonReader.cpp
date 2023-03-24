@@ -93,18 +93,20 @@ void EngineJsonReader::LoadSceneToPlay()
             }
             else if (currentComponent_json_Name == "CircleCollider")
             {
+                std::vector<CircleCollider*> newColliders = CreateCircleColliderFromJsonData(currentComponent_Json_Data);
                 //i store the gameobject collider in a list so that i can then add all colliders to the rb
-                allColliders_currentGameObject.push_back(CreateCircleColliderFromJsonData(currentComponent_Json_Data));
+                allColliders_currentGameObject.insert(allColliders_currentGameObject.end(), newColliders.begin(), newColliders.end()); 
             }
             else if (currentComponent_json_Name == "SquareCollider")
             {
+                std::vector<SquareCollider*> newColliders = CreateSquareColliderFromJsonData(currentComponent_Json_Data);
                 //i store the gameobject collider in a list so that i can then add all colliders to the rb
-                allColliders_currentGameObject.push_back(CreateSquareColliderFromJsonData(currentComponent_Json_Data));
+                allColliders_currentGameObject.insert(allColliders_currentGameObject.end(), newColliders.begin(), newColliders.end());
             }
             else if (currentComponent_json_Name == "ScriptBehaviour")
             {
-                //i add the script to the game object
-                allScripts_currentGameObject.push_back(CreateScriptBehaviourFromJsonData(currentComponent_Json_Data));
+                std::vector<ScriptBehaviour*> newScripts = CreateScriptBehaviourFromJsonData(currentComponent_Json_Data);
+                allScripts_currentGameObject.insert(allScripts_currentGameObject.end(), newScripts.begin(), newScripts.end());
             }
         }
 
@@ -297,25 +299,31 @@ Json::Value EngineJsonReader::ConvertRigidBodyToJson(RigidBody* rb)
 }
 
 
-CircleCollider* EngineJsonReader::CreateCircleColliderFromJsonData(Json::Value jsonData_)
+std::vector<CircleCollider*> EngineJsonReader::CreateCircleColliderFromJsonData(Json::Value jsonData_)
 {
+    std::vector<CircleCollider*> allCircleColliders;
+    for (Json::Value circleColliderData : jsonData_)
+    {
 #pragma region Getting the json data
-    float circleColl_radius = jsonData_["radius"].asFloat();
-    Vector2 circleColl_posOffset(
-        jsonData_["posOffset"]["x"].asFloat(),
-        jsonData_["posOffset"]["y"].asFloat()
-    );
-    float circleColl_offsetAngle = jsonData_["offsetAngle"].asFloat();
-    float circleColl_mass = jsonData_["mass"].asFloat();
-    float circleColl_friction = jsonData_["friction"].asFloat();
-    float circleColl_bounciness = jsonData_["bouciness"].asFloat();
+        float circleColl_radius = circleColliderData["radius"].asFloat();
+        Vector2 circleColl_posOffset(
+            circleColliderData["posOffset"]["x"].asFloat(),
+            circleColliderData["posOffset"]["y"].asFloat()
+        );
+        float circleColl_offsetAngle = circleColliderData["offsetAngle"].asFloat();
+        float circleColl_mass = circleColliderData["mass"].asFloat();
+        float circleColl_friction = circleColliderData["friction"].asFloat();
+        float circleColl_bounciness = circleColliderData["bouciness"].asFloat();
 #pragma endregion
 
 #pragma region Creating the component
-    CircleCollider* circleCollider = new CircleCollider(circleColl_radius, circleColl_posOffset, circleColl_offsetAngle, circleColl_mass, circleColl_friction, circleColl_bounciness);
+        CircleCollider* circleCollider = new CircleCollider(circleColl_radius, circleColl_posOffset, circleColl_offsetAngle, circleColl_mass, circleColl_friction, circleColl_bounciness);
 #pragma endregion
 
-    return circleCollider;
+        allCircleColliders.push_back(circleCollider);
+    }
+    return allCircleColliders;
+
 }
 
 Json::Value EngineJsonReader::ConvertCircleColliderToJson(CircleCollider* circleColl)
@@ -336,28 +344,33 @@ Json::Value EngineJsonReader::ConvertCircleColliderToJson(CircleCollider* circle
 }
 
 
-SquareCollider* EngineJsonReader::CreateSquareColliderFromJsonData(Json::Value jsonData_)
+std::vector<SquareCollider*> EngineJsonReader::CreateSquareColliderFromJsonData(Json::Value jsonData_)
 {
-#pragma region Getting the json data
-    Vector2 squareColl_halfSize(
-        jsonData_["halfSize"]["x"].asFloat(),
-        jsonData_["halfSize"]["y"].asFloat()
-    );
-    Vector2 squareColl_posOffset(
-        jsonData_["posOffset"]["x"].asFloat(),
-        jsonData_["posOffset"]["y"].asFloat()
-    );
-    float squareColl_offsetAngle = jsonData_["offsetAngle"].asFloat();
-    float squareColl_mass = jsonData_["mass"].asFloat();
-    float squareColl_friction = jsonData_["friction"].asFloat();
-    float squareColl_bounciness = jsonData_["bouciness"].asFloat();
-#pragma endregion
+    std::vector<SquareCollider*> allSquareColliders;
+    for (Json::Value squareColliderData : jsonData_)
+    {
+    #pragma region Getting the json data
+        Vector2 squareColl_halfSize(
+            squareColliderData["halfSize"]["x"].asFloat(),
+            squareColliderData["halfSize"]["y"].asFloat()
+        );
+        Vector2 squareColl_posOffset(
+            squareColliderData["posOffset"]["x"].asFloat(),
+            squareColliderData["posOffset"]["y"].asFloat()
+        );
+        float squareColl_offsetAngle = squareColliderData["offsetAngle"].asFloat();
+        float squareColl_mass = squareColliderData["mass"].asFloat();
+        float squareColl_friction = squareColliderData["friction"].asFloat();
+        float squareColl_bounciness = squareColliderData["bouciness"].asFloat();
+    #pragma endregion
 
-#pragma region Creating the component
-    SquareCollider* squareCollider = new SquareCollider(squareColl_halfSize, squareColl_posOffset, squareColl_offsetAngle, squareColl_mass, squareColl_friction, squareColl_bounciness);
-#pragma endregion
+    #pragma region Creating the component
+        SquareCollider* squareCollider = new SquareCollider(squareColl_halfSize, squareColl_posOffset, squareColl_offsetAngle, squareColl_mass, squareColl_friction, squareColl_bounciness);
+    #pragma endregion
 
-    return squareCollider;
+        allSquareColliders.push_back(squareCollider);
+    }
+    return allSquareColliders;
 }
 
 Json::Value EngineJsonReader::ConvertSquareColliderToJson(SquareCollider* squareColl)
@@ -379,17 +392,22 @@ Json::Value EngineJsonReader::ConvertSquareColliderToJson(SquareCollider* square
 }
 
 
-ScriptBehaviour* EngineJsonReader::CreateScriptBehaviourFromJsonData(Json::Value jsonData_)
+std::vector<ScriptBehaviour*> EngineJsonReader::CreateScriptBehaviourFromJsonData(Json::Value jsonData_)
 {
+    std::vector<ScriptBehaviour*> allScriptBehaviours;
+    for (Json::Value scriptData : jsonData_)
+    {
 #pragma region Getting the json data
-    float scriptBehaviour_uniqueId = jsonData_["uniqueIdIdentifier"].asUInt();
+        float scriptBehaviour_uniqueId = scriptData["uniqueIdIdentifier"].asUInt();
 #pragma endregion
 
 #pragma region Creating the component
-    ScriptBehaviour* scriptBehaviour = ScriptLoaderManager::GetInstance()->GetScript(scriptBehaviour_uniqueId);
+        ScriptBehaviour* scriptBehaviour = ScriptLoaderManager::GetInstance()->GetScript(scriptBehaviour_uniqueId);
 #pragma endregion
 
-    return scriptBehaviour;
+        allScriptBehaviours.push_back(scriptBehaviour);
+    }
+    return allScriptBehaviours;
 }
 
 Json::Value EngineJsonReader::ConvertScriptBehaviourToJson(ScriptBehaviour* scriptBehaviour)

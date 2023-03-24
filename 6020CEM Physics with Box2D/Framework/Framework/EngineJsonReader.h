@@ -1,5 +1,6 @@
 #pragma once
 #include <jsoncpp/json/json.h>
+#include <vector>
 
 class Com_Mesh;
 class RigidBody;
@@ -41,13 +42,13 @@ public:
 	RigidBody* CreateRigidBodyFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertRigidBodyToJson(RigidBody* rb);
 
-	CircleCollider* CreateCircleColliderFromJsonData(Json::Value jsonData_);
+	std::vector<CircleCollider*> CreateCircleColliderFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertCircleColliderToJson(CircleCollider* circleColl);
 
-	SquareCollider* CreateSquareColliderFromJsonData(Json::Value jsonData_);
+	std::vector<SquareCollider*> CreateSquareColliderFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertSquareColliderToJson(SquareCollider* circleColl);
 
-	ScriptBehaviour* CreateScriptBehaviourFromJsonData(Json::Value jsonData_);
+	std::vector<ScriptBehaviour*> CreateScriptBehaviourFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertScriptBehaviourToJson(ScriptBehaviour* scriptBehaviour);
 #pragma endregion
 
