@@ -17,7 +17,7 @@ private:
     ~EventQueue();
 public:
 
-    enum class voidEvents { shoot, test, EnteredEditMode, EnteredPlayMode};
+    enum class voidEvents { shoot, test, EnteredEditMode, EnteredPlayMode, RestartEngine};
     //this gives the instance of the graphics engine, and if theres no instance of it, it creates one
     static EventQueue* GetInstance();
 

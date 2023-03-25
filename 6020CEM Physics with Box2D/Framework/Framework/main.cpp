@@ -1,175 +1,46 @@
-#include <iostream>
-#include <SFML\Graphics.hpp>
-#include <Box2D/Box2D.h>
-#include <stdlib.h>
 #include "GameEngine.h"
 #include "EventQueue.h"
-#include "Scene.h"
-#include "Com_Mesh.h"
-#include "Shape_Box.h"
-#include "RigidBody.h"
-#include "SquareCollider.h"
-#include "CircleCollider.h"
-#include "Component.h"
-#include "UiEngine.h"
-#include "UiScreenView_Text.h"
-#include "UiScreenView_Image.h"
-#include "UiScreenView_btnImage.h"
-#include "UiScreenView_btnText.h"
-#include "EngineFunctionalityManager.h"
-#include "AllUserScipts/SB_TestScript.h"
-#include <fstream>
-#include <jsoncpp/json/json.h>
-#include "AllUserScipts/SB_CharacterMovement.h"
-#include "AllUserScipts/SB_CameraFollowPlayer.h"
+#include <iostream>
+#include <Windows.h>
 
-void test()
+
+bool restartEngine = false;
+
+void RestartEngine()
 {
-    std::cout << "ei" << std::endl;
+    restartEngine = true;
 }
 
-void test2()
-{
-    std::cout << "ei2" << std::endl;
+void CreateNewInstance() {
+    STARTUPINFOW si;
+    PROCESS_INFORMATION pi;
+
+    ZeroMemory(&si, sizeof(si));
+    si.cb = sizeof(si);
+    ZeroMemory(&pi, sizeof(pi));
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_HIDE;
+
+    std::wstring exePath = L"\"";
+    WCHAR exeFullPath[MAX_PATH];
+    GetModuleFileNameW(NULL, exeFullPath, MAX_PATH);
+    exePath += exeFullPath;
+    exePath += L"\"";
+
+    std::wstring cmdLine = L"cmd /c start \"\" ";
+    cmdLine += exePath;
+
+    if (!CreateProcessW(NULL, &exePath[0], NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi)) {
+        std::cerr << "Failed to launch new instance: " << GetLastError() << std::endl;
+    }
 }
-
-void test3()
-{
-    std::cout << "ei3" << std::endl;
-}
-
-void testUserKeyPressedA() { std::cout << "Pressed A" << std::endl; }
-
-void testUserKeyReleasedA() { std::cout << "Released A" << std::endl; }
-
-void testUserKeyPressedD() { std::cout << "Pressed D" << std::endl; }
-
-void testUserKeyReleasedD() { std::cout << "Released D" << std::endl; }
-
-
-#pragma region Testing event callback mouse input
-
-void testUserMouseKeyPressedRight() { std::cout << "Pressed Right Mouse Button" << std::endl; }
-
-void testUserMouseKeyPressedLeft() { std::cout << "Pressed Left Mouse Button" << std::endl; }
-
-void testUserMouseKeyPressedMidle() { std::cout << "Pressed Midle Mouse Button" << std::endl; }
-
-void testUserMouseKeyReleasedRight() { std::cout << "Released Right Mouse Button" << std::endl; }
-
-void testUserMouseKeyReleasedLeft() { std::cout << "Released Left Mouse Button" << std::endl; }
-
-void testUserMouseKeyReleasedMidle() { std::cout << "Released Midle Mouse Button" << std::endl; }
-
-void testUserMouseMoved(Vector2 pos_) { std::cout << "Mouse position: X: " << pos_.x << " Y: " << pos_.y << std::endl; }
-void testUserMouseMoved2(Vector2 pos_) { std::cout << "Mouse position2: X: " << pos_.x << " Y: " << pos_.y << std::endl; }
-
-void testUserMouseScrollWheel(float delta_) { std::cout << "Mouse scrolled wheel " << delta_ << std::endl; }
-
-#pragma endregion
-
-
 
 int main()
 {
+    
     GameEngine::GetInstance()->InitializeEngine(1920,1080);
-  
-   /* EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test);
-    EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::shoot, &test2);
 
-    EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::A, &testUserKeyPressedA);
-    EventQueue::GetInstance()->SubscribeToKeyPressEvent(sf::Keyboard::D, &testUserKeyPressedD);
-
-    EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::A, &testUserKeyReleasedA);
-    EventQueue::GetInstance()->SubscribeToKeyReleasedEvent(sf::Keyboard::D, &testUserKeyReleasedD);
-
-    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Right, &testUserMouseKeyPressedRight);
-    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Left, &testUserMouseKeyPressedLeft);
-    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Button::Middle, &testUserMouseKeyPressedMidle);
-    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Right, &testUserMouseKeyReleasedRight);
-    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Left, &testUserMouseKeyReleasedLeft);
-    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button::Middle, &testUserMouseKeyReleasedMidle);*/
-
-    //EventQueue::GetInstance()->SubscribeToMouseMovedEvent(&testUserMouseMoved);
-    /*EventQueue::GetInstance()->SubscribeToMouseWheelScrolledEvent(&testUserMouseScrollWheel);
-
-    EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::shoot);*/
-
-
-#pragma region creating a game object with a mesh with and shape and a texture
-    
-    //GameObject* obj1 = new GameObject("obj1", new Transform(Vector2(0, 0), 0, Vector2(1.5, 1.5)));
-    //
-    //Shape_Box* shapeBox = new Shape_Box();
-
-    //Com_Mesh* obj1Mesh = new Com_Mesh("../Textures/keyboardcat.jpg", shapeBox);
-
-    //RigidBodySettings bodySettings_ = RigidBodySettings(dynamicBody, 1, 1, false, true, false, true, 0);
-    //RigidBody* rb = new RigidBody(bodySettings_);
-    //
-    //CircleCollider* squareColl = new CircleCollider(0.1f, Vector2(0, 0));
-
-    //SB_CharacterMovement* playerScript1 = new SB_CharacterMovement();
-    //SB_CameraFollowPlayer* playerScript2 = new SB_CameraFollowPlayer();
-
-    //obj1->AddComponent(rb);
-    //obj1->AddComponent(playerScript1);
-    //obj1->AddComponent(playerScript2);
-    //obj1->AddComponent(squareColl);
-    //obj1->AddComponent(obj1Mesh);
-
-    ////add an object to the scene
-    //Scene::GetInstance()->AddObject(obj1);
-
-
-    ////Object 2
-    //GameObject* obj2 = new GameObject("obj2", new Transform(Vector2(1,1.2), 0, Vector2(1,1)));
-
-    //Shape_Box* shapeBox2 = new Shape_Box();
-
-    //Com_Mesh* obj2Mesh = new Com_Mesh();
-
-    //RigidBodySettings bodySettings = RigidBodySettings(dynamicBody, 1, 1, false, true, false, false, 0);
-    //RigidBody* rb2 = new RigidBody(bodySettings);
-
-    //SquareCollider* squareColl2 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
-    //
-    //obj2Mesh->SetShape(shapeBox2);
-    //obj2Mesh->SetTexture("../Textures/WhiteSquare.png");
-
-    //obj2->AddComponent(obj2Mesh);
-    //obj2->AddComponent(rb2);
-    //obj2->AddComponent(squareColl2);
-
-    ////add an object to the scene
-    //Scene::GetInstance()->AddObject(obj2);
-
-    ////Object 3
-    //GameObject* obj3 = new GameObject("obj3", new Transform(Vector2(1, 1.2), 0, Vector2(1.5, 1.5)));
-
-    //Shape_Box* shapeBox3 = new Shape_Box();
-
-    //Com_Mesh* obj3Mesh = new Com_Mesh();
-
-    //RigidBodySettings bodySettings3 = RigidBodySettings(staticBody, 1, 1, false, true, false, false, 0);
-    //RigidBody* rb3 = new RigidBody(bodySettings3);
-
-    //SquareCollider* squareColl3 = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
-
-    //obj3Mesh->SetShape(shapeBox3);
-    //obj3Mesh->SetTexture("../Textures/WhiteSquare.png");
-
-    //obj3->AddComponent(obj3Mesh);
-    //obj3->AddComponent(rb3);
-    //obj3->AddComponent(squareColl3);
-
-    ////add an object to the scene
-    //Scene::GetInstance()->AddObject(obj3);
-    
-#pragma endregion
-
-   /* Com_Mesh* meshToCheckPos = obj1->TryGetComponent<Com_Mesh>(Component::typeOfComponent::Mesh);
-    RigidBody* rbToCheckPos = obj1->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);*/
+    EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::RestartEngine, &RestartEngine);
 
     float forceToAply = 0.1f;
     while (GameEngine::GetInstance()->isGameEngineRunning())
@@ -177,65 +48,11 @@ int main()
         GameEngine::GetInstance()->Update();
         GameEngine::GetInstance()->Render();
         
-        //GameEngine::GetInstance()->MoveCamera(obj1->GetPosition());
-        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::A].pressing)
-        //{
-        //    //std::cout << "PRessed A" << std::endl;
-        //    rbToCheckPos->AddForceToCenter(Vector2(-forceToAply, 0.f));
-        //}
-        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::D].pressing)
-        //{
-        //    //std::cout << "PRessed D" << std::endl;
-        //    rbToCheckPos->AddForceToCenter(Vector2(+forceToAply, 0.f));
-        //}
-
-        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::W].pressing)
-        //{
-        //    //std::cout << "PRessed W" << std::endl;
-        //    rbToCheckPos->AddForceToCenter(Vector2(0.f, -forceToAply));
-        //}
-        //if (InputsEngine::GetInstance()->GetKeyStates()[sf::Keyboard::S].pressing)
-        //{
-        //    //std::cout << "PRessed S" << std::endl;
-        //    rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
-        //}
-
-        //std::cout << InputsEngine::GetInstance()->GetMouseState().wheelDelta << std::endl;
-
-        /*for (int i = 0; i < InputsEngine::GetInstance()->GetInputEvents()->size(); i++)
+        if (restartEngine == true)
         {
-            if (InputsEngine::GetInstance()->GetInputEvents()->at(i).type == sf::Event::KeyPressed)
-            {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-                {
-                    std::cout << "PRessed A" << std::endl;
-                    rbToCheckPos->AddForceToCenter(Vector2(-forceToAply, 0.f));
-                    
-                }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-                {
-                    std::cout << "PRessed D" << std::endl;
-                    rbToCheckPos->AddForceToCenter(Vector2(+forceToAply, 0.f));
-                }
-
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-                {
-                    std::cout << "PRessed W" << std::endl;
-                    rbToCheckPos->AddForceToCenter(Vector2(0.f, -forceToAply));
-                }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-                {
-                    std::cout << "PRessed S" << std::endl;
-                    rbToCheckPos->AddForceToCenter(Vector2(0.f, +forceToAply));
-                }
-            }
-            if (InputsEngine::GetInstance()->GetInputEvents()->at(i).type == sf::Event::Closed)
-            {
-                std::cout << "Closed Window" << std::endl;
-            }
+            CreateNewInstance();
             break;
-          
-        }*/
+        }
     }
 
 	return 0;
