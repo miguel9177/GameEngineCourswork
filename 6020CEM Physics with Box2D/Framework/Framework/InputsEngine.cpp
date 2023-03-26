@@ -40,12 +40,15 @@ void InputsEngine::Update(sf::Window* window_)
 
 Vector2 InputsEngine::GetMouseWorldPosition()
 {
-    float x = mouseState.position.x / Com_Mesh::scalingFactor;
-    float y = mouseState.position.y / Com_Mesh::scalingFactor;
-    
-    return Vector2(x, y);
+    Vector2 screenMousePos = InputsEngine::GetInstance()->GetMouseState().position;
+    Vector2 viewCenter = GameEngine::GetInstance()->GetCameraSfmlPosition();
+    Vector2 viewSize = GameEngine::GetInstance()->GetCameraSize();
 
+    Vector2 worldMousePos = Vector2(screenMousePos.x + viewCenter.x - viewSize.x / 2.0f, screenMousePos.y + viewCenter.y - viewSize.y / 2.0f);
 
+    std::cout << worldMousePos.x << " : "  << worldMousePos.y << std::endl;
+
+    return worldMousePos / Com_Mesh::scalingFactor;
 }
 
 std::vector<sf::Event>* InputsEngine::GetAllEvents()
