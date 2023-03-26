@@ -31,6 +31,7 @@ private:
 #pragma endregion
 	
 	GameObject* objBeingDragged;
+
 public:
 	//this will store the state of the game engine
 	enum State {editMode, playMode};

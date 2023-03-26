@@ -54,7 +54,7 @@ void EngineFunctionalityManager::Update()
     }
     if (InputsEngine::GetInstance()->GetMouseState().pressingMiddleButton)
     {
-        //GameEngine::GetInstance()->MoveCamera(GameEngine::GetInstance()->GetCameraPosition() + InputsEngine::GetInstance()->GetMouseState().velocity);
+        GameEngine::GetInstance()->MoveCamera(GameEngine::GetInstance()->GetCameraPosition() + InputsEngine::GetInstance()->GetMouseState().velocity);
     }
 }
 
@@ -166,6 +166,9 @@ void EngineFunctionalityManager::CreateEngineUI()
 
 void EngineFunctionalityManager::OnPlayButtonClicked()
 {
+    if (state == State::playMode)
+        return;
+
     PhysicsEngine::GetInstance()->StopPhysicsWorld();
     PhysicsEngine::GetInstance()->StartPhysicsWorld();
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::EnteredPlayMode);
@@ -173,12 +176,10 @@ void EngineFunctionalityManager::OnPlayButtonClicked()
     
     state = State::playMode;
 
-    if (state == State::playMode)
-    {
-        sf::Texture clickedTexture = sf::Texture();
-        clickedTexture.loadFromFile("../Textures/PlayButtonClicked.png");
-        uiBtnImg_PlayButton->SetTexture(clickedTexture);
-    }
+    sf::Texture clickedTexture = sf::Texture();
+    clickedTexture.loadFromFile("../Textures/PlayButtonClicked.png");
+    uiBtnImg_PlayButton->SetTexture(clickedTexture);
+
 }
 
 void EngineFunctionalityManager::OnDebugButtonClicked()
@@ -233,6 +234,7 @@ void EngineFunctionalityManager::MiddleMousePressed()
 
 void EngineFunctionalityManager::MiddleMouseReleased()
 {
+
 }
 
 #pragma endregion
@@ -244,7 +246,7 @@ GameObject* EngineFunctionalityManager::GetObjectAtMousePos()
     for (Com_Mesh* currentMesh : *Scene::GetInstance()->GetAllMeshes())
     {
         Vector2 screenMousePos = InputsEngine::GetInstance()->GetMouseState().position;
-        Vector2 viewCenter = GameEngine::GetInstance()->GetCameraPosition();
+        Vector2 viewCenter = GameEngine::GetInstance()->GetCameraSfmlPosition();
         Vector2 viewSize = GameEngine::GetInstance()->GetCameraSize();
 
         sf::Vector2f worldMousePos = sf::Vector2f(screenMousePos.x + viewCenter.x - viewSize.x / 2.0f, screenMousePos.y + viewCenter.y - viewSize.y / 2.0f);

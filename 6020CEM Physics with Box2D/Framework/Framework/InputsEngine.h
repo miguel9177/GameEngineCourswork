@@ -24,6 +24,8 @@ public:
         float wheelDelta = 0;
     };
 
+    float mouseVelociyReducer = 500;
+
  private:
     
     float lastWheelDelta = 0;

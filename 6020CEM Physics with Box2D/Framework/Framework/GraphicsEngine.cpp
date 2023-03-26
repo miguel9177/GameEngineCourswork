@@ -86,7 +86,7 @@ void GraphicsEngine::MoveCamera(Vector2 _newPos)
 
 Vector2 GraphicsEngine::GetCameraPosition()
 {
-    return cameraPos;
+    return Vector2(cameraView.getCenter().x / 200, cameraView.getCenter().y / 200);
 }
 
 Vector2 GraphicsEngine::GetCameraSfmlPosition()

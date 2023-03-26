@@ -37,7 +37,7 @@ b2Body* PhysicsEngine::CreateRigidBody(b2BodyDef* bodyDefenition_)
 void PhysicsEngine::Update()
 {
     // Calculate delta time
-    deltaTime = clock.restart().asMilliseconds();
+    deltaTime = clock.restart().asSeconds();
 
     if (world == nullptr)
         return;

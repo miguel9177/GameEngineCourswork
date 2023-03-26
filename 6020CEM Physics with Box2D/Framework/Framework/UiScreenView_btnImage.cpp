@@ -180,7 +180,6 @@ bool UiScreenView_btnImage::isButtonBeingHovered()
 	sf::Vector2f worldMousePos = sf::Vector2f(screenMousePos.x + viewCenter.x - viewSize.x / 2.0f, screenMousePos.y + viewCenter.y - viewSize.y / 2.0f);
 
 	sf::FloatRect buttonBounds = sprite.getGlobalBounds();
-	std::cout << worldMousePos.x << std::endl;
 	if (buttonBounds.contains(worldMousePos))
 		return true;
 	else
