@@ -138,13 +138,13 @@ void EngineFunctionalityManager::CreateEngineUI()
 
 #pragma region Event dependent functions
 
-
 void EngineFunctionalityManager::OnPlayButtonClicked()
 {
     PhysicsEngine::GetInstance()->StopPhysicsWorld();
     PhysicsEngine::GetInstance()->StartPhysicsWorld();
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::EnteredPlayMode);
     EngineJsonReader::GetInstance()->LoadSceneToPlay();
+    state = State::playMode;
 }
 
 void EngineFunctionalityManager::OnDebugButtonClicked()
@@ -157,6 +157,7 @@ void EngineFunctionalityManager::OnStopButtonClicked()
     PhysicsEngine::GetInstance()->StopPhysicsWorld();
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::EnteredEditMode);
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::RestartEngine);
+    state = State::editMode;
 }
 
 void EngineFunctionalityManager::OnSaveButtonClicked()

@@ -31,7 +31,6 @@ void GameEngine::InitializeEngine(float width, float height)
     graphicsEngine->InitializeWindow(width, height);
     ScriptLoaderManager::GetInstance()->InitializeVectorOfScripts();
     EngineFunctionalityManager::GetInstance();
-    
 }
 
 void GameEngine::Update()
@@ -68,7 +67,13 @@ void GameEngine::UpdateWindowEvents()
             float newCameraWidth = windowEvents.size.width;
             float newCameraHeight = windowEvents.size.height;
             graphicsEngine->SetCameraSize(Vector2(newCameraWidth, newCameraHeight));
+
+            if (EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
+                graphicsEngine->MoveCamera(Vector2(0, 0));
         }
+        else if (windowEvents.type == sf::Event::Closed)
+            graphicsEngine->GetEngineWindow()->close();
+
         InputsEngine::GetInstance()->ReceiveInputFromWindow(windowEvents);
     }    
 }
