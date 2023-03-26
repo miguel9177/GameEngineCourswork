@@ -39,7 +39,6 @@ void UiScreenView_Text::SetFont(sf::Font _newFont)
 
 void UiScreenView_Text::SetText(std::string _newText)
 {
-	std::cout << _newText << std::endl;
 	sfmlText.setString(_newText);
 }
 
@@ -94,10 +93,7 @@ void UiScreenView_Text::SetUiScale(Vector2 _newScale)
 
 sf::Text UiScreenView_Text::GetComponentToDraw()
 {
-	std::string a = sfmlText.getString();
-	std::cout << a << std::endl;
 	return sfmlText;
-
 }
 
 void UiScreenView_Text::AddUiToScreen()

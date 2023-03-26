@@ -27,7 +27,7 @@ private:
 	void LeftMouseReleased();
 	void MiddleMousePressed();
 	void MiddleMouseReleased();
-
+	void GameObjectButtonClicked(GameObject* objButtonClicked);
 #pragma endregion
 	
 	GameObject* objBeingDragged;
@@ -39,6 +39,7 @@ public:
 	static EngineFunctionalityManager* GetInstance();
 	void CreateEngineUI();
 	void Update();
+	void Start();
 	inline State GetEngineState() { return state; };
 
 #pragma region helper Functions

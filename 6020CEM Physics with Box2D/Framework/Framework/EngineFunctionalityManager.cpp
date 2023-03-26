@@ -14,7 +14,6 @@ EngineFunctionalityManager* EngineFunctionalityManager::instance;
 
 EngineFunctionalityManager::EngineFunctionalityManager()
 {
-    CreateEngineUI();
 
     //this subscribes to the left mouse click event, in order for it to call the function UserPressedLeftMouseButton everytime the user presses left mouse button
     std::function<void()> mousePressCallback = std::bind(&EngineFunctionalityManager::LeftMousePressed, this);
@@ -59,6 +58,11 @@ void EngineFunctionalityManager::Update()
     {
         GameEngine::GetInstance()->MoveCamera(GameEngine::GetInstance()->GetCameraPosition() + InputsEngine::GetInstance()->GetMouseState().velocity);
     }
+}
+
+void EngineFunctionalityManager::Start()
+{
+    CreateEngineUI();
 }
 
 #pragma region Functionality functions
@@ -160,6 +164,11 @@ void EngineFunctionalityManager::MiddleMousePressed()
 void EngineFunctionalityManager::MiddleMouseReleased()
 {
 
+}
+
+void EngineFunctionalityManager::GameObjectButtonClicked(GameObject* _objButtonClicked)
+{
+    std::cout << _objButtonClicked->name << std::endl;
 }
 
 #pragma endregion
@@ -277,22 +286,34 @@ void EngineFunctionalityManager::CreateLeftBarUi()
     uiImg_LeftNavbar->SetUiPosition(Vector2(0, 0.5), Vector2(120,0));
     uiImg_LeftNavbar->AddUiToScreen();
 
-#pragma region Creating every GameObject
+#pragma region Creating every GameObject UI list
 
-    sf::Texture* ui_texture3 = new sf::Texture();
-    if (!ui_texture3->loadFromFile("../Textures/whiteSquare.png"))
+    float yOffset = 55.f; // Offset between each button on the y-axis
+    
+    std::vector<GameObject*> gameObjects = *Scene::GetInstance()->GetAllObjects(); // Assuming you have a vector storing all the GameObjects
+    for (size_t i = 0; i < gameObjects.size(); ++i)
     {
-        std::cout << "Texture did not load!" << "\n" << std::endl;
+        sf::Texture* ui_textureForButtons = new sf::Texture();
+        if (!ui_textureForButtons->loadFromFile("../Textures/whiteSquare.png"))
+        {
+            std::cout << "Texture did not load!" << "\n" << std::endl;
+        }
+
+        UiScreenView_Text* ui_txtText = new UiScreenView_Text(gameObjects.at(i)->name, new Transform(Vector2(0.5f, 0), 0, Vector2(1, 1)));
+        UiScreenView_btnText* ui_btnText = new UiScreenView_btnText(ui_textureForButtons, new Transform(Vector2(0.5, 0), 0, Vector2(5, 1)), gameObjects.at(i)->name, new Transform(Vector2(0.5f, 0), 0, Vector2(1, 1)), ui_txtText);
+
+        ui_btnText->SetFontSize(25);
+        ui_btnText->SetTextColor(sf::Color::Black);
+        ui_btnText->SetUiPosition(Vector2(0, 0), Vector2(120, 100 + yOffset * i)); // Update the y-offset for each button
+        ui_btnText->SetTextUiPosition(Vector2(0, 0), Vector2(120, 100 + (yOffset * i)));
+        ui_btnText->SetTextUiScale(Vector2(1, 1));
+        ui_btnText->AddUiToScreen();
+
+        //this subscribes to the on play button press callback
+      /*  std::function<void(GameObject*)> onGameObjectButtonPressedCallback = std::bind(&EngineFunctionalityManager::GameObjectButtonClicked, this, gameObjects.at(i));
+        uiBtnImg_PlayButton->SubscribeToBtnOnPressEvent(onGameObjectButtonPressedCallback);*/
     }
-    UiScreenView_Text* ui_txtText1 = new UiScreenView_Text("string 1 working on UiEngine", new Transform(Vector2(0.5f, 0.5f), 0, Vector2(1, 1)));
-    UiScreenView_btnText* ui_btnText1 = new UiScreenView_btnText(ui_texture3, new Transform(Vector2(0.5, 0.5), 0, Vector2(2, 1)), "button1", new Transform(Vector2(0.5f, 0.5f),0, Vector2(1, 1)), ui_txtText1);
-    ui_btnText1->SetFontSize(25);
-    ui_btnText1->SetTextColor(sf::Color::Green);
-    ui_btnText1->SetUiPosition(Vector2(0, 0.5), Vector2(120, 0));
-    ui_btnText1->SetTextUiPosition(Vector2(0, 0.5), Vector2(120, 0));
-    ui_btnText1->SetTextUiScale(Vector2(1, 1));
-    ui_btnText1->AddUiToScreen();
-     
+
 #pragma endregion
 
 }

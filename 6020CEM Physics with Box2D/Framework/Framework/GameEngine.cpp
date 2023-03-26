@@ -32,8 +32,8 @@ void GameEngine::InitializeEngine(float width, float height)
     graphicsEngine->InitializeWindow(width, height);
     PhysicsEngine::GetInstance()->StartPhysicsWorld();
     ScriptLoaderManager::GetInstance()->InitializeVectorOfScripts();
-    EngineFunctionalityManager::GetInstance();
     EngineJsonReader::GetInstance()->LoadEditorScene();
+    EngineFunctionalityManager::GetInstance()->Start();
 }
 
 void GameEngine::Update()
