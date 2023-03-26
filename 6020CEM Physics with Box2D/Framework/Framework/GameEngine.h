@@ -36,6 +36,7 @@ public:
     inline sf::Vector2u GetWindowSize() { return graphicsEngine->GetEngineWindow()->getSize(); };
     void MoveCamera(Vector2 _newPos);
     Vector2 GetCameraPosition();
+    Vector2 GetCameraSfmlPosition();
     Vector2 GetCameraSize();
     
 };

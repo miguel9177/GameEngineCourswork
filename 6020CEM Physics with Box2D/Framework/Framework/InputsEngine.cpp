@@ -1,5 +1,6 @@
 #include "InputsEngine.h"
 #include "EventQueue.h"
+#include "Com_Mesh.h"
 
 InputsEngine* InputsEngine::instance;
 
@@ -30,9 +31,18 @@ InputsEngine* InputsEngine::GetInstance()
 
 void InputsEngine::Update(sf::Window* window_)
 {
+    CalculateMouseVelocity(window_);
     UpdateMouseState(window_);
     mouseState.wheelDelta = lastWheelDelta;
     lastWheelDelta = 0;
+}
+
+Vector2 InputsEngine::GetMouseWorldPosition()
+{
+    float x = mouseState.position.x / Com_Mesh::scalingFactor;
+    float y = mouseState.position.y / Com_Mesh::scalingFactor;
+    
+    return Vector2(x, y);
 }
 
 std::vector<sf::Event>* InputsEngine::GetAllEvents()
@@ -132,6 +142,11 @@ void InputsEngine::UpdateMouseState(sf::Window* window_)
         EventQueue::GetInstance()->InvokeMouseMovedEvents(_position);
         mouseState.position = _position;
     }
+}
+
+void InputsEngine::CalculateMouseVelocity(sf::Window* window_)
+{
+    mouseState.velocity = (mouseState.position - sf::Mouse::getPosition(*window_)) / PhysicsEngine::GetInstance()->GetDeltaTime();
 }
 
 #pragma endregion

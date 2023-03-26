@@ -35,8 +35,8 @@ void UiScreenView_Image::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 	float yPos = windowSize.y * _newPos.y;
 
 	//adjust the position of the ui depending on the camera position
-	xPos += GameEngine::GetInstance()->GetCameraPosition().x - windowSize.x / 2.0f;
-	yPos += GameEngine::GetInstance()->GetCameraPosition().y - windowSize.y / 2.0f;
+	xPos += GameEngine::GetInstance()->GetCameraSfmlPosition().x - windowSize.x / 2.0f;
+	yPos += GameEngine::GetInstance()->GetCameraSfmlPosition().y - windowSize.y / 2.0f;
 
 	//move the origin to its center
 	sf::FloatRect textBounds = sprite.getLocalBounds();

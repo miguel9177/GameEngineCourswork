@@ -1,6 +1,7 @@
 #pragma once
 
 class UiScreenView_btnImage;
+class GameObject;
 class EngineFunctionalityManager
 {
 private:
@@ -22,9 +23,14 @@ private:
 	void OnDebugButtonClicked();
 	void OnStopButtonClicked();
 	void OnSaveButtonClicked();
+	void LeftMousePressed();
+	void LeftMouseReleased();
+	void MiddleMousePressed();
+	void MiddleMouseReleased();
 
 #pragma endregion
 	
+	GameObject* objBeingDragged;
 public:
 	//this will store the state of the game engine
 	enum State {editMode, playMode};
@@ -33,6 +39,7 @@ public:
 	void CreateEngineUI();
 	void Update();
 	inline State GetEngineState() { return state; };
+	GameObject* GetObjectAtMousePos();
 private:
 	State state = State::editMode;
 };

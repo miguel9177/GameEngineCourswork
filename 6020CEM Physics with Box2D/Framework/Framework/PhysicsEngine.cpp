@@ -36,10 +36,12 @@ b2Body* PhysicsEngine::CreateRigidBody(b2BodyDef* bodyDefenition_)
 
 void PhysicsEngine::Update()
 {
+    // Calculate delta time
+    deltaTime = clock.restart().asMilliseconds();
+
     if (world == nullptr)
         return;
     
-
     // Iterate through all rigidbodies
     for (std::vector<RigidBody*>::iterator it = Scene::GetInstance()->GetAllRigidBodys()->begin(); it != Scene::GetInstance()->GetAllRigidBodys()->end(); ++it)
     {

@@ -20,6 +20,7 @@ public:
         bool pressingRightButton = false;
         bool pressingMiddleButton = false;
         Vector2 position;
+        Vector2 velocity;
         float wheelDelta = 0;
     };
 
@@ -49,6 +50,9 @@ public:
     void ClearInputsReceivedFromWindow();
     void ReceiveInputFromWindow(sf::Event event_);
 
+    void CalculateMouseVelocity(sf::Window* window_);
+    //this converts the sfml mouse pos to my pos system
+    Vector2 GetMouseWorldPosition();
     std::vector<sf::Event>* GetAllEvents();
     //we return a const reference so that we dont have to copy the key state
     inline const std::unordered_map<sf::Keyboard::Key, KeyPressInformation>& GetKeyStates() const { return keysState; };

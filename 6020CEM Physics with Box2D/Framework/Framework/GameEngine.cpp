@@ -42,6 +42,7 @@ void GameEngine::Update()
     InputsEngine::GetInstance()->Update(graphicsEngine->GetEngineWindow());
     Scene::GetInstance()->Update();
     UiEngine::GetInstance()->Update();
+    EngineFunctionalityManager::GetInstance()->Update();
 }
 
 void GameEngine::Render()
@@ -71,7 +72,7 @@ void GameEngine::UpdateWindowEvents()
             graphicsEngine->SetCameraSize(Vector2(newCameraWidth, newCameraHeight));
 
             if (EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
-                graphicsEngine->MoveCamera(Vector2(0, 0));
+                graphicsEngine->MoveCamera(graphicsEngine->GetCameraPosition());
         }
         else if (windowEvents.type == sf::Event::Closed)
             graphicsEngine->GetEngineWindow()->close();
@@ -90,6 +91,11 @@ void GameEngine::MoveCamera(Vector2 _newPos)
 Vector2 GameEngine::GetCameraPosition()
 {
     return graphicsEngine->GetCameraPosition();
+}
+
+Vector2 GameEngine::GetCameraSfmlPosition()
+{
+    return graphicsEngine->GetCameraSfmlPosition();
 }
 
 Vector2 GameEngine::GetCameraSize()

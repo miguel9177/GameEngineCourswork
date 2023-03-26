@@ -45,8 +45,8 @@ void UiScreenView_btnImage::SetUiPosition(Vector2 _newPos, Vector2 _offset)
 	float yPos = windowSize.y * _newPos.y;
 
 	//adjust the position of the ui depending on the camera position
-	xPos += GameEngine::GetInstance()->GetCameraPosition().x - windowSize.x / 2.0f;
-	yPos += GameEngine::GetInstance()->GetCameraPosition().y - windowSize.y / 2.0f;
+	xPos += GameEngine::GetInstance()->GetCameraSfmlPosition().x - windowSize.x / 2.0f;
+	yPos += GameEngine::GetInstance()->GetCameraSfmlPosition().y - windowSize.y / 2.0f;
 
 	//move the origin to its center
 	sf::FloatRect textBounds = sprite.getLocalBounds();
@@ -174,13 +174,13 @@ void UiScreenView_btnImage::InvokeButtonReleasedEvent()
 bool UiScreenView_btnImage::isButtonBeingHovered()
 {
 	Vector2 screenMousePos = InputsEngine::GetInstance()->GetMouseState().position;
-	Vector2 viewCenter = GameEngine::GetInstance()->GetCameraPosition();
+	Vector2 viewCenter = GameEngine::GetInstance()->GetCameraSfmlPosition();
 	Vector2 viewSize = GameEngine::GetInstance()->GetCameraSize();
 
 	sf::Vector2f worldMousePos = sf::Vector2f(screenMousePos.x + viewCenter.x - viewSize.x / 2.0f, screenMousePos.y + viewCenter.y - viewSize.y / 2.0f);
 
 	sf::FloatRect buttonBounds = sprite.getGlobalBounds();
-
+	std::cout << worldMousePos.x << std::endl;
 	if (buttonBounds.contains(worldMousePos))
 		return true;
 	else

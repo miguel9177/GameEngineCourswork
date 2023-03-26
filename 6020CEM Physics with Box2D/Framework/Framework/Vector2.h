@@ -18,46 +18,40 @@ struct Vector2
         y = y_; 
     }
 
-    Vector2& operator=(const Vector2& newVec2) {
+    Vector2& operator=(const Vector2& newVec2) 
+    {
         x = newVec2.x;
         y = newVec2.y;
 
         return *this;
     }
 
-    Vector2& operator=(const b2Vec2& newVec2) {
+    Vector2& operator=(const b2Vec2& newVec2) 
+    {
         x = newVec2.x;
         y = newVec2.y;
 
         return *this;
     }
 
-    Vector2& operator+(const Vector2& newVec2) {
-        x += newVec2.x;
-        y += newVec2.y;
-
-        return *this;
+    Vector2 operator+(const Vector2& newVec2) const 
+    {
+        return Vector2(x + newVec2.x, y + newVec2.y);
     }
 
-    Vector2& operator-(const Vector2& newVec2) {
-        x -= newVec2.x;
-        y -= newVec2.y;
-
-        return *this;
+    Vector2 operator-(const Vector2& newVec2) const 
+    {
+        return Vector2(x - newVec2.x, y - newVec2.y);
     }
 
-    Vector2& operator*(const float& newFloat) {
-        x *= newFloat;
-        y *= newFloat;
-
-        return *this;
+    Vector2 operator*(const float& newFloat) const 
+    {
+        return Vector2(x * newFloat, y * newFloat);
     }
 
-     Vector2& operator/(const float& newFloat) {
-        x /= newFloat;
-        y /= newFloat;
-
-        return *this;
+    Vector2 operator/(const float& newFloat) const 
+    {
+        return Vector2(x / newFloat, y / newFloat);
     }
 
     //Convert to SFML Vector2

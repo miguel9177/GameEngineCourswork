@@ -1,5 +1,6 @@
 #pragma once
 #include <Box2D/Box2D.h>
+#include <SFML/System/Clock.hpp>
 
 //this is a singleton, and stores the Physics Engine script
 class PhysicsEngine
@@ -11,6 +12,9 @@ private:
     const float timeStep = 1.0f / 60.0f;
     const int32 velocityIterations = 6;
     const int32 positionIterations = 2;
+    float deltaTime = 0;
+    // Create an SFML clock to measure time elapsed between frames
+    sf::Clock clock;
 
     b2Vec2 gravity;
     b2World* world;
@@ -30,5 +34,7 @@ public:
     void StartPhysicsWorld();
 
     void StopPhysicsWorld();
+
+    inline float GetDeltaTime() { return deltaTime; };
 };
 

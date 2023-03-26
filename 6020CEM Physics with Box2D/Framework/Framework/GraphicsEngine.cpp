@@ -6,6 +6,7 @@
 #include "GarbageCollector.h"
 #include "UiEngine.h"
 
+
 sf::Font GraphicsEngine::gameEngineFont;
 
 
@@ -32,7 +33,7 @@ sf::RenderWindow* GraphicsEngine::InitializeWindow(float width, float height)
     cameraView = sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
     //make the window use the new created view
     window.setView(cameraView);
-
+    MoveCamera(Vector2(0, 0));
     return &window;
 }
 
@@ -77,12 +78,18 @@ sf::RenderWindow* GraphicsEngine::GetEngineWindow()
 //this moves the camera to the selected position
 void GraphicsEngine::MoveCamera(Vector2 _newPos)
 {
+    cameraPos = _newPos;
     cameraView.setCenter(_newPos * 200);
     //cameraView.move(_newPos);
     window.setView(cameraView);
 }
 
 Vector2 GraphicsEngine::GetCameraPosition()
+{
+    return cameraPos;
+}
+
+Vector2 GraphicsEngine::GetCameraSfmlPosition()
 {
     return Vector2(cameraView.getCenter().x, cameraView.getCenter().y);
 }

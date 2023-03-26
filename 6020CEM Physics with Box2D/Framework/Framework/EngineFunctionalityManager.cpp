@@ -7,12 +7,30 @@
 #include "EngineJsonReader.h"
 #include "EventQueue.h"
 #include "PhysicsEngine.h"
+#include "GameObject.h"
+#include "Scene.h"
 
 EngineFunctionalityManager* EngineFunctionalityManager::instance;
 
 EngineFunctionalityManager::EngineFunctionalityManager()
 {
     CreateEngineUI();
+
+    //this subscribes to the left mouse click event, in order for it to call the function UserPressedLeftMouseButton everytime the user presses left mouse button
+    std::function<void()> mousePressCallback = std::bind(&EngineFunctionalityManager::LeftMousePressed, this);
+    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Left, mousePressCallback);
+
+    //this subscribes to the left mouse click event, in order for it to call the function UserPressedLeftMouseButton everytime the user presses left mouse button
+    std::function<void()> mouseReleasedCallback = std::bind(&EngineFunctionalityManager::LeftMouseReleased, this);
+    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Left, mouseReleasedCallback);
+
+    //this subscribes to the left mouse click event, in order for it to call the function UserPressedLeftMouseButton everytime the user presses left mouse button
+    std::function<void()> midleMousePressCallback = std::bind(&EngineFunctionalityManager::MiddleMousePressed, this);
+    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Middle, midleMousePressCallback);
+
+    //this subscribes to the left mouse click event, in order for it to call the function UserPressedLeftMouseButton everytime the user presses left mouse button
+    std::function<void()> midleMouseReleasedCallback = std::bind(&EngineFunctionalityManager::MiddleMouseReleased, this);
+    EventQueue::GetInstance()->SubscribeToMouseKeyReleasedEvent(sf::Mouse::Middle, midleMouseReleasedCallback);
 }
 
 EngineFunctionalityManager::~EngineFunctionalityManager()
@@ -30,6 +48,14 @@ EngineFunctionalityManager* EngineFunctionalityManager::GetInstance()
 
 void EngineFunctionalityManager::Update()
 {
+    if (objBeingDragged != nullptr)
+    {
+        objBeingDragged->SetPosition(InputsEngine::GetInstance()->GetMouseWorldPosition());
+    }
+    if (InputsEngine::GetInstance()->GetMouseState().pressingMiddleButton)
+    {
+        //GameEngine::GetInstance()->MoveCamera(GameEngine::GetInstance()->GetCameraPosition() + InputsEngine::GetInstance()->GetMouseState().velocity);
+    }
 }
 
 #pragma region Functionality functions
@@ -187,5 +213,48 @@ void EngineFunctionalityManager::OnSaveButtonClicked()
     EngineJsonReader::GetInstance()->SaveScene();
 }
 
+void EngineFunctionalityManager::LeftMousePressed()
+{
+    if (state == State::editMode)
+    {
+        objBeingDragged = GetObjectAtMousePos();
+    }
+}
+
+void EngineFunctionalityManager::LeftMouseReleased()
+{
+    objBeingDragged = nullptr;
+}
+
+void EngineFunctionalityManager::MiddleMousePressed()
+{
+    
+}
+
+void EngineFunctionalityManager::MiddleMouseReleased()
+{
+}
+
 #pragma endregion
 
+#pragma region Helper functions
+
+GameObject* EngineFunctionalityManager::GetObjectAtMousePos()
+{
+    for (Com_Mesh* currentMesh : *Scene::GetInstance()->GetAllMeshes())
+    {
+        Vector2 screenMousePos = InputsEngine::GetInstance()->GetMouseState().position;
+        Vector2 viewCenter = GameEngine::GetInstance()->GetCameraPosition();
+        Vector2 viewSize = GameEngine::GetInstance()->GetCameraSize();
+
+        sf::Vector2f worldMousePos = sf::Vector2f(screenMousePos.x + viewCenter.x - viewSize.x / 2.0f, screenMousePos.y + viewCenter.y - viewSize.y / 2.0f);
+
+        sf::FloatRect buttonBounds = currentMesh->GetMeshToRender()->getGlobalBounds();
+
+        if (buttonBounds.contains(worldMousePos))
+            return currentMesh->gameObject;
+    }
+    return nullptr;
+}
+
+#pragma endregion
