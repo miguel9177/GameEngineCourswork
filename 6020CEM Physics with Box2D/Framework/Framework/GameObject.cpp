@@ -2,7 +2,7 @@
 #include "RigidBody.h"
 #include <iostream>
 #include "Com_Collider.h"
-
+#include "EngineFunctionalityManager.h"
 GameObject::GameObject(std::string name_)
 {
 	name = name_;
@@ -73,7 +73,8 @@ void GameObject::AddComponent(Component* componentToAdd)
 
 	allComponents[componentToAdd->GetTypeOfComponent()].push_back(componentToAdd);
     componentToAdd->gameObject = this;
-    componentToAdd->Start();
+    if(EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::playMode)
+        componentToAdd->Start();
 }
 
 //this will return true if the user has the component
@@ -137,7 +138,7 @@ void GameObject::RemoveComponent(Component* componentToRemove)
     //this sets the transfpr,, it checks if we have a rb, if yes tell rb to update the transform
     void GameObject::SetTransform(Transform _newTransform)
     {
-        if (HasRigidBody())
+        if (HasRigidBody() && EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::playMode)
         {
             rigidBody->SetPositionAndRotation(_newTransform.position, _newTransform.rotation);
             transform->scale = _newTransform.scale;
@@ -154,7 +155,7 @@ void GameObject::RemoveComponent(Component* componentToRemove)
     //this sets the positiom, it checks if we have a rb, if yes tell rb to update the position
     void GameObject::SetPosition(Vector2 _newPosition, bool checkForRigidBody)
     {
-        if (HasRigidBody() && checkForRigidBody)
+        if (HasRigidBody() && checkForRigidBody && EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::playMode)
             rigidBody->SetPosition(_newPosition);
 
         transform->position = _newPosition;
@@ -169,7 +170,7 @@ void GameObject::RemoveComponent(Component* componentToRemove)
     void GameObject::SetRotation(float _newRotation)
     {
         transform->rotation = _newRotation;
-        if (HasRigidBody())
+        if (HasRigidBody() && EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::playMode)
             rigidBody->SetRotation(_newRotation);
     }
 

@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "ScriptBehaviour.h"
+#include "EngineFunctionalityManager.h"
 
 Scene* Scene::instance;
 
@@ -27,6 +28,9 @@ Scene* Scene::GetInstance()
 
 void Scene::Update()
 {
+    if (EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
+        return;
+
     for (ScriptBehaviour* scriptBehaviour : allScriptBehaviours)
     {
         scriptBehaviour->Update();

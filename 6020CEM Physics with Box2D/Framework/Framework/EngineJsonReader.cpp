@@ -65,11 +65,11 @@ void EngineJsonReader::LoadEditorScene()
         //this gets all components
         Json::Value allcomponents_json_Data = go_json_ObjectData["Components"];
 
-        ////i store the rb and colls in variables so that i can add the colliders after adding the rigidbody
-        //RigidBody* rb_currentGameObject = nullptr;
-        //std::vector<Com_Collider*> allColliders_currentGameObject;
-        ////we want to add the scripts as the last thing, since we dont know its depencies, so if we put it in last the character will already have everything 
-        //std::vector<ScriptBehaviour*>allScripts_currentGameObject;
+        //i store the rb and colls in variables so that i can add the colliders after adding the rigidbody
+        RigidBody* rb_currentGameObject = nullptr;
+        std::vector<Com_Collider*> allColliders_currentGameObject;
+        //we want to add the scripts as the last thing, since we dont know its depencies, so if we put it in last the character will already have everything 
+        std::vector<ScriptBehaviour*>allScripts_currentGameObject;
 
         for (const auto& currentComponent_json_Name : allcomponents_json_Data.getMemberNames())
         {
@@ -82,42 +82,42 @@ void EngineJsonReader::LoadEditorScene()
                 //finaly in the end i add the com mesh to the gameobject
                 currentGameObject->AddComponent(CreateComMeshFromJsonData(currentComponent_Json_Data));
             }
-            //else if (currentComponent_json_Name == "RigidBody")
-            //{
-            //    //i store the rb since i need to add all colliders to the rb;
-            //    rb_currentGameObject = CreateRigidBodyFromJsonData(currentComponent_Json_Data);
-            //}
-            //else if (currentComponent_json_Name == "CircleCollider")
-            //{
-            //    std::vector<CircleCollider*> newColliders = CreateCircleColliderFromJsonData(currentComponent_Json_Data);
-            //    //i store the gameobject collider in a list so that i can then add all colliders to the rb
-            //    allColliders_currentGameObject.insert(allColliders_currentGameObject.end(), newColliders.begin(), newColliders.end());
-            //}
-            //else if (currentComponent_json_Name == "SquareCollider")
-            //{
-            //    std::vector<SquareCollider*> newColliders = CreateSquareColliderFromJsonData(currentComponent_Json_Data);
-            //    //i store the gameobject collider in a list so that i can then add all colliders to the rb
-            //    allColliders_currentGameObject.insert(allColliders_currentGameObject.end(), newColliders.begin(), newColliders.end());
-            //}
-            //else if (currentComponent_json_Name == "ScriptBehaviour")
-            //{
-            //    std::vector<ScriptBehaviour*> newScripts = CreateScriptBehaviourFromJsonData(currentComponent_Json_Data);
-            //    allScripts_currentGameObject.insert(allScripts_currentGameObject.end(), newScripts.begin(), newScripts.end());
-            //}
+            else if (currentComponent_json_Name == "RigidBody")
+            {
+                //i store the rb since i need to add all colliders to the rb;
+                rb_currentGameObject = CreateRigidBodyFromJsonData(currentComponent_Json_Data);
+            }
+            else if (currentComponent_json_Name == "CircleCollider")
+            {
+                std::vector<CircleCollider*> newColliders = CreateCircleColliderFromJsonData(currentComponent_Json_Data);
+                //i store the gameobject collider in a list so that i can then add all colliders to the rb
+                allColliders_currentGameObject.insert(allColliders_currentGameObject.end(), newColliders.begin(), newColliders.end());
+            }
+            else if (currentComponent_json_Name == "SquareCollider")
+            {
+                std::vector<SquareCollider*> newColliders = CreateSquareColliderFromJsonData(currentComponent_Json_Data);
+                //i store the gameobject collider in a list so that i can then add all colliders to the rb
+                allColliders_currentGameObject.insert(allColliders_currentGameObject.end(), newColliders.begin(), newColliders.end());
+            }
+            else if (currentComponent_json_Name == "ScriptBehaviour")
+            {
+                std::vector<ScriptBehaviour*> newScripts = CreateScriptBehaviourFromJsonData(currentComponent_Json_Data);
+                allScripts_currentGameObject.insert(allScripts_currentGameObject.end(), newScripts.begin(), newScripts.end());
+            }
         }
 
-        ////if we have a rb in this gameobject, we add it to the gameobject and then add all colliders
-        //if (rb_currentGameObject != nullptr)
-        //{
-        //    //adds the rbs to the game object
-        //    currentGameObject->AddComponent(rb_currentGameObject);
-        //    //adds the collider to the gameobject
-        //    for (const auto currentColl : allColliders_currentGameObject)
-        //        currentGameObject->AddComponent(currentColl);
-        //}
-        ////after adding everything, we add all scripts
-        //for (const auto currentScript : allScripts_currentGameObject)
-        //    currentGameObject->AddComponent(currentScript);
+        //if we have a rb in this gameobject, we add it to the gameobject and then add all colliders
+        if (rb_currentGameObject != nullptr)
+        {
+            //adds the rbs to the game object
+            currentGameObject->AddComponent(rb_currentGameObject);
+            //adds the collider to the gameobject
+            for (const auto currentColl : allColliders_currentGameObject)
+                currentGameObject->AddComponent(currentColl);
+        }
+        //after adding everything, we add all scripts
+        for (const auto currentScript : allScripts_currentGameObject)
+            currentGameObject->AddComponent(currentScript);
 
         //add an object to the scene
         Scene::GetInstance()->AddObject(currentGameObject);

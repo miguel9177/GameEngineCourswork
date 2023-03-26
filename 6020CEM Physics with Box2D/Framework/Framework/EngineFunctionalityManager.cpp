@@ -168,13 +168,13 @@ void EngineFunctionalityManager::OnPlayButtonClicked()
 {
     if (state == State::playMode)
         return;
+    
+    state = State::playMode;
 
     PhysicsEngine::GetInstance()->StopPhysicsWorld();
     PhysicsEngine::GetInstance()->StartPhysicsWorld();
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::EnteredPlayMode);
     EngineJsonReader::GetInstance()->LoadSceneToPlay();
-    
-    state = State::playMode;
 
     sf::Texture clickedTexture = sf::Texture();
     clickedTexture.loadFromFile("../Textures/PlayButtonClicked.png");

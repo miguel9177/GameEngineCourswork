@@ -3,6 +3,7 @@
 #include <vector>
 #include "Scene.h"
 #include <iostream>
+#include "EngineFunctionalityManager.h"
 
 PhysicsEngine* PhysicsEngine::instance;
 
@@ -39,7 +40,7 @@ void PhysicsEngine::Update()
     // Calculate delta time
     deltaTime = clock.restart().asSeconds();
 
-    if (world == nullptr)
+    if (world == nullptr || EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
         return;
     
     // Iterate through all rigidbodies
