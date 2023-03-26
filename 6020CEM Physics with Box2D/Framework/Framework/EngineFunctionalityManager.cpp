@@ -144,12 +144,33 @@ void EngineFunctionalityManager::OnPlayButtonClicked()
     PhysicsEngine::GetInstance()->StartPhysicsWorld();
     EventQueue::GetInstance()->InvokeVoidEvents(EventQueue::voidEvents::EnteredPlayMode);
     EngineJsonReader::GetInstance()->LoadSceneToPlay();
+    
     state = State::playMode;
+
+    if (state == State::playMode)
+    {
+        sf::Texture clickedTexture = sf::Texture();
+        clickedTexture.loadFromFile("../Textures/PlayButtonClicked.png");
+        uiBtnImg_PlayButton->SetTexture(clickedTexture);
+    }
 }
 
 void EngineFunctionalityManager::OnDebugButtonClicked()
 {
     GameEngine::GetInstance()->isDebugMode = !GameEngine::GetInstance()->isDebugMode;
+
+    if (GameEngine::GetInstance()->isDebugMode)
+    {
+        sf::Texture clickedTexture = sf::Texture();
+        clickedTexture.loadFromFile("../Textures/DebugButtonClicked.png");
+        uiBtnImg_DebugButton->SetTexture(clickedTexture);
+    }
+    else
+    {
+        sf::Texture clickedTexture = sf::Texture();
+        clickedTexture.loadFromFile("../Textures/DebugButton.png");
+        uiBtnImg_DebugButton->SetTexture(clickedTexture);
+    }
 }
 
 void EngineFunctionalityManager::OnStopButtonClicked()

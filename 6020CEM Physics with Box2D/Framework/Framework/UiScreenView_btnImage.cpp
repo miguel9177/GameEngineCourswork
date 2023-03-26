@@ -72,6 +72,11 @@ void UiScreenView_btnImage::SetUiScale(Vector2 _newScale)
 	sprite.setScale(scaleX, scaleY);
 }
 
+void UiScreenView_btnImage::SetTexture(sf::Texture texture_)
+{
+	*texture = texture_;
+}
+
 sf::Sprite UiScreenView_btnImage::GetComponentToDraw()
 {
 	return sprite;

@@ -31,6 +31,7 @@ public:
 	void SetUiPosition(Vector2 _newPos, Vector2 _offset = Vector2(0, 0));
 	void SetUiRotation(float _newRot);
 	void SetUiScale(Vector2 _newScale);
+	void SetTexture(sf::Texture texture_);
 	sf::Sprite GetComponentToDraw();
 	bool isButtonBeingHovered();
 	void AddUiToScreen();
