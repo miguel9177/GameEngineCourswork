@@ -10,7 +10,7 @@ class UiScreenView_btnText
 private:
 	sf::Sprite sprite;
 	sf::Texture* texture;
-	UiScreenView_Text ui_text;
+	UiScreenView_Text* ui_text;
 	Transform* transform;
 	Transform* textTansform;
 	bool pressing = false;
@@ -30,7 +30,7 @@ private:
 	std::vector<std::function<void()>> allSubscribedOnButtonReleasedEvent;
 
 public:
-	UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform, bool _worldObject = false);
+	UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform, UiScreenView_Text* _ui_text, bool _worldObject = false);
 	~UiScreenView_btnText();
 	void SetFont(sf::Font _newFont);
 	void SetText(sf::String _newText);

@@ -120,7 +120,8 @@ void GraphicsEngine::DrawDebugModeInformation()
     {
         RigidBody* rb = *it;
         b2Fixture* fixture = rb->Debug_GetB2Body()->GetFixtureList();
-        Debug_DrawCollider(fixture, sf::Color::Green);
+        if(fixture != nullptr)
+            Debug_DrawCollider(fixture, sf::Color::Green);
     }
     //goes through every mesh on the scene and draws it
     for (std::vector<Com_Mesh*>::iterator it = Scene::GetInstance()->GetAllMeshes()->begin(); it != Scene::GetInstance()->GetAllMeshes()->end(); ++it)

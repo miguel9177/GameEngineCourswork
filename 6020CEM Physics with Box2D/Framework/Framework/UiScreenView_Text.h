@@ -24,7 +24,7 @@ public:
 	UiScreenView_Text(std::string _textToDisplay, Transform* _transform, bool _worldObject = false);
 	~UiScreenView_Text();
 	void SetFont(sf::Font _newFont);
-	void SetText(sf::String _newText);
+	void SetText(std::string _newText);
 	void SetFontSize(float _newSize);
 	void SetTextColor(sf::Color _newColor);
 	void SetUiPosition(Vector2 _newPos, Vector2 _offset = Vector2(0, 0));

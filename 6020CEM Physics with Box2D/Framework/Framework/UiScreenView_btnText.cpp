@@ -6,14 +6,14 @@
 #include <functional>
 #include "UiScreenView_Text.h"
 
-UiScreenView_btnText::UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform, bool _worldObject) : texture(_newImage), transform(_transform), textTansform(_textTransform), ui_text(_textToDisplay, _textTransform), worldObject(_worldObject)
+UiScreenView_btnText::UiScreenView_btnText(sf::Texture* _newImage, Transform* _transform, std::string _textToDisplay, Transform* _textTransform, UiScreenView_Text* _ui_text, bool _worldObject) : texture(_newImage), transform(_transform), textTansform(_textTransform), ui_text(_ui_text), worldObject(_worldObject)
 {
 	//if the texture is not 0, it means theres a texture assigned
 	if (texture != nullptr && texture->getSize() != sf::Vector2u(0, 0))
 	{
-		SetTextUiPosition(_textTransform->position);
+	/*	SetTextUiPosition(_textTransform->position);
 		SetTextUiRotation(_textTransform->rotation);
-		SetTextUiScale(_textTransform->scale);
+		SetTextUiScale(_textTransform->scale);*/
 
 		sprite.setTexture(*texture);
 		SetUiPosition(transform->position);
@@ -51,22 +51,22 @@ void UiScreenView_btnText::Update()
 
 void UiScreenView_btnText::SetFont(sf::Font _newFont)
 {
-	ui_text.SetFont(_newFont);
+	ui_text->SetFont(_newFont);
 }
 
 void UiScreenView_btnText::SetText(sf::String _newText)
 {
-	ui_text.SetText(_newText);
+	ui_text->SetText(_newText);
 }
 
 void UiScreenView_btnText::SetFontSize(float _newSize)
 {
-	ui_text.SetFontSize(_newSize);
+	ui_text->SetFontSize(_newSize);
 }
 
 void UiScreenView_btnText::SetTextColor(sf::Color _newColor)
 {
-	ui_text.SetTextColor(_newColor);
+	ui_text->SetTextColor(_newColor);
 }
 
 /// <summary>
@@ -75,30 +75,30 @@ void UiScreenView_btnText::SetTextColor(sf::Color _newColor)
 /// <param name="_newPos">NEEDS TO BE A VALUE FROM 0 TO 1</param>
 void UiScreenView_btnText::SetTextUiPosition(Vector2 _newPos, Vector2 _offset)
 {
-	Vector2 windowSize = GameEngine::GetInstance()->GetCameraSize();
-	float xPos = windowSize.x * _newPos.x;
-	float yPos = windowSize.y * _newPos.y;
-	
-	//adjust the position of the ui depending on the camera position
-	xPos += GameEngine::GetInstance()->GetCameraSfmlPosition().x - windowSize.x / 2.0f;
-	yPos += GameEngine::GetInstance()->GetCameraSfmlPosition().y - windowSize.y / 2.0f;
+	//Vector2 windowSize = GameEngine::GetInstance()->GetCameraSize();
+	//float xPos = windowSize.x * _newPos.x;
+	//float yPos = windowSize.y * _newPos.y;
+	//
+	////adjust the position of the ui depending on the camera position
+	//xPos += GameEngine::GetInstance()->GetCameraSfmlPosition().x - windowSize.x / 2.0f;
+	//yPos += GameEngine::GetInstance()->GetCameraSfmlPosition().y - windowSize.y / 2.0f;
 
-	//move the origin to its center
-	sf::FloatRect textBounds = ui_text.GetSfmlText()->getLocalBounds();
-	ui_text.GetSfmlText()->setOrigin(textBounds.width / 2, textBounds.height / 2);
+	////move the origin to its center
+	//sf::FloatRect textBounds = ui_text->GetSfmlText()->getLocalBounds();
+	//ui_text->GetSfmlText()->setOrigin(textBounds.width / 2, textBounds.height / 2);
 
 	//move the sfml text to the correct position
-	ui_text.GetSfmlText()->setPosition(xPos + _offset.x, yPos + _offset.y);
+	ui_text->SetUiPosition(_newPos, _offset);
 }
 
 void UiScreenView_btnText::SetTextUiRotation(float _newRot)
 {
-	ui_text.GetSfmlText()->setRotation(_newRot);
+	ui_text->GetSfmlText()->setRotation(_newRot);
 }
 
 void UiScreenView_btnText::SetTextUiScale(Vector2 _newScale)
 {
-	ui_text.GetSfmlText()->setScale(_newScale);
+	ui_text->GetSfmlText()->setScale(_newScale);
 }
 
 /// <summary>
@@ -259,14 +259,14 @@ void UiScreenView_btnText::AddUiToScreen()
 {
 	isUiBeingDrawned = true;
 	UiEngine::GetInstance()->AddUiScreenViewButtonTextToUiEngine(this);
-	UiEngine::GetInstance()->AddUiScreenViewTextToUiEngine(&ui_text);
+	UiEngine::GetInstance()->AddUiScreenViewTextToUiEngine(ui_text);
 }
 
 void UiScreenView_btnText::RemoveUiFromScreen()
 {
 	isUiBeingDrawned = false;
 	UiEngine::GetInstance()->RemoveUiScreenViewButtonTextFromUiEngine(this);
-	UiEngine::GetInstance()->RemoveUiScreenViewTextFromUiEngine(&ui_text);
+	UiEngine::GetInstance()->RemoveUiScreenViewTextFromUiEngine(ui_text);
 }
 
 #pragma endregion

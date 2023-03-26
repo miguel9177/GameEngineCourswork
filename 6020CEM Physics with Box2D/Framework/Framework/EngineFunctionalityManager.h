@@ -40,7 +40,16 @@ public:
 	void CreateEngineUI();
 	void Update();
 	inline State GetEngineState() { return state; };
+
+#pragma region helper Functions
+
 	GameObject* GetObjectAtMousePos();
+
+	void CreateTopBarUi();
+
+	void CreateLeftBarUi();
+
+#pragma endregion
 private:
 	State state = State::editMode;
 };

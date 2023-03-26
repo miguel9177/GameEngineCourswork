@@ -1,6 +1,8 @@
 #include "UiScreenView_Text.h"
 #include "GameEngine.h"
 #include "UiEngine.h"
+#include <iostream>
+
 
 /// <summary>
 /// 
@@ -18,6 +20,10 @@ UiScreenView_Text::UiScreenView_Text(std::string _textToDisplay, Transform* _tra
 	sfmlText.setFillColor(sf::Color::White);
 	sfmlText.setStyle(sf::Text::Regular);
 	SetUiPosition(transform->position);
+	SetUiRotation(transform->rotation);
+	SetUiScale(transform->scale);
+	SetText(_textToDisplay);
+	SetTextColor(sf::Color::Green);
 
 }
 
@@ -31,8 +37,9 @@ void UiScreenView_Text::SetFont(sf::Font _newFont)
 	sfmlText.setFont(_newFont);
 }
 
-void UiScreenView_Text::SetText(sf::String _newText)
+void UiScreenView_Text::SetText(std::string _newText)
 {
+	std::cout << _newText << std::endl;
 	sfmlText.setString(_newText);
 }
 
@@ -87,7 +94,10 @@ void UiScreenView_Text::SetUiScale(Vector2 _newScale)
 
 sf::Text UiScreenView_Text::GetComponentToDraw()
 {
+	std::string a = sfmlText.getString();
+	std::cout << a << std::endl;
 	return sfmlText;
+
 }
 
 void UiScreenView_Text::AddUiToScreen()
