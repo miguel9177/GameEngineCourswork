@@ -48,6 +48,9 @@ EngineFunctionalityManager* EngineFunctionalityManager::GetInstance()
 
 void EngineFunctionalityManager::Update()
 {
+    if (state != State::editMode)
+        return;
+
     if (objBeingDragged != nullptr)
     {
         objBeingDragged->SetPosition(InputsEngine::GetInstance()->GetMouseWorldPosition());
