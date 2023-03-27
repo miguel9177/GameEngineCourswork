@@ -2,6 +2,7 @@
 #include "SB_TestScript.h"
 #include "SB_CameraFollowPlayer.h"
 #include "SB_CharacterMovement.h"
+#include "SB_MultiplayerServerClient.h"
 #include <iostream>
 
 ScriptLoaderManager* ScriptLoaderManager::instance;
@@ -39,8 +40,6 @@ ScriptBehaviour* ScriptLoaderManager::GetScript(unsigned int uniqueIdIdentifier)
     return nullptr;
 }
 
-
-
 ////////////////////
 //USER PLEASE ADD ALL OF YOUR SCRIPTS IN HERE, JUST PUSH AN EMPTY VERSION OF THEM AND THE ENGINE DOES THE REST
 void ScriptLoaderManager::InitializeVectorOfScripts()
@@ -48,5 +47,6 @@ void ScriptLoaderManager::InitializeVectorOfScripts()
     allUserScriptBehaviours.push_back(new SB_TestScript());
     allUserScriptBehaviours.push_back(new SB_CharacterMovement());
     allUserScriptBehaviours.push_back(new SB_CameraFollowPlayer());
+    allUserScriptBehaviours.push_back(new SB_MultiplayerServerClient());
 }
 ////////////////////
