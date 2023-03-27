@@ -73,6 +73,7 @@ void EngineFunctionalityManager::CreateEngineUI()
     ui_txtText1->AddUiToScreen();*/
 
     CreateLeftBarUi();
+    CreateRightBarUi();
     CreateTopBarUi();
 
   /*  sf::Texture ui_texture3;
@@ -288,9 +289,9 @@ void EngineFunctionalityManager::CreateLeftBarUi()
 
 #pragma region Creating every GameObject UI list
 
-    float yOffset = 55.f; // Offset between each button on the y-axis
+    float yOffset = 55.f; 
     
-    std::vector<GameObject*> gameObjects = *Scene::GetInstance()->GetAllObjects(); // Assuming you have a vector storing all the GameObjects
+    std::vector<GameObject*> gameObjects = *Scene::GetInstance()->GetAllObjects();
     for (size_t i = 0; i < gameObjects.size(); ++i)
     {
         sf::Texture* ui_textureForButtons = new sf::Texture();
@@ -304,7 +305,7 @@ void EngineFunctionalityManager::CreateLeftBarUi()
 
         ui_btnText->SetFontSize(25);
         ui_btnText->SetTextColor(sf::Color::Black);
-        ui_btnText->SetUiPosition(Vector2(0, 0), Vector2(120, 100 + yOffset * i)); // Update the y-offset for each button
+        ui_btnText->SetUiPosition(Vector2(0, 0), Vector2(120, 100 + yOffset * i));
         ui_btnText->SetTextUiPosition(Vector2(0, 0), Vector2(120, 100 + (yOffset * i)));
         ui_btnText->SetTextUiScale(Vector2(1, 1));
         ui_btnText->AddUiToScreen();
@@ -316,4 +317,96 @@ void EngineFunctionalityManager::CreateLeftBarUi()
 
 }
 
+void EngineFunctionalityManager::CreateRightBarUi()
+{
+    sf::Texture* ui_LeftWhiteNavbar = new sf::Texture();
+    if (!ui_LeftWhiteNavbar->loadFromFile("../Textures/LeftNavbar.png"))
+    {
+        std::cout << "Texture did not load!" << "\n" << std::endl;
+    }
+    UiScreenView_Image* uiImg_LeftNavbar = new UiScreenView_Image(ui_LeftWhiteNavbar, new Transform(Vector2(0.5f, 0.5f), 0, Vector2(5, 40)));
+    uiImg_LeftNavbar->SetUiPosition(Vector2(1, 0.5), Vector2(-120, 0));
+    uiImg_LeftNavbar->AddUiToScreen();
+
+#pragma region Creating every Component UI Button To add
+
+    //add RB button
+    {
+        sf::Texture* ui_textureForButtons = new sf::Texture();
+        if (!ui_textureForButtons->loadFromFile("../Textures/whiteSquare.png"))
+        {
+            std::cout << "Texture did not load!" << "\n" << std::endl;
+        }
+        UiScreenView_Text* ui_txtText = new UiScreenView_Text("Rb", new Transform(Vector2(0.5f, 0), 0, Vector2(1, 1)));
+        UiScreenView_btnText* ui_btnText = new UiScreenView_btnText(ui_textureForButtons, new Transform(Vector2(0.5, 0), 0, Vector2(5, 1)), "Rb", new Transform(Vector2(0.5f, 0), 0, Vector2(0.3, 0.3)), ui_txtText);
+
+        ui_btnText->SetFontSize(15);
+        ui_btnText->SetTextColor(sf::Color::Black);
+        ui_btnText->SetUiPosition(Vector2(1, 0), Vector2(-220, 100)); // Update the y-offset for each button
+        ui_btnText->SetTextUiPosition(Vector2(1, 0), Vector2(-220, 100));
+        ui_btnText->SetTextUiScale(Vector2(1, 1));
+        ui_btnText->SetUiScale(Vector2(1.f, 1.f));
+        ui_btnText->AddUiToScreen();
+
+        //ui_btnText->SubscribeToBtnOnPressEvent(gameObjects.at(i), std::bind(&EngineFunctionalityManager::GameObjectButtonClicked, this, std::placeholders::_1));
+    }
+    //add Square Collider button
+    {
+        sf::Texture* ui_textureForButtons = new sf::Texture();
+        if (!ui_textureForButtons->loadFromFile("../Textures/whiteSquare.png"))
+        {
+            std::cout << "Texture did not load!" << "\n" << std::endl;
+        }
+        UiScreenView_Text* ui_txtText = new UiScreenView_Text("Square Coll", new Transform(Vector2(0.5f, 0), 0, Vector2(1, 1)));
+        UiScreenView_btnText* ui_btnText = new UiScreenView_btnText(ui_textureForButtons, new Transform(Vector2(0.5, 0), 0, Vector2(5, 1)), "Square Coll", new Transform(Vector2(0.5f, 0), 0, Vector2(0.3, 0.3)), ui_txtText);
+
+        ui_btnText->SetFontSize(10);
+        ui_btnText->SetTextColor(sf::Color::Black);
+        ui_btnText->SetUiPosition(Vector2(1, 0), Vector2(-160, 100)); // Update the y-offset for each button
+        ui_btnText->SetTextUiPosition(Vector2(1, 0), Vector2(-160, 100));
+        ui_btnText->SetTextUiScale(Vector2(1, 1));
+        ui_btnText->SetUiScale(Vector2(1.f, 1.f));
+        ui_btnText->AddUiToScreen();
+    }
+
+    //add Circle Collider
+    {
+        sf::Texture* ui_textureForButtons = new sf::Texture();
+        if (!ui_textureForButtons->loadFromFile("../Textures/whiteSquare.png"))
+        {
+            std::cout << "Texture did not load!" << "\n" << std::endl;
+        }
+        UiScreenView_Text* ui_txtText = new UiScreenView_Text("Circle Coll", new Transform(Vector2(0.5f, 0), 0, Vector2(1, 1)));
+        UiScreenView_btnText* ui_btnText = new UiScreenView_btnText(ui_textureForButtons, new Transform(Vector2(0.5, 0), 0, Vector2(5, 1)), "Circle Coll", new Transform(Vector2(0.5f, 0), 0, Vector2(0.3, 0.3)), ui_txtText);
+
+        ui_btnText->SetFontSize(10);
+        ui_btnText->SetTextColor(sf::Color::Black);
+        ui_btnText->SetUiPosition(Vector2(1, 0), Vector2(-100, 100)); // Update the y-offset for each button
+        ui_btnText->SetTextUiPosition(Vector2(1, 0), Vector2(-100, 100));
+        ui_btnText->SetTextUiScale(Vector2(1, 1));
+        ui_btnText->SetUiScale(Vector2(1.f, 1.f));
+        ui_btnText->AddUiToScreen();
+    }
+
+    //add Script
+    {
+        sf::Texture* ui_textureForButtons = new sf::Texture();
+        if (!ui_textureForButtons->loadFromFile("../Textures/whiteSquare.png"))
+        {
+            std::cout << "Texture did not load!" << "\n" << std::endl;
+        }
+        UiScreenView_Text* ui_txtText = new UiScreenView_Text("Script", new Transform(Vector2(0.5f, 0), 0, Vector2(1, 1)));
+        UiScreenView_btnText* ui_btnText = new UiScreenView_btnText(ui_textureForButtons, new Transform(Vector2(0.5, 0), 0, Vector2(5, 1)), "Script", new Transform(Vector2(0.5f, 0), 0, Vector2(0.3, 0.3)), ui_txtText);
+
+        ui_btnText->SetFontSize(10);
+        ui_btnText->SetTextColor(sf::Color::Black);
+        ui_btnText->SetUiPosition(Vector2(1, 0), Vector2(-40, 100)); // Update the y-offset for each button
+        ui_btnText->SetTextUiPosition(Vector2(1, 0), Vector2(-40, 100));
+        ui_btnText->SetTextUiScale(Vector2(1, 1));
+        ui_btnText->SetUiScale(Vector2(1.f, 1.f));
+        ui_btnText->AddUiToScreen();
+    }
+#pragma endregion
+
+}
 #pragma endregion

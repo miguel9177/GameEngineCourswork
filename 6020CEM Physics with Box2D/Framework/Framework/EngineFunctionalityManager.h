@@ -31,7 +31,7 @@ private:
 #pragma endregion
 	
 	GameObject* objBeingDragged;
-
+	
 public:
 	//this will store the state of the game engine
 	enum State {editMode, playMode};
@@ -49,6 +49,8 @@ public:
 	void CreateTopBarUi();
 
 	void CreateLeftBarUi();
+
+	void CreateRightBarUi();
 
 #pragma endregion
 private:
