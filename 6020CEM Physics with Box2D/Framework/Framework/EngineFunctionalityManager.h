@@ -50,8 +50,6 @@ public:
 
 	void CreateLeftBarUi();
 
-	void CreateRightBarUi();
-
 #pragma endregion
 private:
 	State state = State::editMode;
