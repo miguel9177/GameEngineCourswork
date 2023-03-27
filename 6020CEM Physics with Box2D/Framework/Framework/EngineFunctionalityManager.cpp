@@ -168,7 +168,7 @@ void EngineFunctionalityManager::MiddleMouseReleased()
 
 void EngineFunctionalityManager::GameObjectButtonClicked(GameObject* _objButtonClicked)
 {
-    std::cout << _objButtonClicked->name << std::endl;
+    
 }
 
 #pragma endregion
@@ -309,9 +309,7 @@ void EngineFunctionalityManager::CreateLeftBarUi()
         ui_btnText->SetTextUiScale(Vector2(1, 1));
         ui_btnText->AddUiToScreen();
 
-        //this subscribes to the on play button press callback
-      /*  std::function<void(GameObject*)> onGameObjectButtonPressedCallback = std::bind(&EngineFunctionalityManager::GameObjectButtonClicked, this, gameObjects.at(i));
-        uiBtnImg_PlayButton->SubscribeToBtnOnPressEvent(onGameObjectButtonPressedCallback);*/
+        ui_btnText->SubscribeToBtnOnPressEvent(gameObjects.at(i), std::bind(&EngineFunctionalityManager::GameObjectButtonClicked, this, std::placeholders::_1));
     }
 
 #pragma endregion

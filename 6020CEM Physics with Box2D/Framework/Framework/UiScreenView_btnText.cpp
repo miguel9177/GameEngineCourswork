@@ -213,6 +213,48 @@ void UiScreenView_btnText::UnsubscribeToBtnOnReleasedEvent(std::function<void()>
 	}
 }
 
+
+
+void UiScreenView_btnText::SubscribeToBtnOnPressEvent(GameObject* obj,std::function<void(GameObject*)> function)
+{
+	allSubscribedOnButtonPressEvent.push_back([obj, function]() { function(obj); });
+}
+
+void UiScreenView_btnText::UnsubscribeToBtnOnPressEvent(GameObject* obj, std::function<void(GameObject*)> function)
+{
+	for (unsigned int i = 0; i < allSubscribedOnButtonPressEvent.size();)
+	{
+		if (allSubscribedOnButtonPressEvent[i] != nullptr && EventQueue::getAddress(allSubscribedOnButtonPressEvent[i]) == EventQueue::getAddress(function))
+		{
+			allSubscribedOnButtonPressEvent.erase(allSubscribedOnButtonPressEvent.begin() + i);
+		}
+		else
+		{
+			i++;
+		}
+	}
+}
+
+void UiScreenView_btnText::SubscribeToBtnOnReleasedEvent(GameObject* obj, std::function<void(GameObject*)> function)
+{
+	allSubscribedOnButtonReleasedEvent.push_back([obj, function]() { function(obj); });
+}
+
+void UiScreenView_btnText::UnsubscribeToBtnOnReleasedEvent(GameObject* obj, std::function<void(GameObject*)> function)
+{
+	for (unsigned int i = 0; i < allSubscribedOnButtonReleasedEvent.size();)
+	{
+		if (allSubscribedOnButtonReleasedEvent[i] != nullptr && EventQueue::getAddress(allSubscribedOnButtonReleasedEvent[i]) == EventQueue::getAddress(function))
+		{
+			allSubscribedOnButtonReleasedEvent.erase(allSubscribedOnButtonReleasedEvent.begin() + i);
+		}
+		else
+		{
+			i++;
+		}
+	}
+}
+
 void UiScreenView_btnText::InvokeButtonPressedEvent()
 {
 	for (auto& callback : allSubscribedOnButtonPressEvent)

@@ -5,6 +5,7 @@
 #include <functional>
 #include "UiScreenView_Text.h"
 
+class GameObject;
 class UiScreenView_btnText
 {
 private:
@@ -53,6 +54,11 @@ public:
 	void UnsubscribeToBtnOnPressEvent(std::function<void()> function);
 	void SubscribeToBtnOnReleasedEvent(std::function<void()> function);
 	void UnsubscribeToBtnOnReleasedEvent(std::function<void()> function);
+
+	void SubscribeToBtnOnPressEvent(GameObject* obj, std::function<void(GameObject* obj)> function);
+	void UnsubscribeToBtnOnPressEvent(GameObject* obj, std::function<void(GameObject* obj)> function);
+	void SubscribeToBtnOnReleasedEvent(GameObject* obj, std::function<void(GameObject* obj)> function);
+	void UnsubscribeToBtnOnReleasedEvent(GameObject* obj, std::function<void(GameObject* obj)> function);
 
 private:
 	void InvokeButtonPressedEvent();
