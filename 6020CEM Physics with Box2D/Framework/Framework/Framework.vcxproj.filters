@@ -162,6 +162,9 @@
     <ClCompile Include="AudioPlayer.cpp">
       <Filter>Source Files\Components\Cpps\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="AllUserScipts\SB_MultiplayerServerClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsEngine.h">
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="AudioPlayer.h">
       <Filter>Source Files\Components\Headers\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AllUserScipts\SB_MultiplayerServerClient.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
