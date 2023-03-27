@@ -7,6 +7,7 @@ class RigidBody;
 class CircleCollider;
 class SquareCollider;
 class ScriptBehaviour;
+class AudioPlayer;
 class EngineJsonReader
 {
 private:
@@ -47,6 +48,9 @@ public:
 
 	std::vector<SquareCollider*> CreateSquareColliderFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertSquareColliderToJson(SquareCollider* circleColl);
+
+	AudioPlayer* CreateAudioPlayerFromJsonData(Json::Value jsonData_);
+	Json::Value ConvertAudioPlayerToJson(AudioPlayer* audioPlayer);
 
 	std::vector<ScriptBehaviour*> CreateScriptBehaviourFromJsonData(Json::Value jsonData_);
 	Json::Value ConvertScriptBehaviourToJson(ScriptBehaviour* scriptBehaviour);

@@ -9,6 +9,7 @@
 #include "CircleCollider.h"
 #include "SquareCollider.h"
 #include "AllUserScipts/ScriptLoaderManager.h"
+#include "AudioPlayer.h"
 
 EngineJsonReader* EngineJsonReader::instance;
 
@@ -98,6 +99,11 @@ void EngineJsonReader::LoadEditorScene()
                 std::vector<SquareCollider*> newColliders = CreateSquareColliderFromJsonData(currentComponent_Json_Data);
                 //i store the gameobject collider in a list so that i can then add all colliders to the rb
                 allColliders_currentGameObject.insert(allColliders_currentGameObject.end(), newColliders.begin(), newColliders.end());
+            }
+            else if (currentComponent_json_Name == "AudioPlayer")
+            {
+                //finaly in the end i add the audio player to the gameobject
+                currentGameObject->AddComponent(CreateAudioPlayerFromJsonData(currentComponent_Json_Data));
             }
             else if (currentComponent_json_Name == "ScriptBehaviour")
             {
@@ -193,6 +199,11 @@ void EngineJsonReader::LoadSceneToPlay()
                 //i store the gameobject collider in a list so that i can then add all colliders to the rb
                 allColliders_currentGameObject.insert(allColliders_currentGameObject.end(), newColliders.begin(), newColliders.end());
             }
+            else if (currentComponent_json_Name == "AudioPlayer")
+            {
+                //finaly in the end i add the audio player to the gameobject
+                currentGameObject->AddComponent(CreateAudioPlayerFromJsonData(currentComponent_Json_Data));
+            }
             else if (currentComponent_json_Name == "ScriptBehaviour")
             {
                 std::vector<ScriptBehaviour*> newScripts = CreateScriptBehaviourFromJsonData(currentComponent_Json_Data);
@@ -270,6 +281,11 @@ void EngineJsonReader::SaveScene()
                 {
                     SquareCollider* squareColl = static_cast<SquareCollider*>(component);
                     json_go_Components["SquareCollider"].append(ConvertSquareColliderToJson(squareColl));
+                }
+                else if (component->GetUniqueIdIdentifier() == AudioPlayer::uniqueComponentIdIdentifier)
+                {
+                    AudioPlayer* audioPlayer = static_cast<AudioPlayer*>(component);
+                    json_go_Components["AudioPlayer"].append(ConvertAudioPlayerToJson(audioPlayer));
                 }
                 else if (component->GetUniqueIdIdentifier() > ScriptBehaviour::minimumUniqueComponentIdIdentifier)
                 {
@@ -479,6 +495,28 @@ Json::Value EngineJsonReader::ConvertSquareColliderToJson(SquareCollider* square
 #pragma endregion
 
     return json_go_component_SquareColl;
+}
+
+AudioPlayer* EngineJsonReader::CreateAudioPlayerFromJsonData(Json::Value jsonData_)
+{
+    //gets the texture of the com_mesh
+    std::string json_audioPlayer_path = jsonData_["soundPath"].asString();
+
+#pragma region Creating the component
+
+    AudioPlayer* audioPlayer = new AudioPlayer(json_audioPlayer_path);
+
+#pragma endregion
+
+    return audioPlayer;
+}
+
+Json::Value EngineJsonReader::ConvertAudioPlayerToJson(AudioPlayer* audioPlayer)
+{
+
+    Json::Value json_go_component_AudioSource;
+    json_go_component_AudioSource["soundPath"] = audioPlayer->GetAudioPath();
+    return json_go_component_AudioSource;
 }
 
 

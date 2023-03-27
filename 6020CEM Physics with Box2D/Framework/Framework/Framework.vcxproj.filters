@@ -64,6 +64,12 @@
     <Filter Include="JsonFiles">
       <UniqueIdentifier>{4fe37130-456f-4120-a6a9-441c4d51e273}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\Cpps\Audio">
+      <UniqueIdentifier>{11d1d2c1-7c29-4d41-bdf5-ea865d5f7c5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Headers\Audio">
+      <UniqueIdentifier>{72ae781e-efef-420e-a849-60a0c9c2a786}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="AllUserScipts\SB_CameraFollowPlayer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioPlayer.cpp">
+      <Filter>Source Files\Components\Cpps\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="AllUserScipts\SB_CameraFollowPlayer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioPlayer.h">
+      <Filter>Source Files\Components\Headers\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

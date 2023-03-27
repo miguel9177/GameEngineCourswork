@@ -3,11 +3,13 @@
 #include "../Vector2.h"
 
 class RigidBody;
+class AudioPlayer;
 class SB_CharacterMovement : public ScriptBehaviour
 {
 	static const unsigned int uniqueComponentIdIdentifier = 10002;
 	Vector2 characterUserInput;
 	RigidBody* rb;
+	AudioPlayer* audioSource;
 	float amountOfForceToApply = 0.1f;
 public:
 #pragma region Engine Functions
@@ -23,4 +25,5 @@ public:
 
 #pragma endregion
 
+	void LeftMousePressed();
 };

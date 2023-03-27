@@ -1,6 +1,8 @@
 #include "SB_CharacterMovement.h"
 #include "../InputsEngine.h"
 #include "../RigidBody.h"
+#include "../EventQueue.h"
+#include "../AudioPlayer.h"
 
 #pragma region Engine functions
 
@@ -12,6 +14,10 @@ SB_CharacterMovement::SB_CharacterMovement() : ScriptBehaviour(uniqueComponentId
 void SB_CharacterMovement::Start()
 {
     rb = gameObject->TryGetComponent<RigidBody>(Component::typeOfComponent::Physics);
+
+    audioSource = gameObject->TryGetComponent<AudioPlayer>(Component::typeOfComponent::Audio);
+    EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Left, std::bind(&SB_CharacterMovement::LeftMousePressed, this));
+
 }
 
 void SB_CharacterMovement::Update()
@@ -36,5 +42,11 @@ void SB_CharacterMovement::Update()
 }
 
 #pragma endregion
+
+void SB_CharacterMovement::LeftMousePressed()
+{
+    if (audioSource != nullptr)
+        audioSource->PlaySound();
+}
 
 

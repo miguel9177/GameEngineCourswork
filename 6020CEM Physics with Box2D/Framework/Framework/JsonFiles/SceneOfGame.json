@@ -2,60 +2,54 @@
 	"GameObjects" : 
 	[
 		{
-			"Components" : 
-			{
-				"CircleCollider" : 
-				[
+			"Components": {
+				"CircleCollider": [
 					{
-						"bouciness" : 0.40000000596046448,
-						"friction" : 0.5,
-						"mass" : 1.0,
-						"offsetAngle" : 0.0,
-						"posOffset" : 
-						{
-							"x" : 0.0,
-							"y" : 0.0
+						"bouciness": 0.40000000596046448,
+						"friction": 0.5,
+						"mass": 1.0,
+						"offsetAngle": 0.0,
+						"posOffset": {
+							"x": 0.0,
+							"y": 0.0
 						},
-						"radius" : 0.10000000149011612
+						"radius": 0.10000000149011612
 					}
 				],
-				"Com_Mesh" : 
-				{
-					"Shape_Box" : 
-					{
-						"positionOffsetFromGameObject" : 
-						{
-							"x" : 0.0,
-							"y" : 0.0
+				"Com_Mesh": {
+					"Shape_Box": {
+						"positionOffsetFromGameObject": {
+							"x": 0.0,
+							"y": 0.0
 						},
-						"rotOffsetFromGameObject" : 0.0,
-						"scaleOffsetFromGameObject" : 
-						{
-							"x" : 0.0,
-							"y" : 0.0
+						"rotOffsetFromGameObject": 0.0,
+						"scaleOffsetFromGameObject": {
+							"x": 0.0,
+							"y": 0.0
 						}
 					},
-					"texture" : "../Textures/keyboardcat.jpg"
+					"texture": "../Textures/keyboardcat.jpg"
 				},
-				"RigidBody" : 
-				{
-					"rbSettings_allowSleep" : false,
-					"rbSettings_angularDrag" : 1.0,
-					"rbSettings_awake" : true,
-					"rbSettings_drag" : 1.0,
-					"rbSettings_freezeRotation" : false,
-					"rbSettings_gravityScale" : 0.0,
-					"rbSettings_important" : true,
-					"rbSettings_type" : 2,
-					"rb_useGravity" : false
+				"RigidBody": {
+					"rbSettings_allowSleep": false,
+					"rbSettings_angularDrag": 1.0,
+					"rbSettings_awake": true,
+					"rbSettings_drag": 1.0,
+					"rbSettings_freezeRotation": false,
+					"rbSettings_gravityScale": 0.0,
+					"rbSettings_important": true,
+					"rbSettings_type": 2,
+					"rb_useGravity": false
 				},
-				"ScriptBehaviour" : 
-				[
+				"AudioPlayer": {
+					"soundPath": "../Sounds/gun-gunshot.wav"
+				},
+				"ScriptBehaviour": [
 					{
-						"uniqueIdIdentifier" : 10002
+						"uniqueIdIdentifier": 10002
 					},
 					{
-						"uniqueIdIdentifier" : 10003
+						"uniqueIdIdentifier": 10003
 					}
 				]
 			},
@@ -64,8 +58,8 @@
 			{
 				"position" : 
 				{
-					"x" : 1.2934484481811523,
-					"y" : -0.24469940364360809
+					"x" : -1.8849999904632568,
+					"y" : -0.26499998569488525
 				},
 				"rotation" : -589.805908203125,
 				"scale" : 
@@ -133,8 +127,284 @@
 			{
 				"position" : 
 				{
-					"x" : -0.74500000476837158,
-					"y" : -0.18500000238418579
+					"x" : -0.34999999403953552,
+					"y" : 0.90499997138977051
+				},
+				"rotation" : -757.887451171875,
+				"scale" : 
+				{
+					"x" : 1.0,
+					"y" : 1.0
+				}
+			}
+		},
+		{
+			"Components" : 
+			{
+				"Com_Mesh" : 
+				{
+					"Shape_Box" : 
+					{
+						"positionOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						"rotOffsetFromGameObject" : 0.0,
+						"scaleOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					},
+					"texture" : "../Textures/WhiteSquare.png"
+				},
+				"RigidBody" : 
+				{
+					"rbSettings_allowSleep" : false,
+					"rbSettings_angularDrag" : 1.0,
+					"rbSettings_awake" : true,
+					"rbSettings_drag" : 1.0,
+					"rbSettings_freezeRotation" : false,
+					"rbSettings_gravityScale" : 0.0,
+					"rbSettings_important" : false,
+					"rbSettings_type" : 2,
+					"rb_useGravity" : false
+				},
+				"SquareCollider" : 
+				[
+					{
+						"bouciness" : 0.40000000596046448,
+						"friction" : 0.5,
+						"halfSize" : 
+						{
+							"x" : 0.12200000137090683,
+							"y" : 0.12200000137090683
+						},
+						"mass" : 1.0,
+						"offsetAngle" : 0.0,
+						"posOffset" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					}
+				]
+			},
+			"Name" : "obj3",
+			"Transform" : 
+			{
+				"position" : 
+				{
+					"x" : 1.440000057220459,
+					"y" : 0.23499999940395355
+				},
+				"rotation" : -757.887451171875,
+				"scale" : 
+				{
+					"x" : 1.0,
+					"y" : 1.0
+				}
+			}
+		},
+		{
+			"Components" : 
+			{
+				"Com_Mesh" : 
+				{
+					"Shape_Box" : 
+					{
+						"positionOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						"rotOffsetFromGameObject" : 0.0,
+						"scaleOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					},
+					"texture" : "../Textures/WhiteSquare.png"
+				},
+				"RigidBody" : 
+				{
+					"rbSettings_allowSleep" : false,
+					"rbSettings_angularDrag" : 1.0,
+					"rbSettings_awake" : true,
+					"rbSettings_drag" : 1.0,
+					"rbSettings_freezeRotation" : false,
+					"rbSettings_gravityScale" : 0.0,
+					"rbSettings_important" : false,
+					"rbSettings_type" : 2,
+					"rb_useGravity" : false
+				},
+				"SquareCollider" : 
+				[
+					{
+						"bouciness" : 0.40000000596046448,
+						"friction" : 0.5,
+						"halfSize" : 
+						{
+							"x" : 0.12200000137090683,
+							"y" : 0.12200000137090683
+						},
+						"mass" : 1.0,
+						"offsetAngle" : 0.0,
+						"posOffset" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					}
+				]
+			},
+			"Name" : "obj2",
+			"Transform" : 
+			{
+				"position" : 
+				{
+					"x" : -1.2200000286102295,
+					"y" : -1.309999942779541
+				},
+				"rotation" : -757.887451171875,
+				"scale" : 
+				{
+					"x" : 1.0,
+					"y" : 1.0
+				}
+			}
+		},
+		{
+			"Components" : 
+			{
+				"Com_Mesh" : 
+				{
+					"Shape_Box" : 
+					{
+						"positionOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						"rotOffsetFromGameObject" : 0.0,
+						"scaleOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					},
+					"texture" : "../Textures/WhiteSquare.png"
+				},
+				"RigidBody" : 
+				{
+					"rbSettings_allowSleep" : false,
+					"rbSettings_angularDrag" : 1.0,
+					"rbSettings_awake" : true,
+					"rbSettings_drag" : 1.0,
+					"rbSettings_freezeRotation" : false,
+					"rbSettings_gravityScale" : 0.0,
+					"rbSettings_important" : false,
+					"rbSettings_type" : 2,
+					"rb_useGravity" : false
+				},
+				"SquareCollider" : 
+				[
+					{
+						"bouciness" : 0.40000000596046448,
+						"friction" : 0.5,
+						"halfSize" : 
+						{
+							"x" : 0.12200000137090683,
+							"y" : 0.12200000137090683
+						},
+						"mass" : 1.0,
+						"offsetAngle" : 0.0,
+						"posOffset" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					}
+				]
+			},
+			"Name" : "obj3",
+			"Transform" : 
+			{
+				"position" : 
+				{
+					"x" : 0.59500002861022949,
+					"y" : -1.6200000047683716
+				},
+				"rotation" : -757.887451171875,
+				"scale" : 
+				{
+					"x" : 1.0,
+					"y" : 1.0
+				}
+			}
+		},
+		{
+			"Components" : 
+			{
+				"Com_Mesh" : 
+				{
+					"Shape_Box" : 
+					{
+						"positionOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						},
+						"rotOffsetFromGameObject" : 0.0,
+						"scaleOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					},
+					"texture" : "../Textures/WhiteSquare.png"
+				},
+				"RigidBody" : 
+				{
+					"rbSettings_allowSleep" : false,
+					"rbSettings_angularDrag" : 1.0,
+					"rbSettings_awake" : true,
+					"rbSettings_drag" : 1.0,
+					"rbSettings_freezeRotation" : false,
+					"rbSettings_gravityScale" : 0.0,
+					"rbSettings_important" : false,
+					"rbSettings_type" : 2,
+					"rb_useGravity" : false
+				},
+				"SquareCollider" : 
+				[
+					{
+						"bouciness" : 0.40000000596046448,
+						"friction" : 0.5,
+						"halfSize" : 
+						{
+							"x" : 0.12200000137090683,
+							"y" : 0.12200000137090683
+						},
+						"mass" : 1.0,
+						"offsetAngle" : 0.0,
+						"posOffset" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
+						}
+					}
+				]
+			},
+			"Name" : "obj4",
+			"Transform" : 
+			{
+				"position" : 
+				{
+					"x" : 1.3350000381469727,
+					"y" : -0.73500001430511475
 				},
 				"rotation" : -757.887451171875,
 				"scale" : 

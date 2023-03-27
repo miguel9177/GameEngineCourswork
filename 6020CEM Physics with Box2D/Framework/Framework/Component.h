@@ -3,7 +3,7 @@ class GameObject;
 class Component
 {
 public:
-	enum class typeOfComponent { Mesh = 0, Collider = 100, Physics = 200, ScriptBehaviour = 10000};
+	enum class typeOfComponent { Mesh = 0, Collider = 100, Physics = 200, Audio,ScriptBehaviour = 10000};
 
 private:
 	typeOfComponent componentType;

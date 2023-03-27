@@ -74,19 +74,6 @@ void EngineFunctionalityManager::CreateEngineUI()
 
     CreateLeftBarUi();
     CreateTopBarUi();
-
-  /*  sf::Texture ui_texture3;
-    if (!ui_texture3.loadFromFile("../Textures/whiteSquare.png"))
-    {
-        std::cout << "Texture did not load!" << "\n" << std::endl;
-    }
-    UiScreenView_btnText* ui_btnText1 = new UiScreenView_btnText(&ui_texture3, new Transform(Vector2(0.5, 0.5), 0, Vector2(2, 1)), "button1", new Transform(Vector2(0.5f, 0.5f), 0, Vector2(1, 1)));
-    ui_btnText1->SetFontSize(25);
-    ui_btnText1->SetTextColor(sf::Color::Black);
-    ui_btnText1->SetTextUiPosition(Vector2(0.5f, 0.5f), Vector2(-10, 0));
-    ui_btnText1->AddUiToScreen();
-    ui_btnText1->SubscribeToBtnOnPressEvent(test);
-    ui_btnText1->SubscribeToBtnOnReleasedEvent(test2);*/
 }
 
 #pragma endregion
