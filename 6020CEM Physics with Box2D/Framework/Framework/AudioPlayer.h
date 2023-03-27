@@ -5,11 +5,11 @@
 class AudioPlayer : public Component
 {
 private:
-	sf::SoundBuffer soundSource;
-	sf::Sound sound;
+	sf::SoundBuffer* soundSource;
+	sf::Sound* sound;
 	std::string soundPath;
 public:
-	static const unsigned int uniqueComponentIdIdentifier = 200;
+	static const unsigned int uniqueComponentIdIdentifier = 301;
 
 	AudioPlayer(std::string soundPath);
 	~AudioPlayer();

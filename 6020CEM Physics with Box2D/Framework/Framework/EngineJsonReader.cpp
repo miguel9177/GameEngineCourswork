@@ -285,7 +285,7 @@ void EngineJsonReader::SaveScene()
                 else if (component->GetUniqueIdIdentifier() == AudioPlayer::uniqueComponentIdIdentifier)
                 {
                     AudioPlayer* audioPlayer = static_cast<AudioPlayer*>(component);
-                    json_go_Components["AudioPlayer"].append(ConvertAudioPlayerToJson(audioPlayer));
+                    json_go_Components["AudioPlayer"] = ConvertAudioPlayerToJson(audioPlayer);
                 }
                 else if (component->GetUniqueIdIdentifier() > ScriptBehaviour::minimumUniqueComponentIdIdentifier)
                 {

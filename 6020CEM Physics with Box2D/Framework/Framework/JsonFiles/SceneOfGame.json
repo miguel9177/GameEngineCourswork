@@ -2,54 +2,64 @@
 	"GameObjects" : 
 	[
 		{
-			"Components": {
-				"CircleCollider": [
+			"Components" : 
+			{
+				"AudioPlayer" : 
+				{
+					"soundPath" : "../Sounds/gun-gunshot.wav"
+				},
+				"CircleCollider" : 
+				[
 					{
-						"bouciness": 0.40000000596046448,
-						"friction": 0.5,
-						"mass": 1.0,
-						"offsetAngle": 0.0,
-						"posOffset": {
-							"x": 0.0,
-							"y": 0.0
+						"bouciness" : 0.40000000596046448,
+						"friction" : 0.5,
+						"mass" : 1.0,
+						"offsetAngle" : 0.0,
+						"posOffset" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
 						},
-						"radius": 0.10000000149011612
+						"radius" : 0.10000000149011612
 					}
 				],
-				"Com_Mesh": {
-					"Shape_Box": {
-						"positionOffsetFromGameObject": {
-							"x": 0.0,
-							"y": 0.0
+				"Com_Mesh" : 
+				{
+					"Shape_Box" : 
+					{
+						"positionOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
 						},
-						"rotOffsetFromGameObject": 0.0,
-						"scaleOffsetFromGameObject": {
-							"x": 0.0,
-							"y": 0.0
+						"rotOffsetFromGameObject" : 0.0,
+						"scaleOffsetFromGameObject" : 
+						{
+							"x" : 0.0,
+							"y" : 0.0
 						}
 					},
-					"texture": "../Textures/keyboardcat.jpg"
+					"texture" : "../Textures/keyboardcat.jpg"
 				},
-				"RigidBody": {
-					"rbSettings_allowSleep": false,
-					"rbSettings_angularDrag": 1.0,
-					"rbSettings_awake": true,
-					"rbSettings_drag": 1.0,
-					"rbSettings_freezeRotation": false,
-					"rbSettings_gravityScale": 0.0,
-					"rbSettings_important": true,
-					"rbSettings_type": 2,
-					"rb_useGravity": false
+				"RigidBody" : 
+				{
+					"rbSettings_allowSleep" : false,
+					"rbSettings_angularDrag" : 1.0,
+					"rbSettings_awake" : true,
+					"rbSettings_drag" : 1.0,
+					"rbSettings_freezeRotation" : false,
+					"rbSettings_gravityScale" : 0.0,
+					"rbSettings_important" : true,
+					"rbSettings_type" : 2,
+					"rb_useGravity" : false
 				},
-				"AudioPlayer": {
-					"soundPath": "../Sounds/gun-gunshot.wav"
-				},
-				"ScriptBehaviour": [
+				"ScriptBehaviour" : 
+				[
 					{
-						"uniqueIdIdentifier": 10002
+						"uniqueIdIdentifier" : 10002
 					},
 					{
-						"uniqueIdIdentifier": 10003
+						"uniqueIdIdentifier" : 10003
 					}
 				]
 			},

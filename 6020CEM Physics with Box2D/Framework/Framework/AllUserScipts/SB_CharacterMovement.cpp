@@ -9,6 +9,7 @@
 SB_CharacterMovement::SB_CharacterMovement() : ScriptBehaviour(uniqueComponentIdIdentifier)
 {
     rb = nullptr;
+    audioSource = nullptr;
 }
 
 void SB_CharacterMovement::Start()
