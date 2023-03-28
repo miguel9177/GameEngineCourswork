@@ -53,13 +53,15 @@
 					"rbSettings_type" : 2,
 					"rb_useGravity" : false
 				},
-				"ScriptBehaviour" : 
-				[
+				"ScriptBehaviour": [
 					{
-						"uniqueIdIdentifier" : 10002
+						"uniqueIdIdentifier": 10002
 					},
 					{
-						"uniqueIdIdentifier" : 10003
+						"uniqueIdIdentifier": 10003
+					},
+					{
+						"uniqueIdIdentifier": 10004
 					}
 				]
 			},

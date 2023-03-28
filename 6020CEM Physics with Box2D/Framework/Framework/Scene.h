@@ -16,6 +16,9 @@ private:
 
     Scene();
     ~Scene();
+
+    //we need to know if its the first update or not, since if it is, we want it to do the late start function
+    bool firstUpdate = true;
 public:
     //this gives the instance of the scene, and if theres no instance of it, it creates one
     static Scene* GetInstance();

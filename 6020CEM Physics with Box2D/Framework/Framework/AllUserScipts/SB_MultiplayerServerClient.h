@@ -30,7 +30,12 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
 	ClientPacket* clientPacket;
 	ENetPacket* dataPacket;
 	ENetEvent* enetEvent;
+	int* packetType;
+	int clientIndex;
 
+	GameObject* player;
+
+	std::map<int, GameObject*> otherPlayers;
 public:
 #pragma region Engine Functions
 
@@ -38,6 +43,7 @@ public:
 	~SB_MultiplayerServerClient();
 	void Start() override;
 	void Update() override;
+	void LateStart() override;
 
 	inline SB_MultiplayerServerClient* Clone() override
 	{
@@ -45,5 +51,14 @@ public:
 	}
 
 #pragma endregion
+
+#pragma region Helper Functions
+
+	void GetPlayerObject();
+
+	void CreateNewEnemyPlayer(int _clientIndex);
+
+#pragma endregion
+
 };
 

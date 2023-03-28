@@ -13,6 +13,8 @@ public:
 	ScriptBehaviour(unsigned int uniqueIdIdentifier_);
 	virtual void Start();
 	virtual void Update();
+	//waits for everyobject to be called and calls the late start, if the gameobject is created in runtime the late start will never be called to that gameobject
+	virtual void LateStart(){};
 	virtual ScriptBehaviour* Clone() = 0;
 };
 

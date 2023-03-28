@@ -29,12 +29,26 @@ Scene* Scene::GetInstance()
 void Scene::Update()
 {
     if (EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
+    {
+        //if first update it diferent then true, put it to true, since we are in edit mode, and when we go to play mode, we want it to do the first update aswell
+        if (firstUpdate != true)
+            firstUpdate = true;
+
         return;
+    }
 
     for (ScriptBehaviour* scriptBehaviour : allScriptBehaviours)
     {
+        //if its the first update do the late start function
+        if (firstUpdate)
+            scriptBehaviour->LateStart();
+       
         scriptBehaviour->Update();
     }
+
+    //if we already looped through the first update, we put the first update variable to false
+    if (firstUpdate)
+        firstUpdate = false;
 }
 
 //TODO: IMPROVE THIS FUNCTION, DO ONE LOOP ONLY AND IF ONE TYPE, ADD TO THAT ONE, INSTEAD OF HAVING MULTIPLE LOOPS
