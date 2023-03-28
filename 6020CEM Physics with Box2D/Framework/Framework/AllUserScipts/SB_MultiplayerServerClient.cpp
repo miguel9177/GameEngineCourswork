@@ -11,7 +11,6 @@ SB_MultiplayerServerClient::SB_MultiplayerServerClient() : ScriptBehaviour(uniqu
 	address = new ENetAddress();
 	client = new ENetHost();
 	peer = new ENetPeer();
-	serverData = new PhysicsData;
 	clientData = new ClientData;
 	clientPacket = new ClientPacket;
 	enetEvent = new ENetEvent();
@@ -28,10 +27,16 @@ SB_MultiplayerServerClient::~SB_MultiplayerServerClient()
 		enet_peer_disconnect_now(peer, 0);
 	}
 
+
+	for (auto const& x : serverData)
+	{
+		delete x.second;
+	}
+	serverData.clear();
+
 	delete address;
 	delete client;
 	delete peer;
-	delete serverData;
 	delete clientData;
 	delete clientPacket;
 	delete enetEvent;
@@ -83,19 +88,11 @@ void SB_MultiplayerServerClient::Update()
 
 	while (enet_host_service(client, enetEvent, 0) > 0)
 	{
-		switch (enetEvent->type) 
+		switch (enetEvent->type)
 		{
-		//case ENET_EVENT_TYPE_CONNECT:
-		//	//memcpy(packetType, enetEvent->packet->data, sizeof(int));
-		//	memcpy(clientData, enetEvent->packet->data, sizeof(ClientData));
-		//	clientIndex = clientData->clientIndex;
-		//	CreateNewEnemyPlayer(clientIndex);
-		//	break;
-
 		case ENET_EVENT_TYPE_RECEIVE:
 
 			memcpy(&packetType, enetEvent->packet->data, sizeof(int));
-			std::cout << "Client: Received packet with type " << packetType << std::endl;
 
 			if (packetType == 0)
 			{
@@ -105,15 +102,26 @@ void SB_MultiplayerServerClient::Update()
 			}
 			else if (packetType == 1)
 			{
-				memcpy(serverData, enetEvent->packet->data, sizeof(PhysicsData));
+				// Create a temporary PhysicsData object
+				PhysicsData tempData;
+				// Copy the packet data to the temporary object
+				memcpy(&tempData, enetEvent->packet->data, sizeof(PhysicsData));
+
 				for (int i = 0; i < 2; i++)
 				{
 					if (i != clientIndex)
 					{
-						if (otherPlayers[clientIndex] == nullptr)
-							CreateNewEnemyPlayer(clientIndex);
+						// Get or create the PhysicsData object in the serverData map
+						PhysicsData* data = GetPhysicsData(serverData, i);
 
-						otherPlayers[clientIndex]->SetPosition(Vector2(serverData->positions[i].x, serverData->positions[i].y));
+						// Update the PhysicsData object in the map with the data from the temporary object
+						data->position = tempData.position;
+
+						if (otherPlayers[i] == nullptr)
+							CreateNewEnemyPlayer(i);
+
+						otherPlayers[i]->SetPosition(Vector2(serverData[i]->position.x, serverData[i]->position.y));
+						std::cout << "clientIndex : " << i << " pos x " << otherPlayers[i]->GetPosition().x << " pos y " << otherPlayers[i]->GetPosition().y << std::endl;
 					}
 				}
 			}

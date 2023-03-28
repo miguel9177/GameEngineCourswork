@@ -1,6 +1,7 @@
 #pragma once
 #include "../ScriptBehaviour.h"
 #include <enet/enet.h>
+#include <unordered_map>
 
 class SB_MultiplayerServerClient : public ScriptBehaviour
 {
@@ -13,7 +14,7 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
 
 	struct PhysicsData {
 		int packetType = 1;
-		Vector2Online positions[2];
+		Vector2Online position;
 	};
 
 	struct ClientData {
@@ -29,7 +30,7 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
 	ENetAddress* address;
 	ENetHost* client;
 	ENetPeer* peer;
-	PhysicsData* serverData;
+	std::unordered_map<int, PhysicsData*> serverData;
 	ClientData* clientData;
 	ClientPacket* clientPacket;
 	ENetEvent* enetEvent;
@@ -60,6 +61,17 @@ public:
 	void GetPlayerObject();
 
 	void CreateNewEnemyPlayer(int _clientIndex);
+
+	PhysicsData* GetPhysicsData(std::unordered_map<int, PhysicsData*>& physicsData, int clientIndex) 
+	{
+		auto it = physicsData.find(clientIndex);
+		if (it == physicsData.end()) {
+			PhysicsData* newData = new PhysicsData();
+			physicsData[clientIndex] = newData;
+			return newData;
+		}
+		return it->second;
+	}
 
 #pragma endregion
 
