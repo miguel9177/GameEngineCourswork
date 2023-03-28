@@ -14,10 +14,8 @@ SB_MultiplayerServerClient::SB_MultiplayerServerClient() : ScriptBehaviour(uniqu
 	serverData = new PhysicsData;
 	clientData = new ClientData;
 	clientPacket = new ClientPacket;
-	dataPacket = new ENetPacket();
 	enetEvent = new ENetEvent();
-	packetType = new int;
-	*packetType = -1;
+	packetType = -1;
 	clientIndex = -1;
 
 	player = nullptr;
@@ -36,9 +34,7 @@ SB_MultiplayerServerClient::~SB_MultiplayerServerClient()
 	delete serverData;
 	delete clientData;
 	delete clientPacket;
-	delete dataPacket;
 	delete enetEvent;
-	delete packetType;
 
 	otherPlayers.clear();
 }
@@ -72,10 +68,7 @@ void SB_MultiplayerServerClient::LateStart()
 		std::cout << "Error: No available peers for initializing an ENet connection.\n" << std::endl;
 	}
 
-
-	packetType = new int;
-
-	*packetType = -1;
+	packetType = -1;
 
 	clientIndex = -1;
 }
@@ -92,31 +85,35 @@ void SB_MultiplayerServerClient::Update()
 	{
 		switch (enetEvent->type) 
 		{
-		case ENET_EVENT_TYPE_CONNECT:
-			memcpy(packetType, enetEvent->packet->data, sizeof(int));
-			memcpy(clientData, enetEvent->packet->data, sizeof(ClientData));
-			clientIndex = clientData->clientIndex;
-			CreateNewEnemyPlayer(clientIndex);
-			break;
+		//case ENET_EVENT_TYPE_CONNECT:
+		//	//memcpy(packetType, enetEvent->packet->data, sizeof(int));
+		//	memcpy(clientData, enetEvent->packet->data, sizeof(ClientData));
+		//	clientIndex = clientData->clientIndex;
+		//	CreateNewEnemyPlayer(clientIndex);
+		//	break;
 
 		case ENET_EVENT_TYPE_RECEIVE:
 
-			memcpy(packetType, enetEvent->packet->data, sizeof(int));
+			memcpy(&packetType, enetEvent->packet->data, sizeof(int));
+			std::cout << "Client: Received packet with type " << packetType << std::endl;
 
-			if (*packetType == 0)
+			if (packetType == 0)
 			{
 				std::cout << "Packet Received!\n";
 				memcpy(clientData, enetEvent->packet->data, sizeof(ClientData));
 				clientIndex = clientData->clientIndex;
 			}
-			else if (*packetType == 1)
+			else if (packetType == 1)
 			{
 				memcpy(serverData, enetEvent->packet->data, sizeof(PhysicsData));
 				for (int i = 0; i < 2; i++)
 				{
 					if (i != clientIndex)
 					{
-						otherPlayers[clientIndex]->SetPosition(serverData->positions[i]);
+						if (otherPlayers[clientIndex] == nullptr)
+							CreateNewEnemyPlayer(clientIndex);
+
+						otherPlayers[clientIndex]->SetPosition(Vector2(serverData->positions[i].x, serverData->positions[i].y));
 					}
 				}
 			}
@@ -125,10 +122,14 @@ void SB_MultiplayerServerClient::Update()
 		}
 
 		clientPacket->clientIndex = clientIndex;
-		clientPacket->position = player->GetPosition();
+		Vector2Online playerPos;
+		playerPos.x = player->GetPosition().x;
+		playerPos.y = player->GetPosition().y;
+		clientPacket->position = playerPos;
 
-		dataPacket = enet_packet_create(clientPacket, sizeof(ClientPacket), ENET_PACKET_FLAG_RELIABLE);
-		enet_peer_send(peer, 0, dataPacket);
+		ENetPacket* dataPacketToSend = enet_packet_create(clientPacket, sizeof(ClientPacket), ENET_PACKET_FLAG_RELIABLE);
+		enet_peer_send(peer, 0, dataPacketToSend);
+		enet_packet_destroy(dataPacketToSend);
 	}
 }
 

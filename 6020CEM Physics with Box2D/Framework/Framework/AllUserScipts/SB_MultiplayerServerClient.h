@@ -1,15 +1,19 @@
 #pragma once
 #include "../ScriptBehaviour.h"
-#include "../Vector2.h"
 #include <enet/enet.h>
 
 class SB_MultiplayerServerClient : public ScriptBehaviour
 {
 	static const unsigned int uniqueComponentIdIdentifier = 10004;
 	
+	struct Vector2Online {
+		float x;
+		float y;
+	};
+
 	struct PhysicsData {
 		int packetType = 1;
-		Vector2 positions[2];
+		Vector2Online positions[2];
 	};
 
 	struct ClientData {
@@ -19,7 +23,7 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
 
 	struct ClientPacket {
 		int clientIndex;
-		Vector2 position;
+		Vector2Online position;
 	};
 
 	ENetAddress* address;
@@ -28,9 +32,8 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
 	PhysicsData* serverData;
 	ClientData* clientData;
 	ClientPacket* clientPacket;
-	ENetPacket* dataPacket;
 	ENetEvent* enetEvent;
-	int* packetType;
+	int packetType;
 	int clientIndex;
 
 	GameObject* player;
