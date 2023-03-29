@@ -75,6 +75,7 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
         int uniqueNetworkID;
         int mylocalIdNetwork;
         float hp;
+        GameObject* object;
 
         PlayerInfoClass()
         {
@@ -111,7 +112,7 @@ public:
 
 	GameObject* GetPlayerObject();
 
-	GameObject* CreateNewEnemyPlayer(int _clientIndex);
+	GameObject* CreateNewEnemyPlayer();
 
     PlayerInfoClass ParseObjectData(const std::string& objectData);
 #pragma endregion

@@ -36,7 +36,6 @@ void SB_MultiplayerServerClient::Start()
 
 void SB_MultiplayerServerClient::LateStart()
 {
-	GetPlayerObject();
     std::thread receiveThreadInstance([this] { MultiplayerThread(); });
     receiveThreadInstance.detach(); 
 }
@@ -79,7 +78,10 @@ void SB_MultiplayerServerClient::MultiplayerThread()
 
 
     PlayerInfoClass* player = new PlayerInfoClass();
-
+    player->object = GetPlayerObject();
+    player->position = Vector3(player->object->GetPosition().x, player->object->GetPosition().y, 0);
+    player->rotation = Quaternion(player->object->GetRotation(), player->object->GetRotation(), player->object->GetRotation(), player->object->GetRotation());
+    
     // Loop to continuously send and receive messages
     while (true)
     {
@@ -162,14 +164,27 @@ void SB_MultiplayerServerClient::MultiplayerThread()
             {
                 if (otherPlayersInfoMap.find(tempPlayerInfoReceived.uniqueNetworkID) != otherPlayersInfoMap.end())
                 {
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
                     otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
                 }
+                //if the id doesnt exist it means we are a new player, so we need to create a new gamobject
                 else
                 {
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object = CreateNewEnemyPlayer();
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
                     otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
                 }
             }
         }
+
+        player->position = Vector3(player->object->GetPosition().x, player->object->GetPosition().y, 0);
+        player->rotation = Quaternion(player->object->GetRotation(), player->object->GetRotation(), player->object->GetRotation(), player->object->GetRotation());
 
         std::ostringstream playerDataToSend;
         playerDataToSend << std::fixed << std::setprecision(2)
@@ -216,7 +231,7 @@ GameObject* SB_MultiplayerServerClient::GetPlayerObject()
 	return player;
 }
 
-GameObject* SB_MultiplayerServerClient::CreateNewEnemyPlayer(int _clientIndex)
+GameObject* SB_MultiplayerServerClient::CreateNewEnemyPlayer()
 {
 	GameObject* enemyPlayer = new GameObject("EnemyPlayer", new Transform(Vector2(0, 0), 0, Vector2(0, 0)));
 
