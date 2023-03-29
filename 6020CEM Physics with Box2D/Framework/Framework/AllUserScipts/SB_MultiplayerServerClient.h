@@ -7,40 +7,89 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
 {
 	static const unsigned int uniqueComponentIdIdentifier = 10004;
 	
-	struct Vector2Online {
-		float x;
-		float y;
-	};
+    const std::string SERVER_IP = "10.1.27.154";
+    const int SERVER_PORT = 9050;
+    const int BUFFER_SIZE = 1024;
 
-	struct PhysicsData {
-		int packetType = 1;
-		Vector2Online position;
-	};
+    WSADATA wsaData;
+    int sockfd;
+    struct sockaddr_in server_addr;
+    int addr_len = sizeof(server_addr);
+    char buffer[1024];
 
-	struct ClientData {
-		int packetType = 0;
-		int clientIndex;
-	};
+    class Vector3
+    {
+    public:
+        float x;
+        float y;
+        float z;
 
-	struct ClientPacket {
-		int clientIndex;
-		Vector2Online position;
-	};
+        Vector3(float x_, float y_, float z_)
+        {
+            x = x_;
+            y = y_;
+            z = z_;
+        }
 
-	ENetAddress* address;
-	ENetHost* client;
-	ENetPeer* peer;
-	std::unordered_map<int, PhysicsData*> serverData;
-	ClientData* clientData;
-	ClientPacket* clientPacket;
-	ENetEvent* enetEvent;
-	int packetType;
-	int clientIndex;
+        Vector3()
+        {
+            x = 0;
+            y = 0;
+            z = 0;
+        }
+    };
 
-	GameObject* player;
+    class Quaternion
+    {
+    public:
+        float x;
+        float y;
+        float z;
+        float w;
 
-	std::map<int, GameObject*> otherPlayers;
+        Quaternion(float x_, float y_, float z_, float w_)
+        {
+            x = x_;
+            y = y_;
+            z = z_;
+            w = w_;
+        }
+
+        Quaternion()
+        {
+            x = 0;
+            y = 0;
+            z = 0;
+            w = 0;
+        }
+    };
+
+    static int staticLocalIdNetwork;//this is not necesssary to send to the server, this is something local
+
+    //this has all the player info to send to the network at every possible way, since this info is vital
+    class PlayerInfoClass
+    {
+    public:
+        Vector3 position;
+        Quaternion rotation;
+        int uniqueNetworkID;
+        int mylocalIdNetwork;
+        float hp;
+
+        PlayerInfoClass()
+        {
+            position = Vector3(-5, 0, 0);
+            rotation = Quaternion(0, 0, 0, 0);
+            uniqueNetworkID = -1;
+            mylocalIdNetwork = -1;
+            hp = 100;
+        }
+    };
+
+    std::unordered_map<int, PlayerInfoClass> otherPlayersInfoMap;
+
 public:
+
 #pragma region Engine Functions
 
 	SB_MultiplayerServerClient();
@@ -56,23 +105,15 @@ public:
 
 #pragma endregion
 
+    void MultiplayerThread();
+
 #pragma region Helper Functions
 
-	void GetPlayerObject();
+	GameObject* GetPlayerObject();
 
-	void CreateNewEnemyPlayer(int _clientIndex);
+	GameObject* CreateNewEnemyPlayer(int _clientIndex);
 
-	PhysicsData* GetPhysicsData(std::unordered_map<int, PhysicsData*>& physicsData, int clientIndex) 
-	{
-		auto it = physicsData.find(clientIndex);
-		if (it == physicsData.end()) {
-			PhysicsData* newData = new PhysicsData();
-			physicsData[clientIndex] = newData;
-			return newData;
-		}
-		return it->second;
-	}
-
+    PlayerInfoClass ParseObjectData(const std::string& objectData);
 #pragma endregion
 
 };

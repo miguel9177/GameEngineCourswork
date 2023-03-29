@@ -5,43 +5,29 @@
 #include "../Shape_Box.h"
 #include "../Scene.h"
 #include "SB_CharacterMovement.h"
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <vector>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <sstream>
+#include <iomanip>
+#include <locale>
+#include <codecvt>
+#include <unordered_map>
+#include <thread>
+
+int SB_MultiplayerServerClient::staticLocalIdNetwork = 0;
 
 SB_MultiplayerServerClient::SB_MultiplayerServerClient() : ScriptBehaviour(uniqueComponentIdIdentifier)
 {
-	address = new ENetAddress();
-	client = new ENetHost();
-	peer = new ENetPeer();
-	clientData = new ClientData;
-	clientPacket = new ClientPacket;
-	enetEvent = new ENetEvent();
-	packetType = -1;
-	clientIndex = -1;
 
-	player = nullptr;
 }
 
 SB_MultiplayerServerClient::~SB_MultiplayerServerClient()
 {
-	if (peer != NULL)
-	{
-		enet_peer_disconnect_now(peer, 0);
-	}
-
-
-	for (auto const& x : serverData)
-	{
-		delete x.second;
-	}
-	serverData.clear();
-
-	delete address;
-	delete client;
-	delete peer;
-	delete clientData;
-	delete clientPacket;
-	delete enetEvent;
-
-	otherPlayers.clear();
+	
 }
 
 void SB_MultiplayerServerClient::Start()
@@ -51,101 +37,169 @@ void SB_MultiplayerServerClient::Start()
 void SB_MultiplayerServerClient::LateStart()
 {
 	GetPlayerObject();
-
-	if (enet_initialize() != 0)
-	{
-		std::cout << "Error: Enet failed to initialise!" << "\n\n" << std::endl;
-	}
-
-	client = enet_host_create(NULL, 1, 2, 0, 0);
-
-	if (client == NULL)
-	{
-		std::cout << "Error: Client failed to initialise!" << "\n\n" << std::endl;
-	}
-
-	enet_address_set_host(address, "localhost");
-	address->port = 1234;
-
-	peer = enet_host_connect(client, address, 2, 0);
-
-	if (peer == NULL) {
-		std::cout << "Error: No available peers for initializing an ENet connection.\n" << std::endl;
-	}
-
-	packetType = -1;
-
-	clientIndex = -1;
+    std::thread receiveThreadInstance([this] { MultiplayerThread(); });
+    receiveThreadInstance.detach(); 
 }
 
 void SB_MultiplayerServerClient::Update()
 {
-	if (player == nullptr)
-	{
-		GetPlayerObject();
-		return;
-	}
-
-	while (enet_host_service(client, enetEvent, 0) > 0)
-	{
-		switch (enetEvent->type)
-		{
-		case ENET_EVENT_TYPE_RECEIVE:
-
-			memcpy(&packetType, enetEvent->packet->data, sizeof(int));
-
-			if (packetType == 0)
-			{
-				std::cout << "Packet Received!\n";
-				memcpy(clientData, enetEvent->packet->data, sizeof(ClientData));
-				clientIndex = clientData->clientIndex;
-			}
-			else if (packetType == 1)
-			{
-				// Create a temporary PhysicsData object
-				PhysicsData tempData;
-				// Copy the packet data to the temporary object
-				memcpy(&tempData, enetEvent->packet->data, sizeof(PhysicsData));
-
-				for (int i = 0; i < 2; i++)
-				{
-					if (i != clientIndex)
-					{
-						// Get or create the PhysicsData object in the serverData map
-						PhysicsData* data = GetPhysicsData(serverData, i);
-
-						// Update the PhysicsData object in the map with the data from the temporary object
-						data->position = tempData.position;
-
-						if (otherPlayers[i] == nullptr)
-							CreateNewEnemyPlayer(i);
-
-						otherPlayers[i]->SetPosition(Vector2(serverData[i]->position.x, serverData[i]->position.y));
-						std::cout << "clientIndex : " << i << " pos x " << otherPlayers[i]->GetPosition().x << " pos y " << otherPlayers[i]->GetPosition().y << std::endl;
-					}
-				}
-			}
-
-			break;
-		}
-
-		clientPacket->clientIndex = clientIndex;
-		Vector2Online playerPos;
-		playerPos.x = player->GetPosition().x;
-		playerPos.y = player->GetPosition().y;
-		clientPacket->position = playerPos;
-
-		ENetPacket* dataPacketToSend = enet_packet_create(clientPacket, sizeof(ClientPacket), ENET_PACKET_FLAG_RELIABLE);
-		enet_peer_send(peer, 0, dataPacketToSend);
-		enet_packet_destroy(dataPacketToSend);
-	}
+	
 }
 
+void SB_MultiplayerServerClient::MultiplayerThread()
+{
+    // Initialize Winsock
+    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (result != 0) {
+        std::cerr << "Error initializing Winsock: " << result << std::endl;
+        return;
+    }
+
+    // Create a UDP socket
+    sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (sockfd == INVALID_SOCKET) {
+        std::cerr << "Error creating socket: " << WSAGetLastError() << std::endl;
+        WSACleanup();
+        return;
+    }
+
+    // Configure server address
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(SERVER_PORT);
+    inet_pton(AF_INET, SERVER_IP.c_str(), &(server_addr.sin_addr));
+
+    // Send a message to the server
+    std::string message = "FirstEntrance";
+    if (sendto(sockfd, message.c_str(), message.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
+        std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
+        closesocket(sockfd);
+        WSACleanup();
+        return;
+    }
+
+
+    PlayerInfoClass* player = new PlayerInfoClass();
+
+    // Loop to continuously send and receive messages
+    while (true)
+    {
+        player->position.x += 1;
+        // Receive a message from the server
+        int recv_len;
+        if ((recv_len = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (sockaddr*)&server_addr, &addr_len)) == SOCKET_ERROR) {
+            std::cerr << "Error receiving message: " << WSAGetLastError() << std::endl;
+            closesocket(sockfd);
+            WSACleanup();
+            return;
+        }
+
+        // Convert the received bytes to a string using UTF-8 encoding
+        std::string received_message(buffer, recv_len);
+        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+        std::wstring wide_message = converter.from_bytes(received_message);
+
+        // Print the received message
+        std::wcout << L"Received message: " << wide_message << std::endl;
+
+        if (received_message.find("Yep, you just connected!") != std::string::npos)
+        {
+            // Send a message to the server
+            std::string message = "I need a UID for local object:" + std::to_string(player->mylocalIdNetwork);
+            if (sendto(sockfd, message.c_str(), message.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
+                std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
+                closesocket(sockfd);
+                WSACleanup();
+                return;
+            }
+
+            // Receive a message from the server
+            int recv_len;
+            if ((recv_len = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (sockaddr*)&server_addr, &addr_len)) == SOCKET_ERROR) {
+                std::cerr << "Error receiving message: " << WSAGetLastError() << std::endl;
+                closesocket(sockfd);
+                WSACleanup();
+                return;
+            }
+
+            buffer[recv_len] = '\0';
+            // Null-terminate and print the received message
+            std::string received_message(buffer);
+            std::cout << received_message << std::endl;
+            if (received_message.find("Assigned UID:") != std::string::npos)
+            {
+                std::istringstream iss(received_message);
+                std::string token;
+
+                // Skip the "Assigned UID:" part
+                std::getline(iss, token, ':');
+
+                // Read and store the local ID
+                std::getline(iss, token, ';');
+                staticLocalIdNetwork++;
+                player->mylocalIdNetwork = staticLocalIdNetwork;
+
+                // Read and store the global ID
+                std::getline(iss, token, ';');
+                player->uniqueNetworkID = std::stoi(token);
+
+                std::cout << "Local ID: " << player->mylocalIdNetwork << std::endl;
+                std::cout << "Global ID: " << player->uniqueNetworkID << std::endl;
+            }
+        }
+
+        if (received_message.find("Object data;") != std::string::npos)
+        {
+            PlayerInfoClass tempPlayerInfoReceived = ParseObjectData(received_message);
+
+            /*if (otherPlayerInfoReceived.uniqueNetworkID != player->uniqueNetworkID)
+            {
+                std::cout << "Unique Network ID: " << otherPlayerInfoReceived.uniqueNetworkID << std::endl;
+                std::cout << "Position: (" << otherPlayerInfoReceived.position.x << ", " << otherPlayerInfoReceived.position.y << ", " << otherPlayerInfoReceived.position.z << ")" << std::endl;
+                std::cout << "Rotation: (" << otherPlayerInfoReceived.rotation.x << ", " << otherPlayerInfoReceived.rotation.y << ", " << otherPlayerInfoReceived.rotation.z << ", " << otherPlayerInfoReceived.rotation.w << ")" << std::endl;
+            }*/
+
+            if (player->uniqueNetworkID != tempPlayerInfoReceived.uniqueNetworkID)
+            {
+                if (otherPlayersInfoMap.find(tempPlayerInfoReceived.uniqueNetworkID) != otherPlayersInfoMap.end())
+                {
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
+                }
+                else
+                {
+                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
+                }
+            }
+        }
+
+        std::ostringstream playerDataToSend;
+        playerDataToSend << std::fixed << std::setprecision(2)
+            << "Object data;" << player->uniqueNetworkID << ";"
+            << player->position.x << ";" << player->position.y << ";" << player->position.z << ";"
+            << player->rotation.x << ";" << player->rotation.y << ";" << player->rotation.z << ";" << player->rotation.w << ";";
+
+        std::string messageMyObjectData = playerDataToSend.str();
+        if (sendto(sockfd, messageMyObjectData.c_str(), messageMyObjectData.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
+            std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
+            closesocket(sockfd);
+            WSACleanup();
+            return;
+        }
+
+        // Add a sleep interval to avoid overloading the server (optional)
+        //Sleep(1000); // Sleep for 1000 milliseconds (1 second)
+    }
+
+    // Clean up (this code will not be executed because of the infinite loop)
+    closesocket(sockfd);
+    WSACleanup();
+}
 
 #pragma region Helper Functions
 
-void SB_MultiplayerServerClient::GetPlayerObject()
+
+GameObject* SB_MultiplayerServerClient::GetPlayerObject()
 {
+	GameObject* player = nullptr;
 	for (GameObject* currentObject : *Scene::GetInstance()->GetAllObjects())
 	{
 		if (currentObject->TryGetComponent<SB_CharacterMovement>(Component::typeOfComponent::ScriptBehaviour))
@@ -158,9 +212,11 @@ void SB_MultiplayerServerClient::GetPlayerObject()
 	}
 	else
 		std::cout << player->name;
+
+	return player;
 }
 
-void SB_MultiplayerServerClient::CreateNewEnemyPlayer(int _clientIndex)
+GameObject* SB_MultiplayerServerClient::CreateNewEnemyPlayer(int _clientIndex)
 {
 	GameObject* enemyPlayer = new GameObject("EnemyPlayer", new Transform(Vector2(0, 0), 0, Vector2(0, 0)));
 
@@ -182,7 +238,34 @@ void SB_MultiplayerServerClient::CreateNewEnemyPlayer(int _clientIndex)
 
 	//add an object to the scene
 	Scene::GetInstance()->AddObject(enemyPlayer);
-	otherPlayers[_clientIndex] = enemyPlayer;
+	return enemyPlayer;
 }
+
+SB_MultiplayerServerClient::PlayerInfoClass SB_MultiplayerServerClient::ParseObjectData(const std::string& objectData)
+{
+	PlayerInfoClass playerInfoReceived;
+	std::istringstream iss(objectData);
+	std::string token;
+	std::vector<std::string> values;
+
+	// Split the string by ';'
+	while (std::getline(iss, token, ';'))
+	{
+		values.push_back(token);
+	}
+
+	// Parse the values
+	playerInfoReceived.uniqueNetworkID = std::stoi(values[1]);
+	playerInfoReceived.position.x = std::stof(values[2]);
+	playerInfoReceived.position.y = std::stof(values[3]);
+	playerInfoReceived.position.z = std::stof(values[4]);
+	playerInfoReceived.rotation.x = std::stof(values[5]);
+	playerInfoReceived.rotation.y = std::stof(values[6]);
+	playerInfoReceived.rotation.z = std::stof(values[7]);
+	playerInfoReceived.rotation.w = std::stof(values[8]);
+
+	return playerInfoReceived;
+}
+
 
 #pragma endregion
