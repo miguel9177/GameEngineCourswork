@@ -28,6 +28,7 @@ Scene* Scene::GetInstance()
 
 void Scene::Update()
 {
+
     if (EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
     {
         //if first update it diferent then true, put it to true, since we are in edit mode, and when we go to play mode, we want it to do the first update aswell

@@ -5,6 +5,7 @@
 #include "../Shape_Box.h"
 #include "../Scene.h"
 #include "SB_CharacterMovement.h"
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
 #include <cstring>
@@ -27,7 +28,9 @@ SB_MultiplayerServerClient::SB_MultiplayerServerClient() : ScriptBehaviour(uniqu
 
 SB_MultiplayerServerClient::~SB_MultiplayerServerClient()
 {
-	
+    // Clean up (this code will not be executed because of the infinite loop)
+    closesocket(sockfd);
+    WSACleanup();
 }
 
 void SB_MultiplayerServerClient::Start()
@@ -36,17 +39,8 @@ void SB_MultiplayerServerClient::Start()
 
 void SB_MultiplayerServerClient::LateStart()
 {
-    std::thread receiveThreadInstance([this] { MultiplayerThread(); });
-    receiveThreadInstance.detach(); 
-}
 
-void SB_MultiplayerServerClient::Update()
-{
-	
-}
-
-void SB_MultiplayerServerClient::MultiplayerThread()
-{
+    playerInfoClass->object = GetPlayerObject();
     // Initialize Winsock
     int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (result != 0) {
@@ -75,17 +69,38 @@ void SB_MultiplayerServerClient::MultiplayerThread()
         WSACleanup();
         return;
     }
+}
 
+void SB_MultiplayerServerClient::Update()
+{
+    // Receive a message from the server
+    int recv_len;
+    if ((recv_len = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (sockaddr*)&server_addr, &addr_len)) == SOCKET_ERROR) {
+        std::cerr << "Error receiving message: " << WSAGetLastError() << std::endl;
+        closesocket(sockfd);
+        WSACleanup();
+        return;
+    }
 
-    PlayerInfoClass* player = new PlayerInfoClass();
-    player->object = GetPlayerObject();
-    player->position = Vector3(player->object->GetPosition().x, player->object->GetPosition().y, 0);
-    player->rotation = Quaternion(player->object->GetRotation(), player->object->GetRotation(), player->object->GetRotation(), player->object->GetRotation());
-    
-    // Loop to continuously send and receive messages
-    while (true)
+    // Convert the received bytes to a string using UTF-8 encoding
+    std::string received_message(buffer, recv_len);
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    std::wstring wide_message = converter.from_bytes(received_message);
+
+    // Print the received message
+    std::wcout << L"Received message: " << wide_message << std::endl;
+
+    if (received_message.find("Yep, you just connected!") != std::string::npos)
     {
-        player->position.x += 1;
+        // Send a message to the server
+        std::string message = "I need a UID for local object:" + std::to_string(playerInfoClass->mylocalIdNetwork);
+        if (sendto(sockfd, message.c_str(), message.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
+            std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
+            closesocket(sockfd);
+            WSACleanup();
+            return;
+        }
+
         // Receive a message from the server
         int recv_len;
         if ((recv_len = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (sockaddr*)&server_addr, &addr_len)) == SOCKET_ERROR) {
@@ -95,118 +110,76 @@ void SB_MultiplayerServerClient::MultiplayerThread()
             return;
         }
 
-        // Convert the received bytes to a string using UTF-8 encoding
-        std::string received_message(buffer, recv_len);
-        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-        std::wstring wide_message = converter.from_bytes(received_message);
-
-        // Print the received message
-        std::wcout << L"Received message: " << wide_message << std::endl;
-
-        if (received_message.find("Yep, you just connected!") != std::string::npos)
+        buffer[recv_len] = '\0';
+        // Null-terminate and print the received message
+        std::string received_message(buffer);
+        std::cout << received_message << std::endl;
+        if (received_message.find("Assigned UID:") != std::string::npos)
         {
-            // Send a message to the server
-            std::string message = "I need a UID for local object:" + std::to_string(player->mylocalIdNetwork);
-            if (sendto(sockfd, message.c_str(), message.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
-                std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
-                closesocket(sockfd);
-                WSACleanup();
-                return;
-            }
+            std::istringstream iss(received_message);
+            std::string token;
 
-            // Receive a message from the server
-            int recv_len;
-            if ((recv_len = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (sockaddr*)&server_addr, &addr_len)) == SOCKET_ERROR) {
-                std::cerr << "Error receiving message: " << WSAGetLastError() << std::endl;
-                closesocket(sockfd);
-                WSACleanup();
-                return;
-            }
+            // Skip the "Assigned UID:" part
+            std::getline(iss, token, ':');
 
-            buffer[recv_len] = '\0';
-            // Null-terminate and print the received message
-            std::string received_message(buffer);
-            std::cout << received_message << std::endl;
-            if (received_message.find("Assigned UID:") != std::string::npos)
-            {
-                std::istringstream iss(received_message);
-                std::string token;
+            // Read and store the local ID
+            std::getline(iss, token, ';');
+            staticLocalIdNetwork++;
+            playerInfoClass->mylocalIdNetwork = staticLocalIdNetwork;
 
-                // Skip the "Assigned UID:" part
-                std::getline(iss, token, ':');
+            // Read and store the global ID
+            std::getline(iss, token, ';');
+            playerInfoClass->uniqueNetworkID = std::stoi(token);
 
-                // Read and store the local ID
-                std::getline(iss, token, ';');
-                staticLocalIdNetwork++;
-                player->mylocalIdNetwork = staticLocalIdNetwork;
-
-                // Read and store the global ID
-                std::getline(iss, token, ';');
-                player->uniqueNetworkID = std::stoi(token);
-
-                std::cout << "Local ID: " << player->mylocalIdNetwork << std::endl;
-                std::cout << "Global ID: " << player->uniqueNetworkID << std::endl;
-            }
+            std::cout << "Local ID: " << playerInfoClass->mylocalIdNetwork << std::endl;
+            std::cout << "Global ID: " << playerInfoClass->uniqueNetworkID << std::endl;
         }
-
-        if (received_message.find("Object data;") != std::string::npos)
-        {
-            PlayerInfoClass tempPlayerInfoReceived = ParseObjectData(received_message);
-
-            /*if (otherPlayerInfoReceived.uniqueNetworkID != player->uniqueNetworkID)
-            {
-                std::cout << "Unique Network ID: " << otherPlayerInfoReceived.uniqueNetworkID << std::endl;
-                std::cout << "Position: (" << otherPlayerInfoReceived.position.x << ", " << otherPlayerInfoReceived.position.y << ", " << otherPlayerInfoReceived.position.z << ")" << std::endl;
-                std::cout << "Rotation: (" << otherPlayerInfoReceived.rotation.x << ", " << otherPlayerInfoReceived.rotation.y << ", " << otherPlayerInfoReceived.rotation.z << ", " << otherPlayerInfoReceived.rotation.w << ")" << std::endl;
-            }*/
-
-            if (player->uniqueNetworkID != tempPlayerInfoReceived.uniqueNetworkID)
-            {
-                if (otherPlayersInfoMap.find(tempPlayerInfoReceived.uniqueNetworkID) != otherPlayersInfoMap.end())
-                {
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
-                }
-                //if the id doesnt exist it means we are a new player, so we need to create a new gamobject
-                else
-                {
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object = CreateNewEnemyPlayer();
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
-                    otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
-                }
-            }
-        }
-
-        player->position = Vector3(player->object->GetPosition().x, player->object->GetPosition().y, 0);
-        player->rotation = Quaternion(player->object->GetRotation(), player->object->GetRotation(), player->object->GetRotation(), player->object->GetRotation());
-
-        std::ostringstream playerDataToSend;
-        playerDataToSend << std::fixed << std::setprecision(2)
-            << "Object data;" << player->uniqueNetworkID << ";"
-            << player->position.x << ";" << player->position.y << ";" << player->position.z << ";"
-            << player->rotation.x << ";" << player->rotation.y << ";" << player->rotation.z << ";" << player->rotation.w << ";";
-
-        std::string messageMyObjectData = playerDataToSend.str();
-        if (sendto(sockfd, messageMyObjectData.c_str(), messageMyObjectData.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
-            std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
-            closesocket(sockfd);
-            WSACleanup();
-            return;
-        }
-
-        // Add a sleep interval to avoid overloading the server (optional)
-        //Sleep(1000); // Sleep for 1000 milliseconds (1 second)
     }
 
-    // Clean up (this code will not be executed because of the infinite loop)
-    closesocket(sockfd);
-    WSACleanup();
+    if (received_message.find("Object data;") != std::string::npos)
+    {
+        PlayerInfoClass tempPlayerInfoReceived = ParseObjectData(received_message);
+
+        if (playerInfoClass->uniqueNetworkID != tempPlayerInfoReceived.uniqueNetworkID)
+        {
+            if (otherPlayersInfoMap.find(tempPlayerInfoReceived.uniqueNetworkID) != otherPlayersInfoMap.end())
+            {
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
+            }
+            else
+            {
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object = CreateNewEnemyPlayer();
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
+                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
+            }
+        }
+    }
+
+    playerInfoClass->position = Vector3(playerInfoClass->object->GetPosition().x, playerInfoClass->object->GetPosition().y,0);
+    playerInfoClass->rotation = Quaternion(playerInfoClass->object->GetRotation(), playerInfoClass->object->GetRotation(), playerInfoClass->object->GetRotation(), playerInfoClass->object->GetRotation());
+    std::ostringstream playerDataToSend;
+    playerDataToSend << std::fixed << std::setprecision(2)
+        << "Object data;" << playerInfoClass->uniqueNetworkID << ";"
+        << playerInfoClass->position.x << ";" << playerInfoClass->position.y << ";" << playerInfoClass->position.z << ";"
+        << playerInfoClass->rotation.x << ";" << playerInfoClass->rotation.y << ";" << playerInfoClass->rotation.z << ";" << playerInfoClass->rotation.w << ";";
+
+    std::string messageMyObjectData = playerDataToSend.str();
+    if (sendto(sockfd, messageMyObjectData.c_str(), messageMyObjectData.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
+        std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
+        closesocket(sockfd);
+        WSACleanup();
+        return;
+    }
+
+    // Add a sleep interval to avoid overloading the server (optional)
+    //Sleep(1000); // Sleep for 1000 milliseconds (1 second)
 }
 
 #pragma region Helper Functions
@@ -245,7 +218,7 @@ GameObject* SB_MultiplayerServerClient::CreateNewEnemyPlayer()
 	SquareCollider* squareCollOfEnemy = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
 	Com_MeshOfEnemy->SetShape(shapeBoxOfEnemy);
-	Com_MeshOfEnemy->SetTexture("../Textures/EnemyPlayer.png");
+	Com_MeshOfEnemy->SetTexture("../../Textures/keyboardcat.jpg");
 
 	enemyPlayer->AddComponent(Com_MeshOfEnemy);
 	enemyPlayer->AddComponent(rbOfEnemy);

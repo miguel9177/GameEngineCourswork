@@ -87,7 +87,9 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
         }
     };
 
+    PlayerInfoClass* playerInfoClass = new PlayerInfoClass();
     std::unordered_map<int, PlayerInfoClass> otherPlayersInfoMap;
+    GameObject* enemyPlayer;
 
 public:
 
@@ -106,8 +108,6 @@ public:
 
 #pragma endregion
 
-    void MultiplayerThread();
-
 #pragma region Helper Functions
 
 	GameObject* GetPlayerObject();
@@ -115,6 +115,7 @@ public:
 	GameObject* CreateNewEnemyPlayer();
 
     PlayerInfoClass ParseObjectData(const std::string& objectData);
+
 #pragma endregion
 
 };
