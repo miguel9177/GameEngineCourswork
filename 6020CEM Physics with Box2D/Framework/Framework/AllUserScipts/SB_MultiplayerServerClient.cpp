@@ -18,6 +18,7 @@
 #include <codecvt>
 #include <unordered_map>
 #include <thread>
+#include <mutex>
 
 int SB_MultiplayerServerClient::staticLocalIdNetwork = 0;
 
@@ -26,8 +27,14 @@ SB_MultiplayerServerClient::SB_MultiplayerServerClient() : ScriptBehaviour(uniqu
 
 }
 
+SB_MultiplayerServerClient::SB_MultiplayerServerClient(const SB_MultiplayerServerClient& other) : ScriptBehaviour(uniqueComponentIdIdentifier) 
+{
+    
+}
+
 SB_MultiplayerServerClient::~SB_MultiplayerServerClient()
 {
+    delete playerInfoClass;
     // Clean up (this code will not be executed because of the infinite loop)
     closesocket(sockfd);
     WSACleanup();
@@ -39,7 +46,6 @@ void SB_MultiplayerServerClient::Start()
 
 void SB_MultiplayerServerClient::LateStart()
 {
-
     playerInfoClass->object = GetPlayerObject();
     // Initialize Winsock
     int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -69,95 +75,78 @@ void SB_MultiplayerServerClient::LateStart()
         WSACleanup();
         return;
     }
+
+    std::thread receiveThread(&SB_MultiplayerServerClient::ReceiveMessages, this);
+    receiveThread.detach();
 }
 
 void SB_MultiplayerServerClient::Update()
 {
-    // Receive a message from the server
-    int recv_len;
-    if ((recv_len = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (sockaddr*)&server_addr, &addr_len)) == SOCKET_ERROR) {
-        std::cerr << "Error receiving message: " << WSAGetLastError() << std::endl;
-        closesocket(sockfd);
-        WSACleanup();
-        return;
-    }
-
-    // Convert the received bytes to a string using UTF-8 encoding
-    std::string received_message(buffer, recv_len);
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    std::wstring wide_message = converter.from_bytes(received_message);
-
-    // Print the received message
-    std::wcout << L"Received message: " << wide_message << std::endl;
-
-    if (received_message.find("Yep, you just connected!") != std::string::npos)
+    // Process the received messages
     {
-        // Send a message to the server
-        std::string message = "I need a UID for local object:" + std::to_string(playerInfoClass->mylocalIdNetwork);
-        if (sendto(sockfd, message.c_str(), message.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
-            std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
-            closesocket(sockfd);
-            WSACleanup();
-            return;
-        }
-
-        // Receive a message from the server
-        int recv_len;
-        if ((recv_len = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (sockaddr*)&server_addr, &addr_len)) == SOCKET_ERROR) {
-            std::cerr << "Error receiving message: " << WSAGetLastError() << std::endl;
-            closesocket(sockfd);
-            WSACleanup();
-            return;
-        }
-
-        buffer[recv_len] = '\0';
-        // Null-terminate and print the received message
-        std::string received_message(buffer);
-        std::cout << received_message << std::endl;
-        if (received_message.find("Assigned UID:") != std::string::npos)
+        std::lock_guard<std::mutex> lock(receivedMessagesMutex);
+        while (!receivedMessages.empty()) 
         {
-            std::istringstream iss(received_message);
-            std::string token;
-
-            // Skip the "Assigned UID:" part
-            std::getline(iss, token, ':');
-
-            // Read and store the local ID
-            std::getline(iss, token, ';');
-            staticLocalIdNetwork++;
-            playerInfoClass->mylocalIdNetwork = staticLocalIdNetwork;
-
-            // Read and store the global ID
-            std::getline(iss, token, ';');
-            playerInfoClass->uniqueNetworkID = std::stoi(token);
-
-            std::cout << "Local ID: " << playerInfoClass->mylocalIdNetwork << std::endl;
-            std::cout << "Global ID: " << playerInfoClass->uniqueNetworkID << std::endl;
-        }
-    }
-
-    if (received_message.find("Object data;") != std::string::npos)
-    {
-        PlayerInfoClass tempPlayerInfoReceived = ParseObjectData(received_message);
-
-        if (playerInfoClass->uniqueNetworkID != tempPlayerInfoReceived.uniqueNetworkID)
-        {
-            if (otherPlayersInfoMap.find(tempPlayerInfoReceived.uniqueNetworkID) != otherPlayersInfoMap.end())
-            {
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
+            std::string received_message = receivedMessages.front();
+            receivedMessages.pop();
+            
+            // Handle the received message here
+            if (received_message.find("Yep, you just connected!") != std::string::npos) {
+                // Send a message to the server
+                std::string message = "I need a UID for local object:" + std::to_string(playerInfoClass->mylocalIdNetwork);
+                if (sendto(sockfd, message.c_str(), message.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
+                    std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
+                    closesocket(sockfd);
+                    WSACleanup();
+                    return;
+                }
             }
-            else
+            else if (received_message.find("Assigned UID:") != std::string::npos) {
+                std::istringstream iss(received_message);
+                std::string token;
+
+                // Skip the "Assigned UID:" part
+                std::getline(iss, token, ':');
+
+                // Read and store the local ID
+                std::getline(iss, token, ';');
+                staticLocalIdNetwork++;
+                playerInfoClass->mylocalIdNetwork = staticLocalIdNetwork;
+
+                // Read and store the global ID
+                std::getline(iss, token, ';');
+                playerInfoClass->uniqueNetworkID = std::stoi(token);
+
+                std::cout << "Local ID: " << playerInfoClass->mylocalIdNetwork << std::endl;
+                std::cout << "Global ID: " << playerInfoClass->uniqueNetworkID << std::endl;
+            }
+            else if (received_message.find("Object data;") != std::string::npos) 
             {
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object = CreateNewEnemyPlayer();
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
-                otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
+                PlayerInfoClass tempPlayerInfoReceived = ParseObjectData(received_message);
+
+                if (playerInfoClass->uniqueNetworkID != tempPlayerInfoReceived.uniqueNetworkID)
+                {
+                    if (tempPlayerInfoReceived.uniqueNetworkID < 0 || playerInfoClass->uniqueNetworkID < 0)
+                        return;
+
+                    if (otherPlayersInfoMap.find(tempPlayerInfoReceived.uniqueNetworkID) != otherPlayersInfoMap.end())
+                    {
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
+                    }
+                    else
+                    {
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position = tempPlayerInfoReceived.position;
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].rotation = tempPlayerInfoReceived.rotation;
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object = CreateNewEnemyPlayer();
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
+                        otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
+                    }
+                }
             }
         }
     }
@@ -218,7 +207,7 @@ GameObject* SB_MultiplayerServerClient::CreateNewEnemyPlayer()
 	SquareCollider* squareCollOfEnemy = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
 	Com_MeshOfEnemy->SetShape(shapeBoxOfEnemy);
-	Com_MeshOfEnemy->SetTexture("../../Textures/keyboardcat.jpg");
+	Com_MeshOfEnemy->SetTexture("../Textures/keyboardcat.jpg");
 
 	enemyPlayer->AddComponent(Com_MeshOfEnemy);
 	enemyPlayer->AddComponent(rbOfEnemy);
@@ -255,5 +244,27 @@ SB_MultiplayerServerClient::PlayerInfoClass SB_MultiplayerServerClient::ParseObj
 	return playerInfoReceived;
 }
 
+void SB_MultiplayerServerClient::ReceiveMessages()
+{
+    while (true) 
+    {
+        int recv_len;
+        if ((recv_len = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (sockaddr*)&server_addr, &addr_len)) == SOCKET_ERROR) {
+            std::cerr << "Error receiving message: " << WSAGetLastError() << std::endl;
+            closesocket(sockfd);
+            WSACleanup();
+            return;
+        }
+
+        // Ensure the buffer is properly null-terminated
+        buffer[recv_len] = '\0';
+
+        // Lock the mutex to ensure safe access to the received messages queue
+        {
+            std::lock_guard<std::mutex> lock(receivedMessagesMutex);
+            receivedMessages.push(std::string(buffer, recv_len));
+        }
+    }
+}
 
 #pragma endregion

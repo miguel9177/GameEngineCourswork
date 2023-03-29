@@ -2,12 +2,14 @@
 #include "../ScriptBehaviour.h"
 #include <enet/enet.h>
 #include <unordered_map>
+#include <queue>
+#include <mutex>
 
 class SB_MultiplayerServerClient : public ScriptBehaviour
 {
 	static const unsigned int uniqueComponentIdIdentifier = 10004;
 	
-    const std::string SERVER_IP = "10.1.27.154";
+    const std::string SERVER_IP = "192.168.0.38";
     const int SERVER_PORT = 9050;
     const int BUFFER_SIZE = 1024;
 
@@ -90,12 +92,14 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
     PlayerInfoClass* playerInfoClass = new PlayerInfoClass();
     std::unordered_map<int, PlayerInfoClass> otherPlayersInfoMap;
     GameObject* enemyPlayer;
-
+    std::mutex receivedMessagesMutex;
+    std::queue<std::string> receivedMessages;
 public:
 
 #pragma region Engine Functions
 
 	SB_MultiplayerServerClient();
+    SB_MultiplayerServerClient(const SB_MultiplayerServerClient& other);
 	~SB_MultiplayerServerClient();
 	void Start() override;
 	void Update() override;
@@ -115,6 +119,8 @@ public:
 	GameObject* CreateNewEnemyPlayer();
 
     PlayerInfoClass ParseObjectData(const std::string& objectData);
+
+    void SB_MultiplayerServerClient::ReceiveMessages();
 
 #pragma endregion
 
