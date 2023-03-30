@@ -123,6 +123,7 @@ public:
 
     void SB_MultiplayerServerClient::ReceiveMessages();
 
+    std::string ReplaceAllCharacters(const std::string& str, char from, char to);
 #pragma endregion
 
 };

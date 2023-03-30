@@ -144,6 +144,8 @@ void SB_MultiplayerServerClient::Update()
                         otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].uniqueNetworkID = tempPlayerInfoReceived.uniqueNetworkID;
                         otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetPosition(Vector2(tempPlayerInfoReceived.position.x, tempPlayerInfoReceived.position.y));
                         otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].object->SetRotation(tempPlayerInfoReceived.rotation.x);
+
+                        std::cout << otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position.x << " : " << otherPlayersInfoMap[tempPlayerInfoReceived.uniqueNetworkID].position.y << std::endl;
                     }
                     else
                     {
@@ -241,13 +243,13 @@ SB_MultiplayerServerClient::PlayerInfoClass SB_MultiplayerServerClient::ParseObj
 
 	// Parse the values
 	playerInfoReceived.uniqueNetworkID = std::stoi(values[1]);
-	playerInfoReceived.position.x = std::stof(values[2]);
-	playerInfoReceived.position.y = std::stof(values[3]);
-	playerInfoReceived.position.z = std::stof(values[4]);
-	playerInfoReceived.rotation.x = std::stof(values[5]);
-	playerInfoReceived.rotation.y = std::stof(values[6]);
-	playerInfoReceived.rotation.z = std::stof(values[7]);
-	playerInfoReceived.rotation.w = std::stof(values[8]);
+	playerInfoReceived.position.x = std::stof(ReplaceAllCharacters(values[2], ',', '.'));
+	playerInfoReceived.position.y = std::stof(ReplaceAllCharacters(values[3], ',', '.'));
+	playerInfoReceived.position.z = std::stof(ReplaceAllCharacters(values[4], ',', '.'));
+	playerInfoReceived.rotation.x = std::stof(ReplaceAllCharacters(values[5], ',', '.'));
+	playerInfoReceived.rotation.y = std::stof(ReplaceAllCharacters(values[6], ',', '.'));
+	playerInfoReceived.rotation.z = std::stof(ReplaceAllCharacters(values[7], ',', '.'));
+	playerInfoReceived.rotation.w = std::stof(ReplaceAllCharacters(values[8], ',', '.'));
 
 	return playerInfoReceived;
 }
@@ -275,4 +277,14 @@ void SB_MultiplayerServerClient::ReceiveMessages()
     }
 }
 
+std::string SB_MultiplayerServerClient::ReplaceAllCharacters(const std::string& str, char from, char to)
+{
+    std::string result(str);
+    for (auto& ch : result) {
+        if (ch == from) {
+            ch = to;
+        }
+    }
+    return result;
+}
 #pragma endregion

@@ -50,14 +50,14 @@ int main()
         GameEngine::GetInstance()->Render();
         
         //if true, we create a new instance and break out of the loop, so that all memory is reseted.
-        /*if (restartEngine == true)
+        if (restartEngine == true)
         {
             CreateNewInstance();
             break;
-        }*/
+        }
 
 
-        if (InputsEngine::GetInstance()->GetKeyStates().at(sf::Keyboard::L).pressing && createdNewEngine == false)
+        if (InputsEngine::GetInstance()->GetKeyStates().at(sf::Keyboard::L).pressing && InputsEngine::GetInstance()->GetKeyStates().at(sf::Keyboard::LControl).pressing && createdNewEngine == false)
         {
             createdNewEngine = true;
             CreateNewInstance();
