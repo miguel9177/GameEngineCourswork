@@ -71,5 +71,5 @@ void PhysicsEngine::StopPhysicsWorld()
 
 void PhysicsEngine::SubscribeRbToCollisionDetectionCallbacks(ScriptBehaviour* scriptToCall, RigidBody* rb)
 {
-    world->SetContactListener(scriptToCall);
+   // world->SetContactListener(scriptToCall);
 }

@@ -26,21 +26,14 @@ void SB_CharacterWeapon::Start()
 
 void SB_CharacterWeapon::Update()
 {
-	
+	timer = timer + PhysicsEngine::GetInstance()->GetDeltaTime();
+	if (timer > 0.35f)
+		bullet->SetPosition(Vector2(99.f, 99.f));
 }
 
 void SB_CharacterWeapon::LateStart()
 {
-	mousePressCallback = std::bind(&SB_CharacterWeapon::WeaponShot, this);
-	EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Left, mousePressCallback);
-}
-
-void SB_CharacterWeapon::WeaponShot()
-{
-	if (EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
-		return;
-
-	GameObject* bullet = new GameObject("Bullet", new Transform(gameObject->GetPosition(), 0, Vector2(1, 1)));
+	bullet = new GameObject("Bullet", new Transform(gameObject->GetPosition(), 0, Vector2(1, 1)));
 
 	bullet->name = "Bullet";
 
@@ -63,10 +56,23 @@ void SB_CharacterWeapon::WeaponShot()
 	bullet->AddComponent(squareCollOfBullet);
 	bullet->AddComponent(bulletScript);
 
+	bullet->SetPosition(Vector2(99.f, 99.f));
+
 	//add an object to the scene
 	Scene::GetInstance()->AddObject(bullet);
-	
-	Vector2 dir = InputsEngine::GetInstance()->GetMouseWorldPosition() - bullet->GetPosition();
+
+	mousePressCallback = std::bind(&SB_CharacterWeapon::WeaponShot, this);
+	EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Left, mousePressCallback);
+}
+
+void SB_CharacterWeapon::WeaponShot()
+{
+	if (EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
+		return;
+
+	timer = 0;
+
+	Vector2 dir = InputsEngine::GetInstance()->GetMouseWorldPosition() - gameObject->GetPosition();
 	dir.Normalize();
 	bullet->SetPosition(gameObject->GetPosition() + (dir * 0.38));
 

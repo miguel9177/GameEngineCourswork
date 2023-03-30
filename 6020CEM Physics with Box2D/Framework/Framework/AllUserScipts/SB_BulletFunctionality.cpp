@@ -28,7 +28,7 @@ void SB_BulletFunctionality::BeginContact(b2Contact* contact)
 	
 	if (collidedBody1 == gameObject->TryGetRigidBody()->Debug_GetB2Body() || collidedBody2 == gameObject->TryGetRigidBody()->Debug_GetB2Body())
 	{
-		std::cout << gameObject->name << "collided" << std::endl;
+		
 	}
 
 }

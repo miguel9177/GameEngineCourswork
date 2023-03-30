@@ -5,7 +5,8 @@ class SB_CharacterWeapon : public ScriptBehaviour
 {
 	static const unsigned int uniqueComponentIdIdentifier = 10005;
 	std::function<void()> mousePressCallback;
-	
+	GameObject* bullet;
+	float timer = 0;
 public:
 #pragma region Engine Functions
 
