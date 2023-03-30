@@ -47,10 +47,12 @@ void SB_MultiplayerServerClient::Start()
 void SB_MultiplayerServerClient::LateStart()
 {
     playerInfoClass->object = GetPlayerObject();
+
     // Initialize Winsock
     int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (result != 0) {
         std::cerr << "Error initializing Winsock: " << result << std::endl;
+        errorConnectingToServer = false;
         return;
     }
 
@@ -58,6 +60,7 @@ void SB_MultiplayerServerClient::LateStart()
     sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sockfd == INVALID_SOCKET) {
         std::cerr << "Error creating socket: " << WSAGetLastError() << std::endl;
+        errorConnectingToServer = false;
         WSACleanup();
         return;
     }
@@ -73,15 +76,20 @@ void SB_MultiplayerServerClient::LateStart()
         std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
         closesocket(sockfd);
         WSACleanup();
+        errorConnectingToServer = true;
         return;
     }
 
+    errorConnectingToServer = false;
     std::thread receiveThread(&SB_MultiplayerServerClient::ReceiveMessages, this);
     receiveThread.detach();
 }
 
 void SB_MultiplayerServerClient::Update()
 {
+    if (errorConnectingToServer)
+        return;
+
     // Process the received messages
     {
         std::lock_guard<std::mutex> lock(receivedMessagesMutex);
@@ -206,8 +214,8 @@ GameObject* SB_MultiplayerServerClient::CreateNewEnemyPlayer()
 
 	SquareCollider* squareCollOfEnemy = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
-	Com_MeshOfEnemy->SetShape(shapeBoxOfEnemy);
 	Com_MeshOfEnemy->SetTexture("../Textures/EnemyPlayer.png");
+	Com_MeshOfEnemy->SetShape(shapeBoxOfEnemy);
 
 	enemyPlayer->AddComponent(Com_MeshOfEnemy);
 	enemyPlayer->AddComponent(rbOfEnemy);

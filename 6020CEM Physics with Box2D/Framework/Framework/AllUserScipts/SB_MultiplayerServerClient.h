@@ -94,6 +94,7 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
     GameObject* enemyPlayer;
     std::mutex receivedMessagesMutex;
     std::queue<std::string> receivedMessages;
+    bool errorConnectingToServer = false;
 public:
 
 #pragma region Engine Functions
