@@ -1,15 +1,16 @@
 #pragma once
 #include "../ScriptBehaviour.h"
-
+#include <functional>
 class SB_CharacterWeapon : public ScriptBehaviour
 {
 	static const unsigned int uniqueComponentIdIdentifier = 10005;
-
-	void WeaponShot();
+	std::function<void()> mousePressCallback;
+	
 public:
 #pragma region Engine Functions
 
 	SB_CharacterWeapon();
+	~SB_CharacterWeapon();
 	void Start() override;
 	void Update() override;
 	void LateStart() override;
@@ -21,5 +22,6 @@ public:
 
 #pragma endregion
 
+	void WeaponShot();
 };
 

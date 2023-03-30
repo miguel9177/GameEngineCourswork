@@ -5,15 +5,22 @@
 #include "../Com_Mesh.h"
 #include "../RigidBody.h"
 #include "../SquareCollider.h"
+#include "../EngineFunctionalityManager.h"
 #include "../Scene.h"
+
 
 SB_CharacterWeapon::SB_CharacterWeapon() : ScriptBehaviour(uniqueComponentIdIdentifier)
 {
 }
 
+SB_CharacterWeapon::~SB_CharacterWeapon()
+{
+	EventQueue::GetInstance()->UnsubscribeToMouseKeyPressEvent(sf::Mouse::Left, mousePressCallback);
+}
+
 void SB_CharacterWeapon::Start()
 {
-	EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Left, std::bind(&SB_CharacterWeapon::WeaponShot, this));
+	
 }
 
 void SB_CharacterWeapon::Update()
@@ -23,10 +30,15 @@ void SB_CharacterWeapon::Update()
 
 void SB_CharacterWeapon::LateStart()
 {
+	mousePressCallback = std::bind(&SB_CharacterWeapon::WeaponShot, this);
+	EventQueue::GetInstance()->SubscribeToMouseKeyPressEvent(sf::Mouse::Left, mousePressCallback);
 }
 
 void SB_CharacterWeapon::WeaponShot()
 {
+	if (EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
+		return;
+
 	GameObject* bullet = new GameObject("Bullet", new Transform(gameObject->GetPosition(), 0, Vector2(1, 1)));
 
 	Shape_Box* shapeBoxOfBullet = new Shape_Box();
@@ -48,8 +60,10 @@ void SB_CharacterWeapon::WeaponShot()
 	//add an object to the scene
 	Scene::GetInstance()->AddObject(bullet);
 	
+	Vector2 dir = InputsEngine::GetInstance()->GetMouseWorldPosition() - bullet->GetPosition();
+	dir.Normalize();
+	bullet->SetPosition(gameObject->GetPosition() + (dir * 0.32));
 
-
-	if(bullet->TryGetRigidBody() != nullptr)
-		bullet->TryGetRigidBody()->AddForce()
+	if (bullet->TryGetRigidBody() != nullptr)
+		bullet->TryGetRigidBody()->AddForceToCenter(dir * 25);
 }

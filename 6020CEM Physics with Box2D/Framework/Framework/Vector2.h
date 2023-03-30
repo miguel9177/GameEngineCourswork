@@ -72,4 +72,15 @@ struct Vector2
         x = vec2.x;
         y = vec2.y;
     }
+public:
+    void Normalize() 
+    {
+        float length = std::sqrt(x * x + y * y);
+        
+        if (length == 0)
+            return;
+        
+        x /= length;
+        y /= length;
+    }
 };
