@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Faculdade\3Ano\AdvancedGameProgramming\Apis\Box2D\box2d-2.3.0\Box2D\Build\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Faculdade\3Ano\AdvancedGameProgramming\Apis\Box2D\box2d-2.3.0\Box2D\Build\Box2D\Release\Box2D.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Faculdade\3Ano\AdvancedGameProgramming\Apis\Box2D\box2d-2.3.0\Box2D\Build\HelloWorld\Release\HelloWorld.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Faculdade\3Ano\AdvancedGameProgramming\Apis\Box2D\box2d-2.3.0\Box2D\Build\Testbed\Release\Testbed.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Faculdade\3Ano\AdvancedGameProgramming\Apis\Box2D\box2d-2.3.0\Box2D\Build\x64\Release\ALL_BUILD</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

@@ -1,0 +1,115 @@
+﻿  GameEngine.cpp
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(72,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(73,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\GameEngine.cpp(88,34): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\GameEngine.cpp(89,35): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
+  GraphicsEngine.cpp
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(72,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(73,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\GarbageCollector.h(27,72): warning C4267: '+=': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\GarbageCollector.h(33,72): warning C4267: '-=': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\GraphicsEngine.cpp(26,40): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\GraphicsEngine.cpp(26,33): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\GraphicsEngine.cpp(35,83): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\GraphicsEngine.cpp(35,63): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  UiEngine.cpp
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(72,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(73,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+  UiScreenView_Image.cpp
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(72,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(73,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+  UiScreenView_Text.cpp
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(72,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(73,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\UiScreenView_Text.cpp(48,28): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  UiScreenView_btnImage.cpp
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(72,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(73,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+  UiScreenView_btnText.cpp
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(72,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(73,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+  main.cpp
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(72,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\Framework\Vector2.h(73,17): warning C4244: '=': conversion from 'const T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+  Generating Code...
+  Framework.vcxproj -> C:\Faculdade\3Ano\AdvancedGameProgramming\GameEngineProject\GameEngineCourswork\6020CEM Physics with Box2D\Framework\x64\Debug\Framework.exe
