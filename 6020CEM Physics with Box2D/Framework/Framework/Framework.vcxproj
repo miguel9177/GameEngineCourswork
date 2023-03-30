@@ -151,6 +151,8 @@
     <ClCompile Include="AllUserScipts\SB_CharacterMovement.cpp" />
     <ClCompile Include="AllUserScipts\SB_CameraFollowPlayer.cpp" />
     <ClCompile Include="AllUserScipts\SB_MultiplayerServerClient.cpp" />
+    <ClCompile Include="AllUserScipts\SB_CharacterWeapon.cpp" />
+    <ClCompile Include="AllUserScipts\SB_BulletFunctionality.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ScriptBehaviour.cpp" />
     <ClCompile Include="AllUserScipts\ScriptLoaderManager.cpp" />
@@ -184,6 +186,8 @@
     <ClInclude Include="AllUserScipts\SB_CharacterMovement.h" />
     <ClInclude Include="AllUserScipts\SB_CameraFollowPlayer.h" />
     <ClInclude Include="AllUserScipts\SB_MultiplayerServerClient.h" />
+    <ClInclude Include="AllUserScipts\SB_CharacterWeapon.h" />
+    <ClInclude Include="AllUserScipts\SB_BulletFunctionality.h" />
     <ClInclude Include="ScriptBehaviour.h" />
     <ClInclude Include="AllUserScipts\ScriptLoaderManager.h" />
     <ClInclude Include="Shape.h" />

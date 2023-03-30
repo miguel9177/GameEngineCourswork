@@ -3,6 +3,8 @@
 #include "SB_CameraFollowPlayer.h"
 #include "SB_CharacterMovement.h"
 #include "SB_MultiplayerServerClient.h"
+#include "SB_CharacterWeapon.h"
+#include "SB_BulletFunctionality.h"
 #include <iostream>
 
 ScriptLoaderManager* ScriptLoaderManager::instance;
@@ -48,5 +50,7 @@ void ScriptLoaderManager::InitializeVectorOfScripts()
     allUserScriptBehaviours.push_back(new SB_CharacterMovement());
     allUserScriptBehaviours.push_back(new SB_CameraFollowPlayer());
     allUserScriptBehaviours.push_back(new SB_MultiplayerServerClient());
+    allUserScriptBehaviours.push_back(new SB_CharacterWeapon());
+    allUserScriptBehaviours.push_back(new SB_BulletFunctionality());
 }
 ////////////////////

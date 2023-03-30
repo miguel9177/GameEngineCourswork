@@ -153,17 +153,23 @@
     <ClCompile Include="AllUserScipts\ScriptLoaderManager.cpp">
       <Filter>Source Files\PlayerScripts</Filter>
     </ClCompile>
-    <ClCompile Include="AllUserScipts\SB_CharacterMovement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AllUserScipts\SB_CameraFollowPlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AudioPlayer.cpp">
       <Filter>Source Files\Components\Cpps\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="AllUserScipts\SB_CameraFollowPlayer.cpp">
+      <Filter>Source Files\PlayerScripts\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AllUserScipts\SB_CharacterMovement.cpp">
+      <Filter>Source Files\PlayerScripts\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AllUserScipts\SB_CharacterWeapon.cpp">
+      <Filter>Source Files\PlayerScripts\Cpp</Filter>
+    </ClCompile>
     <ClCompile Include="AllUserScipts\SB_MultiplayerServerClient.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\PlayerScripts\Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="AllUserScipts\SB_BulletFunctionality.cpp">
+      <Filter>Source Files\PlayerScripts\Cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,17 +266,23 @@
     <ClInclude Include="AllUserScipts\ScriptLoaderManager.h">
       <Filter>Source Files\PlayerScripts</Filter>
     </ClInclude>
-    <ClInclude Include="AllUserScipts\SB_CharacterMovement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AllUserScipts\SB_CameraFollowPlayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AudioPlayer.h">
       <Filter>Source Files\Components\Headers\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="AllUserScipts\SB_CameraFollowPlayer.h">
+      <Filter>Source Files\PlayerScripts\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="AllUserScipts\SB_CharacterMovement.h">
+      <Filter>Source Files\PlayerScripts\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="AllUserScipts\SB_CharacterWeapon.h">
+      <Filter>Source Files\PlayerScripts\Header</Filter>
+    </ClInclude>
     <ClInclude Include="AllUserScipts\SB_MultiplayerServerClient.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\PlayerScripts\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="AllUserScipts\SB_BulletFunctionality.h">
+      <Filter>Source Files\PlayerScripts\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

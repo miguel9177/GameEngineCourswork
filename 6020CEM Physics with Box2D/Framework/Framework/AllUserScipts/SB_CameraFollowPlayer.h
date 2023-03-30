@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "../ScriptBehaviour.h"
 
 class SB_CameraFollowPlayer : public ScriptBehaviour
