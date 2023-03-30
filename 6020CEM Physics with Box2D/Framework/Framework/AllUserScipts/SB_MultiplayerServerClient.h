@@ -9,7 +9,7 @@ class SB_MultiplayerServerClient : public ScriptBehaviour
 {
 	static const unsigned int uniqueComponentIdIdentifier = 10004;
 	
-    const std::string SERVER_IP = "192.168.0.38";
+    const std::string SERVER_IP = "10.1.42.104";
     const int SERVER_PORT = 9050;
     const int BUFFER_SIZE = 1024;
 

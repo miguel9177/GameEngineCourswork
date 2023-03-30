@@ -195,7 +195,7 @@ GameObject* SB_MultiplayerServerClient::GetPlayerObject()
 
 GameObject* SB_MultiplayerServerClient::CreateNewEnemyPlayer()
 {
-	GameObject* enemyPlayer = new GameObject("EnemyPlayer", new Transform(Vector2(0, 0), 0, Vector2(0, 0)));
+	GameObject* enemyPlayer = new GameObject("EnemyPlayer", new Transform(Vector2(0, 0), 0, Vector2(1, 1)));
 
 	Shape_Box* shapeBoxOfEnemy = new Shape_Box();
 
@@ -207,7 +207,7 @@ GameObject* SB_MultiplayerServerClient::CreateNewEnemyPlayer()
 	SquareCollider* squareCollOfEnemy = new SquareCollider(Vector2(0.122, 0.122), Vector2(0, 0));
 
 	Com_MeshOfEnemy->SetShape(shapeBoxOfEnemy);
-	Com_MeshOfEnemy->SetTexture("../Textures/keyboardcat.jpg");
+	Com_MeshOfEnemy->SetTexture("../Textures/EnemyPlayer.png");
 
 	enemyPlayer->AddComponent(Com_MeshOfEnemy);
 	enemyPlayer->AddComponent(rbOfEnemy);

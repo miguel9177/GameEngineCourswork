@@ -42,6 +42,7 @@ int main()
     GameEngine::GetInstance()->InitializeEngine(1920,1080);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::RestartEngine, &RestartEngine);
 
+    bool createdNewEngine = false;
     float forceToAply = 0.1f;
     while (GameEngine::GetInstance()->isGameEngineRunning())
     {
@@ -49,10 +50,17 @@ int main()
         GameEngine::GetInstance()->Render();
         
         //if true, we create a new instance and break out of the loop, so that all memory is reseted.
-        if (restartEngine == true)
+        /*if (restartEngine == true)
         {
             CreateNewInstance();
             break;
+        }*/
+
+
+        if (InputsEngine::GetInstance()->GetKeyStates().at(sf::Keyboard::L).pressing && createdNewEngine == false)
+        {
+            createdNewEngine = true;
+            CreateNewInstance();
         }
     }
 
