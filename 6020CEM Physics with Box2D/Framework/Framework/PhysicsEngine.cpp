@@ -3,7 +3,9 @@
 #include <vector>
 #include "Scene.h"
 #include <iostream>
+#include <Box2D/Box2D.h>
 #include "EngineFunctionalityManager.h"
+#include "ScriptBehaviour.h"
 
 PhysicsEngine* PhysicsEngine::instance;
 
@@ -65,4 +67,9 @@ void PhysicsEngine::StopPhysicsWorld()
 {
     delete world;
     world = nullptr;
+}
+
+void PhysicsEngine::SubscribeRbToCollisionDetectionCallbacks(ScriptBehaviour* scriptToCall, RigidBody* rb)
+{
+    world->SetContactListener(scriptToCall);
 }

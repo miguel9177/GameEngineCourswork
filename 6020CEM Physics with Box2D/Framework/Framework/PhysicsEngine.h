@@ -2,6 +2,8 @@
 #include <Box2D/Box2D.h>
 #include <SFML/System/Clock.hpp>
 
+class ScriptBehaviour;
+class RigidBody;
 //this is a singleton, and stores the Physics Engine script
 class PhysicsEngine
 {
@@ -34,6 +36,9 @@ public:
     void StartPhysicsWorld();
 
     void StopPhysicsWorld();
+
+    //this will make the received rb callback the collision detections
+    void SubscribeRbToCollisionDetectionCallbacks(ScriptBehaviour* scriptToCall,RigidBody* rb);
 
     inline float GetDeltaTime() { return deltaTime; };
 };

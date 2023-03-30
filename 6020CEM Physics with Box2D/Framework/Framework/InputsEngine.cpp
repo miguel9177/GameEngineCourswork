@@ -46,7 +46,7 @@ Vector2 InputsEngine::GetMouseWorldPosition()
 
     Vector2 worldMousePos = Vector2(screenMousePos.x + viewCenter.x - viewSize.x / 2.0f, screenMousePos.y + viewCenter.y - viewSize.y / 2.0f);
 
-    std::cout << worldMousePos.x << " : "  << worldMousePos.y << std::endl;
+    //std::cout << worldMousePos.x << " : "  << worldMousePos.y << std::endl;
 
     return worldMousePos / Com_Mesh::scalingFactor;
 }

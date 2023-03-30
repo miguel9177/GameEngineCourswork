@@ -1,8 +1,8 @@
 #pragma once
 #include "Component.h"
 #include "GameObject.h"
-
-class ScriptBehaviour : public Component
+#include <Box2D/Box2D.h>
+class ScriptBehaviour : public Component, public b2ContactListener
 {
 public:
 	static const unsigned int minimumUniqueComponentIdIdentifier = 10000;
@@ -16,5 +16,8 @@ public:
 	//waits for everyobject to be called and calls the late start, if the gameobject is created in runtime the late start will never be called to that gameobject
 	virtual void LateStart(){};
 	virtual ScriptBehaviour* Clone() = 0;
+
+	virtual void BeginContact(b2Contact* contact) override;
+	virtual void EndContact(b2Contact* contact) override;
 };
 

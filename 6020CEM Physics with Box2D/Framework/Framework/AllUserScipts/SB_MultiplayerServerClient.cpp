@@ -52,7 +52,7 @@ void SB_MultiplayerServerClient::LateStart()
     int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (result != 0) {
         std::cerr << "Error initializing Winsock: " << result << std::endl;
-        errorConnectingToServer = false;
+        errorConnectingToServer = true;
         return;
     }
 
@@ -60,7 +60,7 @@ void SB_MultiplayerServerClient::LateStart()
     sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (sockfd == INVALID_SOCKET) {
         std::cerr << "Error creating socket: " << WSAGetLastError() << std::endl;
-        errorConnectingToServer = false;
+        errorConnectingToServer = true;
         WSACleanup();
         return;
     }
@@ -80,7 +80,6 @@ void SB_MultiplayerServerClient::LateStart()
         return;
     }
 
-    errorConnectingToServer = false;
     std::thread receiveThread(&SB_MultiplayerServerClient::ReceiveMessages, this);
     receiveThread.detach();
 }
@@ -104,6 +103,7 @@ void SB_MultiplayerServerClient::Update()
                 std::string message = "I need a UID for local object:" + std::to_string(playerInfoClass->mylocalIdNetwork);
                 if (sendto(sockfd, message.c_str(), message.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
                     std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
+                    errorConnectingToServer = true;
                     closesocket(sockfd);
                     WSACleanup();
                     return;
@@ -172,6 +172,7 @@ void SB_MultiplayerServerClient::Update()
     std::string messageMyObjectData = playerDataToSend.str();
     if (sendto(sockfd, messageMyObjectData.c_str(), messageMyObjectData.size(), 0, (sockaddr*)&server_addr, addr_len) == SOCKET_ERROR) {
         std::cerr << "Error sending message: " << WSAGetLastError() << std::endl;
+        errorConnectingToServer = true;
         closesocket(sockfd);
         WSACleanup();
         return;
