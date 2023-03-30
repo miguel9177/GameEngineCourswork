@@ -12,6 +12,7 @@
 UiScreenView_Text::UiScreenView_Text(std::string _textToDisplay, Transform* _transform, bool _worldObject) : worldObject(_worldObject)
 {
 	transform = _transform;
+	//sets the sfml settings
 	sfmlText.setFont(*GraphicsEngine::GetGameEngineFont());
 	sfmlText.setRotation(transform->rotation);
 	sfmlText.setScale(transform->scale);
@@ -114,6 +115,7 @@ void UiScreenView_Text::Update()
 	if (worldObject)
 		return;
 
+	//updates the ui position for him to be at correct pos, since the ui needs to be always on the correct screen pos
 	SetUiPosition(uiTransformInformation.pos, uiTransformInformation.offset);
 	SetUiRotation(uiTransformInformation.rot);
 	SetUiScale(uiTransformInformation.scale);

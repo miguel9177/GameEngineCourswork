@@ -32,8 +32,8 @@ enum RigidBodyType
 struct RigidBodySettings
 {
 	RigidBodyType type = RigidBodyType::dynamicBody;
-	float drag = 0.5f; // adds drag to the body (reducing its speed over time)
-	float angularDrag = 0.5f; // adds Angular drag to the body (reducing its rotating speed over time)
+	float drag = 0.5f; //adds drag to the body (reducing its speed over time)
+	float angularDrag = 0.5f; //adds Angular drag to the body (reducing its rotating speed over time)
 	
 	/*When Box2D determines that a body (or group of bodies) has come to rest, the body enters a sleep state which 
 	has very little CPU overhead. If a body is awake and collides with a sleeping body, then the sleeping body wakes 
@@ -99,6 +99,7 @@ class RigidBody : public Component
 	std::vector<Com_Collider*> allColliders;
 
 public:
+	//this is a unique id identifier, read documentation graph to fully understand its reason, but in short everty component needs an unique identifier
 	static const unsigned int uniqueComponentIdIdentifier = 200;
 	bool useGravity = false;
 

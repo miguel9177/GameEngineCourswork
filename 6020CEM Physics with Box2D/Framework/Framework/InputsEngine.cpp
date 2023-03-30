@@ -21,6 +21,7 @@ InputsEngine::~InputsEngine()
 
 }
 
+//returns the instance since its a singleton
 InputsEngine* InputsEngine::GetInstance()
 {
     if (!instance)
@@ -32,22 +33,29 @@ InputsEngine* InputsEngine::GetInstance()
 
 void InputsEngine::Update(sf::Window* window_)
 {
+    //calculates the mouse velocity
     CalculateMouseVelocity(window_);
+    //uopdates the mouse state
     UpdateMouseState(window_);
+    //gets the whell delta
     mouseState.wheelDelta = lastWheelDelta;
     lastWheelDelta = 0;
 }
 
 Vector2 InputsEngine::GetMouseWorldPosition()
 {
+    //gets the screen mouse pos
     Vector2 screenMousePos = InputsEngine::GetInstance()->GetMouseState().position;
+    //gets the camera center
     Vector2 viewCenter = GameEngine::GetInstance()->GetCameraSfmlPosition();
+    //gets camera size
     Vector2 viewSize = GameEngine::GetInstance()->GetCameraSize();
 
+    //gets mouse world pos
     Vector2 worldMousePos = Vector2(screenMousePos.x + viewCenter.x - viewSize.x / 2.0f, screenMousePos.y + viewCenter.y - viewSize.y / 2.0f);
 
     //std::cout << worldMousePos.x << " : "  << worldMousePos.y << std::endl;
-
+    //return the worlçd mouse pos
     return worldMousePos / Com_Mesh::scalingFactor;
 }
 
@@ -111,10 +119,14 @@ void InputsEngine::ReceiveInputFromWindow(sf::Event event_)
 
 void InputsEngine::UpdateMouseState(sf::Window* window_)
 {
+    //updates the mouse buttons
     bool _leftButton = sf::Mouse::isButtonPressed(sf::Mouse::Left);
     bool _rightButton = sf::Mouse::isButtonPressed(sf::Mouse::Right);
     bool _middleButton = sf::Mouse::isButtonPressed(sf::Mouse::Middle);
+    //updates the pos of the mouse
     Vector2 _position = sf::Mouse::getPosition(*window_);
+
+#pragma region Call Event queue events depending on mouse state
 
     if (_leftButton != mouseState.pressingLeftButton)
     {
@@ -148,10 +160,13 @@ void InputsEngine::UpdateMouseState(sf::Window* window_)
         EventQueue::GetInstance()->InvokeMouseMovedEvents(_position);
         mouseState.position = _position;
     }
+
+#pragma endregion    
 }
 
 void InputsEngine::CalculateMouseVelocity(sf::Window* window_)
 {
+    //calculates the mouse velocity
     mouseState.velocity = (mouseState.position - sf::Mouse::getPosition(*window_)) / PhysicsEngine::GetInstance()->GetDeltaTime();
     mouseState.velocity = (mouseState.velocity / Com_Mesh::scalingFactor) / mouseVelociyReducer;
 }

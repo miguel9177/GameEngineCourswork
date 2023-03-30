@@ -4,7 +4,9 @@
 
 AudioPlayer::AudioPlayer(std::string _soundPath) : Component(Component::typeOfComponent::Audio, uniqueComponentIdIdentifier)
 {
+    //stores the sound path
     soundPath = _soundPath;
+    //create a new sound source
     soundSource = new sf::SoundBuffer();
     if (!soundSource->loadFromFile(soundPath))
     {
@@ -12,7 +14,9 @@ AudioPlayer::AudioPlayer(std::string _soundPath) : Component(Component::typeOfCo
         return;
     }
 
+    //create a new sound object
     sound = new sf::Sound();
+    //set its buffer
     sound->setBuffer(*soundSource);
 }
 
@@ -26,6 +30,7 @@ AudioPlayer::~AudioPlayer()
 
 void AudioPlayer::PlaySound()
 {
+    //if on play mode play the sound
     if(EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::playMode && sound != nullptr && soundSource != nullptr)
         sound->play();
 }

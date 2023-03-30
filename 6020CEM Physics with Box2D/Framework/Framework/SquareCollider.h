@@ -10,11 +10,12 @@ private:
 	Vector2 halfSize;
 	Vector2 posOffset;
 	float offsetAngle;
-	//Data
+	//stores the coll of the box 2d
 	b2FixtureDef coll;
-
+	//creates teh collider
 	void CreateCollider();
 public:
+	//this is a unique id identifier, read documentation graph to fully understand its reason, but in short everty component needs an unique identifier
 	static const unsigned int uniqueComponentIdIdentifier = 101;
 
 	b2FixtureDef* GetColliderBox2dDefenition() override;

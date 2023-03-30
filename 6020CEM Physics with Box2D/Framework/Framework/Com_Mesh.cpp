@@ -8,6 +8,7 @@ const float Com_Mesh::scalingFactor = 200.f;
 
 Com_Mesh::Com_Mesh() : Component(Component::typeOfComponent::Mesh, uniqueComponentIdIdentifier)
 {
+	//puts the texture and shape to null, since we didnt provided one
 	texture = nullptr;
 	shape = nullptr;
 	// Create a small circle to represent the origin point
@@ -17,15 +18,18 @@ Com_Mesh::Com_Mesh() : Component(Component::typeOfComponent::Mesh, uniqueCompone
 
 Com_Mesh::Com_Mesh(std::string texturePath_, Shape* shape_) : Component(Component::typeOfComponent::Mesh, uniqueComponentIdIdentifier)
 {
+	//stores the texture path
 	texturePath = texturePath_;
+	//creates a new texture
 	texture = new sf::Texture();
 	if (!texture->loadFromFile(texturePath))
 	{
 		std::cout << "Texture did not load!" << "\n" << std::endl;
 	}
+	//stores the shape
 	shape = shape_;
 
-	// Create a small circle to represent the origin point
+	//creates a origin point
 	debug_OriginPointShape = new sf::CircleShape(2.15f);
 
 	//if the texture is not 0, it means theres a texture assigned
@@ -60,6 +64,7 @@ void Com_Mesh::SetTexture(std::string texturePath_)
 	if (texture != nullptr)
 		delete texture;
 
+	//creates the new texture
 	texture = new sf::Texture();
 	if (!texture->loadFromFile(texturePath))
 	{
@@ -138,11 +143,15 @@ sf::Shape* Com_Mesh::GetMeshToRender()
 //this draws the origin point of the sfml object
 sf::Shape* Com_Mesh::Debug_GetOriginPointToRender()
 {
+	//this gets the shape pos
 	sf::Vector2f shapePos = shape->GetDrawableShape()->getPosition();
+	//this gets origin point pos
 	sf::Vector2f originPointPos = shape->GetDrawableShape()->getOrigin();
 	
+	//fills and positions the origin point
 	debug_OriginPointShape->setFillColor(sf::Color::Red);
 	debug_OriginPointShape->setOrigin(2.15f, 2.15f);
 	debug_OriginPointShape->setPosition(originPointPos + shapePos);
+	//returns the origin point
 	return debug_OriginPointShape;
 }

@@ -22,8 +22,10 @@ GraphicsEngine::~GraphicsEngine()
 
 sf::RenderWindow* GraphicsEngine::InitializeWindow(float width, float height)
 {
+    //creates the window
     window.create(sf::VideoMode(width, height), "Vami Reloaded Engine");
 
+    //gets the game engine font
     if (!gameEngineFont.loadFromFile("../TextFonts/Roboto-Regular.ttf"))
     {
         std::cout << "Font did not load!" << "\n" << std::endl;
@@ -39,6 +41,7 @@ sf::RenderWindow* GraphicsEngine::InitializeWindow(float width, float height)
 
 void GraphicsEngine::Render()
 {
+    //reset gthe window and paint it black
     window.clear(sf::Color::Black);
 
     //goes through every mesh on the scene and draws it
@@ -59,8 +62,10 @@ void GraphicsEngine::Render()
     if (GameEngine::GetInstance()->isDebugMode)
         DrawDebugModeInformation();
 
+    //tells the uiengine to draw all ui
     UiEngine::GetInstance()->DrawAllUi(&window);
 
+    //if on debug mode draw debug information
     if(GameEngine::GetInstance()->isDebugMode)
         Debug_WriteDebugInformation();
 
@@ -68,6 +73,7 @@ void GraphicsEngine::Render()
     window.display();
 }
 
+//returns the engine window
 sf::RenderWindow* GraphicsEngine::GetEngineWindow()
 {
     return &window;
@@ -78,17 +84,21 @@ sf::RenderWindow* GraphicsEngine::GetEngineWindow()
 //this moves the camera to the selected position
 void GraphicsEngine::MoveCamera(Vector2 _newPos)
 {
+    //we store the new pos
     cameraPos = _newPos;
+    //change its center (multiply by 200, since thats our scaling factor from sfml to box 2d)
     cameraView.setCenter(_newPos * 200);
     //cameraView.move(_newPos);
     window.setView(cameraView);
 }
 
+//returns the camera world position
 Vector2 GraphicsEngine::GetCameraPosition()
 {
     return Vector2(cameraView.getCenter().x / 200, cameraView.getCenter().y / 200);
 }
 
+//returns the camera sfml position
 Vector2 GraphicsEngine::GetCameraSfmlPosition()
 {
     return Vector2(cameraView.getCenter().x, cameraView.getCenter().y);
@@ -99,11 +109,13 @@ Vector2 GraphicsEngine::GetCameraSize()
     return Vector2(cameraView.getSize().x, cameraView.getSize().y);
 }
 
+//chanhges the camera size
 void GraphicsEngine::SetCameraSize(Vector2 _newSize)
 {
     cameraView.setSize(_newSize.x, _newSize.y);
 }
 
+//chanhges the camera viewport
 void GraphicsEngine::SetCameraViewPort(sf::FloatRect _newViewPort)
 {
     cameraView.setViewport(_newViewPort);

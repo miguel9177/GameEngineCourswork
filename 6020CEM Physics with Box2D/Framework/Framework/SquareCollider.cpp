@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "RigidBody.h"
 #include <iostream>
+
 #pragma region Constructors
 
 SquareCollider::SquareCollider(Vector2 _halfSize) : Com_Collider(ColliderType::BoxColl, uniqueComponentIdIdentifier)

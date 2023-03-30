@@ -9,6 +9,7 @@ class Scene
 {
 private:
     static Scene* instance;
+    //this vectors, store all important elements of the game
     std::vector<GameObject*> allSceneGameObjects;
     std::vector<Com_Mesh*> allMeshes;
     std::vector<RigidBody*> allRigidBodys;

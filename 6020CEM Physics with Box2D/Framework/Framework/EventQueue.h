@@ -10,6 +10,7 @@
 class EventQueue
 {
 private:
+    //this is a instance since its a singleton
     static EventQueue* instance;
     
     EventQueue();
@@ -17,31 +18,47 @@ private:
     ~EventQueue();
 public:
 
+    //this has all the void events
     enum class voidEvents { shoot, test, EnteredEditMode, EnteredPlayMode, RestartEngine};
     //this gives the instance of the graphics engine, and if theres no instance of it, it creates one
     static EventQueue* GetInstance();
 
+    //this handles the subscription of the event
     void SubscribeToVoidEvent(voidEvents eventToSubscribeTo, std::function<void()> function);
+    //this handles the unsubscription of the event
     void UnsubscribeToVoidEvent(voidEvents eventToSubscribeTo, std::function<void()> function);
 
+    //this handles the subscription of the event
     void SubscribeToKeyPressEvent(sf::Keyboard::Key, std::function<void()> function);
+    //this handles the unsubscription of the event
     void UnsubscribeToKeyPressEvent(sf::Keyboard::Key, std::function<void()> function);
 
+    //this handles the subscription of the event
     void SubscribeToKeyReleasedEvent(sf::Keyboard::Key, std::function<void()> function);
+    //this handles the unsubscription of the event
     void UnsubscribeToKeyReleasedEvent(sf::Keyboard::Key, std::function<void()> function);
 
+    //this handles the subscription of the event
     void SubscribeToMouseKeyPressEvent(sf::Mouse::Button, std::function<void()> function);
+    //this handles the unsubscription of the event
     void UnsubscribeToMouseKeyPressEvent(sf::Mouse::Button, std::function<void()> function);
 
+    //this handles the subscription of the event
     void SubscribeToMouseKeyReleasedEvent(sf::Mouse::Button, std::function<void()> function);
+    //this handles the unsubscription of the event
     void UnsubscribeToMouseKeyReleasedEvent(sf::Mouse::Button, std::function<void()> function);
 
+    //this handles the subscription of the event
     void SubscribeToMouseMovedEvent(std::function<void(Vector2 _pos)> function);
+    //this handles the unsubscription of the event
     void UnsubscribeToMouseMovedEvent(std::function<void(Vector2 _pos)> function);
 
+    //this handles the subscription of the event
     void SubscribeToMouseWheelScrolledEvent(std::function<void(float _delta)> function);
+    //this handles the unsubscription of the event
     void UnsubscribeToMouseWheelScrolledEvent(std::function<void(float _delta)> function);
 
+    //all of this handle the invocation of the events
     void InvokeVoidEvents(voidEvents eventToSubscribeTo);
     void InvokeKeyPressedEvents(sf::Keyboard::Key);
     void InvokeKeyReleasedEvents(sf::Keyboard::Key);
@@ -59,6 +76,7 @@ public:
         return (size_t)*fnPointer;
     }
 private:
+    //all this stores all events
     std::map<voidEvents, std::vector<std::function<void()>>> allSubscribedVoidEvents;
     std::map<sf::Keyboard::Key, std::vector<std::function<void()>>> allSubscribedOnKeyPressEvent;
     std::map<sf::Keyboard::Key, std::vector<std::function<void()>>> allSubscribedOnKeyReleaseEvent;

@@ -11,11 +11,14 @@ class AudioPlayer;
 class EngineJsonReader
 {
 private:
+	//this is the instance since this is a singleton
 	static EngineJsonReader* instance;
 	EngineJsonReader();
 	~EngineJsonReader();
 
+	//this is the path for the scene json
 	const std::string gameSceneDataPath = "JsonFiles/SceneOfGame.json";
+	//this stores the game scene data
 	Json::Value gameSceneData;
 public:
 	static EngineJsonReader* GetInstance();

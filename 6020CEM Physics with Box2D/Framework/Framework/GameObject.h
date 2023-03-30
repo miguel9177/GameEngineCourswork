@@ -9,6 +9,7 @@ class RigidBody;
 class GameObject
 {
 private:
+	//stores all componenbts
 	std::map<Component::typeOfComponent, std::vector<Component*>> allComponents;
 	//transform is private since if the game object has a rigidbody we cant edit the transform since the rb will be the owner of this body, so we need getter and setters to control this
 	Transform* transform;
@@ -16,6 +17,7 @@ private:
 	RigidBody* rigidBody = nullptr;
 
 public:
+	//stores the name
 	std::string name;
 
 	GameObject(std::string name_);

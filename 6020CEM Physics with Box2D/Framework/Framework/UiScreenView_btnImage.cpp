@@ -112,8 +112,10 @@ void UiScreenView_btnImage::SubscribeToBtnOnPressEvent(std::function<void()> fun
 
 void UiScreenView_btnImage::UnsubscribeToBtnOnPressEvent(std::function<void()> function)
 {
+	//loops through all the subscribed events
 	for (unsigned int i = 0; i < allSubscribedOnButtonPressEvent.size();)
 	{
+		//if the event is the given one, remove it
 		if (allSubscribedOnButtonPressEvent[i] != nullptr && EventQueue::getAddress(allSubscribedOnButtonPressEvent[i]) == EventQueue::getAddress(function))
 		{
 			allSubscribedOnButtonPressEvent.erase(allSubscribedOnButtonPressEvent.begin() + i);
@@ -132,8 +134,10 @@ void UiScreenView_btnImage::SubscribeToBtnOnReleasedEvent(std::function<void()> 
 
 void UiScreenView_btnImage::UnsubscribeToBtnOnReleasedEvent(std::function<void()> function)
 {
+	//loops through all the subscribed events
 	for (unsigned int i = 0; i < allSubscribedOnButtonReleasedEvent.size();)
 	{
+		//if the event is the given one, remove it
 		if (allSubscribedOnButtonReleasedEvent[i] != nullptr && EventQueue::getAddress(allSubscribedOnButtonReleasedEvent[i]) == EventQueue::getAddress(function))
 		{
 			allSubscribedOnButtonReleasedEvent.erase(allSubscribedOnButtonReleasedEvent.begin() + i);
@@ -147,8 +151,10 @@ void UiScreenView_btnImage::UnsubscribeToBtnOnReleasedEvent(std::function<void()
 
 void UiScreenView_btnImage::InvokeButtonPressedEvent()
 {
+	//loops through all the subscribed events
 	for (auto& callback : allSubscribedOnButtonPressEvent)
 	{
+		//calls the callback
 		if (callback != nullptr)
 		{
 			callback();
@@ -158,8 +164,10 @@ void UiScreenView_btnImage::InvokeButtonPressedEvent()
 
 void UiScreenView_btnImage::InvokeButtonReleasedEvent()
 {
+	//loops through all the subscribed events
 	for (auto& callback : allSubscribedOnButtonReleasedEvent)
 	{
+		//calls the callback
 		if (callback != nullptr)
 		{
 			callback();
@@ -173,13 +181,19 @@ void UiScreenView_btnImage::InvokeButtonReleasedEvent()
 
 bool UiScreenView_btnImage::isButtonBeingHovered()
 {
+	//gets the screen mouse pos
 	Vector2 screenMousePos = InputsEngine::GetInstance()->GetMouseState().position;
+	//gets the camera center
 	Vector2 viewCenter = GameEngine::GetInstance()->GetCameraSfmlPosition();
+	//gets the camera size
 	Vector2 viewSize = GameEngine::GetInstance()->GetCameraSize();
 
+	//gets the world mouse pos
 	sf::Vector2f worldMousePos = sf::Vector2f(screenMousePos.x + viewCenter.x - viewSize.x / 2.0f, screenMousePos.y + viewCenter.y - viewSize.y / 2.0f);
 
+	//gets the sprite bounds
 	sf::FloatRect buttonBounds = sprite.getGlobalBounds();
+	//if the mouse is inside the sprite, return true, since we are hovering it
 	if (buttonBounds.contains(worldMousePos))
 		return true;
 	else
@@ -204,6 +218,7 @@ void UiScreenView_btnImage::Update()
 	if (worldObject)
 		return;
 
+	//updates the ui position for him to be at correct pos, since the ui needs to be always on the correct screen pos
 	SetUiPosition(uiTransformInformation.pos, uiTransformInformation.offset);
 	SetUiRotation(uiTransformInformation.rot);
 	SetUiScale(uiTransformInformation.scale);

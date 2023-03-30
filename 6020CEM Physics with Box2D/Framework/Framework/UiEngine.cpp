@@ -15,6 +15,7 @@ UiEngine::~UiEngine()
 {
 }
 
+//returns its own instance since this is a singleton
 UiEngine* UiEngine::GetInstance()
 {
     if (!instance)

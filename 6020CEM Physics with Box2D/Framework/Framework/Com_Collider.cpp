@@ -1,6 +1,7 @@
 #include "Com_Collider.h"
 #include <Box2D/Box2D.h>
 
+//construcctor with type
 Com_Collider::Com_Collider(ColliderType type_, unsigned int uniqueComponentIdIdentifier) : Component(Component::typeOfComponent::Collider, uniqueComponentIdIdentifier)
 {
 	typeOfCollider = type_;
@@ -9,6 +10,7 @@ Com_Collider::Com_Collider(ColliderType type_, unsigned int uniqueComponentIdIde
 	bouciness = 0.4f;
 }
 
+//construcctor with type and settings
 Com_Collider::Com_Collider(ColliderType type_, float _mass, float _friction, float _bouciness, unsigned int uniqueComponentIdIdentifier) : Component(Component::typeOfComponent::Collider, uniqueComponentIdIdentifier)
 {
 	typeOfCollider = type_;

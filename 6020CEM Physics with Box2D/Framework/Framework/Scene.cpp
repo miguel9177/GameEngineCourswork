@@ -6,9 +6,11 @@ Scene* Scene::instance;
 
 Scene::Scene()
 {
+    //subscribes to the play mode
     std::function<void()> onEnteredPlayModeCallback = std::bind(&Scene::EnteredPlayMode, this);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::EnteredPlayMode, onEnteredPlayModeCallback);
 
+    //subscribes to the edit mode
     std::function<void()> onEnteredEditModeCallback = std::bind(&Scene::EnteredEditMode, this);
     EventQueue::GetInstance()->SubscribeToVoidEvent(EventQueue::voidEvents::EnteredEditMode, onEnteredEditModeCallback);
 }
@@ -17,6 +19,7 @@ Scene::~Scene()
 {
 }
 
+//this returns the instance of the scene, since this is a singleton
 Scene* Scene::GetInstance()
 {
     if (!instance)
@@ -28,7 +31,7 @@ Scene* Scene::GetInstance()
 
 void Scene::Update()
 {
-
+    //if we are in edit mode tell the code if we did an update or not
     if (EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
     {
         //if first update it diferent then true, put it to true, since we are in edit mode, and when we go to play mode, we want it to do the first update aswell
@@ -38,12 +41,14 @@ void Scene::Update()
         return;
     }
 
+    //goes through all script behaviours
     for (ScriptBehaviour* scriptBehaviour : allScriptBehaviours)
     {
         //if its the first update do the late start function
         if (firstUpdate)
             scriptBehaviour->LateStart();
        
+        //updates all scripts
         scriptBehaviour->Update();
     }
 
@@ -137,6 +142,7 @@ void Scene::DeleteAllGameObjects()
     for (GameObject* gameObject : allSceneGameObjects) {
         delete gameObject;
     }
+    //clears all vectors
     allSceneGameObjects.clear();
     allMeshes.clear();
     allRigidBodys.clear();

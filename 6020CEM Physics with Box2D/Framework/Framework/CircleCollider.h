@@ -13,9 +13,12 @@ private:
 	//Data
 	b2FixtureDef coll;
 
+	//creates the collider
 	void CreateCollider();
 public:
+	//this is a unique id identifier, read documentation graph to fully understand its reason, but in short everty component needs an unique identifier
 	static const unsigned int uniqueComponentIdIdentifier = 102;
+	//gets the collider box definition
 	b2FixtureDef* GetColliderBox2dDefenition() override;
 
 	void Start() override;

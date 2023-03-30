@@ -80,22 +80,22 @@ void GameObject::AddComponent(Component* componentToAdd)
 //this will return true if the user has the component
 bool GameObject::HasComponent(Component* _componentToCheck)
 {
-    // Get the type of the component to check
+    //stores the component type to check
     Component::typeOfComponent componentType = _componentToCheck->GetTypeOfComponent();
 
-    // Check if the type of component exists in the map
+    //this checks if the component type exists
     auto it = allComponents.find(componentType);
     if (it == allComponents.end()) {
         return false;
     }
 
-    // Get the vector of components for the given type
+    //gets all components of the given type
     std::vector<Component*>& componentsOfType = it->second;
 
-    // Loop through the vector of components
+    //loops through the vector of components
     for (std::vector<Component*>::iterator it = componentsOfType.begin(); it != componentsOfType.end(); ++it) 
     {
-        // do something with each component in the vector
+        //gets the current component
         Component* component = *it;
         if (component->GetUniqueIdIdentifier() == _componentToCheck->GetUniqueIdIdentifier())
             return true;

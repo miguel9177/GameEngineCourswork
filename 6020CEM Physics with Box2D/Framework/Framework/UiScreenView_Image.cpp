@@ -73,6 +73,7 @@ void UiScreenView_Image::Update()
 	if (worldObject)
 		return;
 
+	//updates the ui position for him to be at correct pos, since the ui needs to be always on the correct screen pos
 	SetUiPosition(uiTransformInformation.pos, uiTransformInformation.offset);
 	SetUiRotation(uiTransformInformation.rot);
 	SetUiScale(uiTransformInformation.scale);

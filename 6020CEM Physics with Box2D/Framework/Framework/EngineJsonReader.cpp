@@ -22,6 +22,7 @@ EngineJsonReader::~EngineJsonReader()
 {
 }
 
+//this gets the instance since this is a singleton
 EngineJsonReader* EngineJsonReader::GetInstance()
 {
     if (!instance)
@@ -31,6 +32,7 @@ EngineJsonReader* EngineJsonReader::GetInstance()
     return instance;
 }
 
+//this loads editor scene, reading the objects from the json
 void EngineJsonReader::LoadEditorScene()
 {
     //read the data from the test1.JsonFile
@@ -130,6 +132,7 @@ void EngineJsonReader::LoadEditorScene()
     }
 }
 
+//this loads play scene, reading the objects from the json
 void EngineJsonReader::LoadSceneToPlay()
 {
     //read the data from the test1.JsonFile
@@ -230,6 +233,7 @@ void EngineJsonReader::LoadSceneToPlay()
 
 }
 
+//this saves the scene
 void EngineJsonReader::SaveScene()
 {
     Json::Value root;
@@ -513,7 +517,6 @@ AudioPlayer* EngineJsonReader::CreateAudioPlayerFromJsonData(Json::Value jsonDat
 
 Json::Value EngineJsonReader::ConvertAudioPlayerToJson(AudioPlayer* audioPlayer)
 {
-
     Json::Value json_go_component_AudioSource;
     json_go_component_AudioSource["soundPath"] = audioPlayer->GetAudioPath();
     return json_go_component_AudioSource;

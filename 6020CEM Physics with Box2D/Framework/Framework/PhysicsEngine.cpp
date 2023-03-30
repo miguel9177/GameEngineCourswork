@@ -39,22 +39,23 @@ b2Body* PhysicsEngine::CreateRigidBody(b2BodyDef* bodyDefenition_)
 
 void PhysicsEngine::Update()
 {
-    // Calculate delta time
+    //calculates the delta times
     deltaTime = clock.restart().asSeconds();
 
     if (world == nullptr || EngineFunctionalityManager::GetInstance()->GetEngineState() == EngineFunctionalityManager::State::editMode)
         return;
     
-    // Iterate through all rigidbodies
+    //goes trough all rbs
     for (std::vector<RigidBody*>::iterator it = Scene::GetInstance()->GetAllRigidBodys()->begin(); it != Scene::GetInstance()->GetAllRigidBodys()->end(); ++it)
     {
-        // Update the rigidBodies
+        //updates all rbs
         RigidBody* rb = *it;
 
         if (rb != nullptr)
             rb->Update();
     }
 
+    //tell the box2d world to update
     world->Step(timeStep, velocityIterations, positionIterations);
 }
 

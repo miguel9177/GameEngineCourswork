@@ -7,8 +7,11 @@ class GraphicsEngine
 {    
     //this stores the game engine window
     sf::RenderWindow window;
+    //stores the camera
     sf::View cameraView;
+    //stores the gameengine font
     static sf::Font gameEngineFont;
+    //stores the camera position
     Vector2 cameraPos;
 public:
 
@@ -19,25 +22,33 @@ public:
     //this is only called once and it creates and returns the Game Engine Window
     sf::RenderWindow* InitializeWindow(float width, float height);
 
+    //this renders everything
     void Render();
 
+    //returns the engine window, since this class is only accescible by the game engine is fine to give the window
     sf::RenderWindow* GetEngineWindow();
 
+    //returns the game engine font
     static inline sf::Font* GetGameEngineFont() { return &gameEngineFont; };
 
 #pragma region Functionality functions
     
     void MoveCamera(Vector2 _newPos);
+    //this gets the camera world position
     Vector2 GetCameraPosition();
+    //this gets the camera sfml position
     Vector2 GetCameraSfmlPosition();
     Vector2 GetCameraSize();
+    //chanhges the camera size
     void SetCameraSize(Vector2 _newSize);
+    //changes the camera view port
     void SetCameraViewPort(sf::FloatRect _newViewPort);
 
 #pragma endregion
 
 #pragma region DEBUG FUNCTIONS
 
+    //drawas the debug mode information
     void DrawDebugModeInformation();
 
     //this draws the square colliders (only  activated in debug mode)

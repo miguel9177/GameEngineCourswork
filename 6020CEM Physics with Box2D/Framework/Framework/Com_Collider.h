@@ -18,11 +18,12 @@ public:
 	Com_Collider(ColliderType type_, unsigned int uniqueComponentIdIdentifier);
 	Com_Collider(ColliderType type_, float _mass, float _friction, float _bouciness, unsigned int uniqueComponentIdIdentifier);
 
+	//gets the collider type
 	ColliderType GetColliderType();
 
+	//gets the box 2d defenition
 	virtual b2FixtureDef* GetColliderBox2dDefenition() = 0;
 
-	// Inherited via Component
 	virtual void Start();
 
 };
